@@ -1,6 +1,4 @@
 const Boom = require('boom');
-const packageModule = require('./package');
-const config = require('./config');
 
 const registrations = [
 	{
