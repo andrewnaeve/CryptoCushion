@@ -1,5 +1,6 @@
 const Glue = require('glue');
 const manifest = require('./manifest');
+require('dotenv').config();
 
 const options = {
 	relativeTo: __dirname + '/src'

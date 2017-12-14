@@ -3,6 +3,11 @@ const Boom = require('boom');
 const registrations = [
 	{
 		plugin: {
+			register: '../bootstrap'
+		}
+	},
+	{
+		plugin: {
 			register: 'good',
 			options: {
 				reporters: {
