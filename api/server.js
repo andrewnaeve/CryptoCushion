@@ -1,17 +1,18 @@
-const Glue = require('glue');
-const manifest = require('./manifest');
-require('dotenv').config();
+'use strict';
 
-const options = {
-	relativeTo: __dirname + '/src'
-};
+const Hapi = require('hapi');
+const server = new Hapi.Server();
+const routes = require('./routes');
 
-Glue.compose(manifest, options, function(err, server) {
-	if (err) {
-		throw err;
-	}
-	server.start(function() {
-		console.log('Server running at:', server.info.port);
-		// console.log('Environment:', process.env.NODE_ENV);
-	});
+server.connection({
+	port: 8000
+});
+
+routes.forEach(route => {
+	server.route(require(route));
+});
+
+server.start(err => {
+	if (err) throw err;
+	console.log('server listening on port:', server.info.port);
 });
