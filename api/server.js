@@ -1,10 +1,10 @@
 'use strict';
 
 const Hapi = require('hapi');
-const server = new Hapi.Server();
 const routes = require('./routes');
 
-server.connection({
+const server = Hapi.server({
+	host: 'localhost',
 	port: 8000
 });
 
@@ -12,7 +12,14 @@ routes.forEach(route => {
 	server.route(require(route));
 });
 
-server.start(err => {
-	if (err) throw err;
-	console.log('server listening on port:', server.info.port);
-});
+async function start() {
+	try {
+		await server.start();
+	} catch (err) {
+		console.log(err);
+		process.exit(1);
+	}
+	console.log('Server running on port:', server.info.port);
+}
+
+start();
