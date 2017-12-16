@@ -1,84 +1,56 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+	StyleSheet,
+	WebView,
+	TouchableOpacity,
+	Text,
+	View,
+	Modal
+} from 'react-native';
 import PlaidAuthenticator from 'react-native-plaid-link';
+
+const PLAID_PUBLIC_KEY = '51714a53c9375443b3156193601f62';
+const PLAID_ENV = 'sandbox';
+const PLAID_PRODUCT = 'auth,transactions';
 
 export class Plaid extends React.Component {
 	state = {
-		data: {},
-		showPlaid: false
+		data: {}
 	};
 
-	onLoadStart = props => {
-		console.log('onLoadStart', props);
-	};
-
-	onLoad = props => {
-		console.log('onLoad', props);
-	};
-
-	onLoadEnd = props => {
-		console.log('onLoadEnd', props);
-		this.setState({
-			showPlaid: false
-		});
-	};
-
-	launchPlaid = () => {
-		this.setState({
-			showPlaid: true
-		});
-	};
-
-	renderLogin() {
-		console.log('dot', process.env.PLAID_PUBLIC_KEY);
-		return (
-			<PlaidAuthenticator
-				onMessage={this.onMessage}
-				publicKey={process.env.PLAID_PUBLIC_KEY}
-				env="sandbox"
-				product="auth,transactions"
-				onLoad={this.onLoad}
-				onLoadStart={this.onLoadStart}
-				onLoadEnd={this.onLoadEnd}
-			/>
-		);
+	componentDidUpdate(prevProps, prevState) {
+		const { data: { eventName } } = prevState;
+		const { closePlaid } = this.props;
+		if (eventName === 'EXIT') {
+			closePlaid();
+		}
 	}
 
+	onMessage = e => {
+		this.setState({
+			data: JSON.parse(e.nativeEvent.data)
+		});
+	};
+
 	render() {
-		const { showPlaid } = this.state;
+		const { visible } = this.props;
 		return (
-			<View style={styles.container}>
-				<View style={styles.body} />
-				<View style={styles.button} onPress={this.handlePress}>
-					<Text>Launch Plaid</Text>
-					{showPlaid && this.renderLogin()}
+			<Modal visible={visible}>
+				<View style={styles.container}>
+					<WebView
+						source={{
+							uri: `https://cdn.plaid.com/link/v2/stable/link.html?key=${PLAID_PUBLIC_KEY}&env=${PLAID_ENV}&product=${PLAID_PRODUCT}&clientName=CatalinMiron&isWebView=true&webhook=http://google.com`
+						}}
+						onMessage={e => this.onMessage(e)}
+					/>
 				</View>
-			</View>
+			</Modal>
 		);
 	}
 }
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
-		backgroundColor: '#fff',
-		alignItems: 'center',
-		justifyContent: 'center'
-	},
-	body: {
-		flex: 1,
-		justifyContent: 'flex-end',
-		alignItems: 'center'
-	},
-	button: {
-		width: 300,
-		height: 50,
-		borderColor: 'blue',
-		borderWidth: 2,
-		borderRadius: 10,
-		backgroundColor: 'transparent',
-		marginBottom: 40,
-		alignItems: 'center',
-		justifyContent: 'center'
+		flex: 1
 	}
 });
