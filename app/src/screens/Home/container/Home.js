@@ -1,35 +1,32 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import styled from 'styled-components/native';
 import { StyleSheet, Text, View } from 'react-native';
 import { Plaid } from '../../Plaid/container/Plaid';
 import { height, width } from '../../../utils/styleConstants';
+import { showPlaid } from '../../../redux/actions/plaid-actions';
 
-export class Home extends React.Component {
-	state = {
-		showPlaid: false
-	};
-
+class Home extends Component {
 	launchPlaid = () => {
-		this.setState({
-			showPlaid: true
-		});
+		const { showPlaid } = this.props;
+		showPlaid(true);
 	};
 
 	closePlaid = () => {
-		this.setState({
-			showPlaid: false
-		});
+		const { showPlaid } = this.props;
+		showPlaid(false);
 	};
 
 	render() {
-		const { showPlaid } = this.state;
+		const { showPlaidModal, navigation } = this.props;
 		return (
-			<HomeContainer>
+			<HomeContainer navigation={navigation}>
 				<Body />
 				<Button onPress={this.launchPlaid}>
 					<Text>Launch Plaid</Text>
 				</Button>
-				<Plaid visible={showPlaid} closePlaid={this.closePlaid} />
+				<Plaid visible={showPlaidModal} closePlaid={this.closePlaid} />
 			</HomeContainer>
 		);
 	}
@@ -55,3 +52,13 @@ const Button = styled.TouchableOpacity`
 	align-items: center;
 	justify-content: center;
 `;
+
+const mapStateToProps = ({ plaid: { showPlaidModal } }) => {
+	return { showPlaidModal };
+};
+
+const mapDispatchToProps = dispatch => {
+	return bindActionCreators({ showPlaid }, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

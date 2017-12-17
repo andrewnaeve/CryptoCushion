@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
 	StyleSheet,
 	WebView,
@@ -12,7 +12,7 @@ const PLAID_PUBLIC_KEY = '51714a53c9375443b3156193601f62';
 const PLAID_ENV = 'sandbox';
 const PLAID_PRODUCT = 'auth,transactions';
 
-export class Plaid extends React.Component {
+export class Plaid extends Component {
 	state = {
 		data: {}
 	};
@@ -27,9 +27,11 @@ export class Plaid extends React.Component {
 		if (eventName === 'EXIT' && eventName !== prevEventName) {
 			closePlaid();
 		}
+
 		if (action !== undefined && action !== prevAction) {
 			const actionType = action.split('::')[1];
 			if (actionType === 'connected') {
+				console.log(this.state.data.metadata);
 				closePlaid();
 			}
 		}
@@ -44,7 +46,7 @@ export class Plaid extends React.Component {
 	render() {
 		const { visible } = this.props;
 		return (
-			<Modal visible={visible} animationType="slide">
+			<Modal visible={visible} animationType="fade">
 				<View style={styles.container}>
 					<WebView
 						source={{

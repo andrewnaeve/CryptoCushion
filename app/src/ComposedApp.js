@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { Text, View } from 'react-native';
-import { HomeNavigator } from './nav/router';
+import { Router } from './nav/router';
 
 export class ComposedApp extends React.Component {
 	render() {
 		return (
 			<App>
-				<HomeNavigator />
+				<Router />
 			</App>
 		);
 	}
