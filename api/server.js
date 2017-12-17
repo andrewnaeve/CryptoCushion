@@ -1,5 +1,4 @@
 'use strict';
-
 const Hapi = require('hapi');
 const routes = require('./routes');
 

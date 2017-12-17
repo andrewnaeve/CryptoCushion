@@ -4,11 +4,11 @@ import {
 	WebView,
 	TouchableOpacity,
 	Text,
-	View,
-	Modal
+	View
 } from 'react-native';
+import styled from 'styled-components/native';
 
-const PLAID_PUBLIC_KEY = '51714a53c9375443b3156193601f62';
+const PLAID_PUBLIC_KEY = '65ae65b2025490e611b70fb2854d95';
 const PLAID_ENV = 'sandbox';
 const PLAID_PRODUCT = 'auth,transactions';
 
@@ -18,7 +18,7 @@ class Plaid extends Component {
 	};
 
 	componentDidUpdate(prevProps, prevState) {
-		const { data: { action, eventName } } = this.state;
+		const { data: { action, eventName }} = this.state;
 		const prevEventName = prevState.data.eventName;
 		const prevAction = prevState.data.action;
 		const { navigation: { goBack } } = this.props;
@@ -31,7 +31,6 @@ class Plaid extends Component {
 		if (action !== undefined && action !== prevAction) {
 			const actionType = action.split('::')[1];
 			if (actionType === 'connected') {
-				console.log(this.state.data.metadata);
 				goBack();
 			}
 		}
@@ -45,18 +44,17 @@ class Plaid extends Component {
 
 	render() {
 		console.log(this.state);
-		return (
-			<View style={styles.container}>
-				<WebView
-					source={{
-						uri: `https://cdn.plaid.com/link/v2/stable/link.html?key=${PLAID_PUBLIC_KEY}&env=${PLAID_ENV}&product=${PLAID_PRODUCT}&clientName=Bit Cushion&isWebView=true&webhook=http://google.com`
-					}}
-					onMessage={e => this.onMessage(e)}
-				/>
+		return ( 
+			<View style = {styles.container}>
+				<WebView 
+					source = {{uri: `https://cdn.plaid.com/link/v2/stable/link.html?key=${PLAID_PUBLIC_KEY}&env=${PLAID_ENV}&product=${PLAID_PRODUCT}&clientName=Bit Cushion&isWebView=true&webhook=http://google.com`}}
+					onMessage = {e => this.onMessage(e)}
+				/> 
 			</View>
 		);
 	}
 }
+
 
 const styles = StyleSheet.create({
 	container: {
