@@ -1,7 +1,7 @@
-export const SHOW_PLAID = 'SHOW_PLAID';
+export const LINK_OBJECT_INFORMATION = 'LINK_OBJECT_INFORMATION';
 
-export const showPlaid = show => {
+export const linkObjectInformation = object => {
 	return dispatch => {
-		dispatch({ type: SHOW_PLAID, payload: show });
+		dispatch({ type: LINK_OBJECT_INFORMATION, payload: object });
 	};
 };

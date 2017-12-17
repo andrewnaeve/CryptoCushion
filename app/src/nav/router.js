@@ -1,7 +1,7 @@
 import React from 'react';
 import { StackNavigator } from 'react-navigation';
 import Home from '../screens/Home/container/Home';
-import { Plaid } from '../screens/Plaid/container/Plaid';
+import Plaid from '../screens/Plaid/container/Plaid';
 
 export const MainNavigator = StackNavigator(
 	{
@@ -21,6 +21,9 @@ export const Router = StackNavigator(
 	},
 	{
 		headerMode: 'none',
-		mode: 'modal'
+		mode: 'modal',
+		navigationOptions: {
+			gesturesEnabled: false
+		}
 	}
 );

@@ -5,28 +5,21 @@ import styled from 'styled-components/native';
 import { StyleSheet, Text, View } from 'react-native';
 import { Plaid } from '../../Plaid/container/Plaid';
 import { height, width } from '../../../utils/styleConstants';
-import { showPlaid } from '../../../redux/actions/plaid-actions';
+import { linkObjectInformation } from '../../../redux/actions/plaid-actions';
 
 class Home extends Component {
 	launchPlaid = () => {
-		const { showPlaid } = this.props;
-		showPlaid(true);
-	};
-
-	closePlaid = () => {
-		const { showPlaid } = this.props;
-		showPlaid(false);
+		const { navigation: { navigate } } = this.props;
+		navigate('Plaid');
 	};
 
 	render() {
-		const { showPlaidModal, navigation } = this.props;
 		return (
-			<HomeContainer navigation={navigation}>
+			<HomeContainer>
 				<Body />
 				<Button onPress={this.launchPlaid}>
 					<Text>Launch Plaid</Text>
 				</Button>
-				<Plaid visible={showPlaidModal} closePlaid={this.closePlaid} />
 			</HomeContainer>
 		);
 	}
@@ -58,7 +51,7 @@ const mapStateToProps = ({ plaid: { showPlaidModal } }) => {
 };
 
 const mapDispatchToProps = dispatch => {
-	return bindActionCreators({ showPlaid }, dispatch);
+	return bindActionCreators({ linkObjectInformation }, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
