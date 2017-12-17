@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 import { StyleSheet, Text, View } from 'react-native';
 import { Plaid } from '../../Plaid/container/Plaid';
 import { height, width } from '../../../utils/styleConstants';
-import { linkObjectInformation } from '../../../redux/actions/plaid-actions';
+import { updatePublicToken } from '../../../redux/actions/plaid-actions';
 
 class Home extends Component {
 	launchPlaid = () => {
@@ -51,7 +51,7 @@ const mapStateToProps = ({ plaid: { showPlaidModal } }) => {
 };
 
 const mapDispatchToProps = dispatch => {
-	return bindActionCreators({ linkObjectInformation }, dispatch);
+	return bindActionCreators({ updatePublicToken }, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(null, mapDispatchToProps)(Home);

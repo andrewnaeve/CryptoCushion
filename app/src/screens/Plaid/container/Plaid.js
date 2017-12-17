@@ -7,6 +7,9 @@ import {
 	View
 } from 'react-native';
 import styled from 'styled-components/native';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { updatePublicToken } from '../../../redux/actions/plaid-actions';
 
 const PLAID_PUBLIC_KEY = '65ae65b2025490e611b70fb2854d95';
 const PLAID_ENV = 'sandbox';
@@ -18,11 +21,10 @@ class Plaid extends Component {
 	};
 
 	componentDidUpdate(prevProps, prevState) {
-		const { data: { action, eventName }} = this.state;
+		const { data: { action, eventName, metadata } } = this.state;
+		const { navigation: { goBack }, updatePublicToken } = this.props;
 		const prevEventName = prevState.data.eventName;
 		const prevAction = prevState.data.action;
-		const { navigation: { goBack } } = this.props;
-		const { closePlaid } = this.props;
 
 		if (eventName === 'EXIT' && eventName !== prevEventName) {
 			goBack();
@@ -31,6 +33,8 @@ class Plaid extends Component {
 		if (action !== undefined && action !== prevAction) {
 			const actionType = action.split('::')[1];
 			if (actionType === 'connected') {
+				const { publicToken } = metadata;
+				updatePublicToken(publicToken);
 				goBack();
 			}
 		}
@@ -43,18 +47,18 @@ class Plaid extends Component {
 	};
 
 	render() {
-		console.log(this.state);
-		return ( 
-			<View style = {styles.container}>
-				<WebView 
-					source = {{uri: `https://cdn.plaid.com/link/v2/stable/link.html?key=${PLAID_PUBLIC_KEY}&env=${PLAID_ENV}&product=${PLAID_PRODUCT}&clientName=Bit Cushion&isWebView=true&webhook=http://google.com`}}
-					onMessage = {e => this.onMessage(e)}
-				/> 
+		return (
+			<View style={styles.container}>
+				<WebView
+					source={{
+						uri: `https://cdn.plaid.com/link/v2/stable/link.html?key=${PLAID_PUBLIC_KEY}&env=${PLAID_ENV}&product=${PLAID_PRODUCT}&clientName=Bit Cushion&isWebView=true&webhook=http://google.com`
+					}}
+					onMessage={e => this.onMessage(e)}
+				/>
 			</View>
 		);
 	}
 }
-
 
 const styles = StyleSheet.create({
 	container: {
@@ -62,4 +66,8 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default Plaid;
+const mapDispatchToProps = dispatch => {
+	return bindActionCreators({ updatePublicToken }, dispatch);
+};
+
+export default connect(null, mapDispatchToProps)(Plaid);

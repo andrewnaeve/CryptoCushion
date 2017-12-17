@@ -8,10 +8,10 @@
 // 	env: 'sandbox',
 // 	key: process.env.PLAID_PUBLIC_KEY,
 // 	product: ['transactions'],
-// 	onSuccess: function(public_token, metadata) {
+// 	onSuccess: function(publicToken, metadata) {
 // 		axios
 // 			.post(`${endpoing}/get_access_token`, {
-// 				public_token: public_token
+// 				publicToken: publicToken
 // 			})
 // 			.then(response => {
 // 				console.log('response from post:', response);

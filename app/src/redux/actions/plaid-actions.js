@@ -1,7 +1,7 @@
-export const LINK_OBJECT_INFORMATION = 'LINK_OBJECT_INFORMATION';
+export const UPDATE_publicToken = 'UPDATE_publicToken';
 
-export const linkObjectInformation = object => {
+export const updatePublicToken = publicToken => {
 	return dispatch => {
-		dispatch({ type: LINK_OBJECT_INFORMATION, payload: object });
+		dispatch({ type: UPDATE_publicToken, payload: publicToken });
 	};
 };
