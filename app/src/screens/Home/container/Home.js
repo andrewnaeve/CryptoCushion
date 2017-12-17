@@ -2,9 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import { StyleSheet, Text, View } from 'react-native';
 import { Plaid } from '../../Plaid/container/Plaid';
-import { PlaidExample } from '../../Plaid/container/PlaidExample';
 import { height, width } from '../../../utils/styleConstants';
-import PlaidAuthenticator from 'react-native-plaid-link';
 
 export class Home extends React.Component {
 	state = {
