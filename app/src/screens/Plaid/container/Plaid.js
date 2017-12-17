@@ -18,15 +18,20 @@ export class Plaid extends React.Component {
 	};
 
 	componentDidUpdate(prevProps, prevState) {
-		// const { data: { eventName } } = prevState;
 		const { data: { action, eventName } } = this.state;
-		const { closePlaid } = this.props;
-		console.log('ts', this.state.data);
-		console.log('ps', prevState.data);
+		const prevEventName = prevState.data.eventName;
+		const prevAction = prevState.data.action;
 
-		if (eventName === 'EXIT' && eventName !== prevState.data.eventName) {
-			console.log('exittt');
+		const { closePlaid } = this.props;
+
+		if (eventName === 'EXIT' && eventName !== prevEventName) {
 			closePlaid();
+		}
+		if (action !== undefined && action !== prevAction) {
+			const actionType = action.split('::')[1];
+			if (actionType === 'connected') {
+				closePlaid();
+			}
 		}
 	}
 
