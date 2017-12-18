@@ -9,7 +9,7 @@ import {
 import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updatePublicToken } from '../../../redux/actions/plaid-actions';
+import { cashInToken } from '../../../redux/actions/plaid-actions';
 
 const PLAID_PUBLIC_KEY = '65ae65b2025490e611b70fb2854d95';
 const PLAID_ENV = 'sandbox';
@@ -34,7 +34,7 @@ class Plaid extends Component {
 			const actionType = action.split('::')[1];
 			if (actionType === 'connected') {
 				const { publicToken } = metadata;
-				updatePublicToken(publicToken);
+				cashInToken(publicToken);
 				goBack();
 			}
 		}
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
 });
 
 const mapDispatchToProps = dispatch => {
-	return bindActionCreators({ updatePublicToken }, dispatch);
+	return bindActionCreators({ cashInToken }, dispatch);
 };
 
 export default connect(null, mapDispatchToProps)(Plaid);
