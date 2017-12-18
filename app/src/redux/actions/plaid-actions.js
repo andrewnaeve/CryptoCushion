@@ -10,14 +10,15 @@ export const updatePublicToken = token => {
 
 export const CASH_IN_TOKEN = 'CASH_IN_TOKEN';
 export const cashInToken = token => {
-	return () => {
+	return dispatch => {
 		dispatch(updatePublicToken(token));
 		return axios
-			.post(`${API_URL}/get_access_token`, {
+			.get(`${API_URL}/get_access_token`, {
 				publicToken: token
 			})
 			.then(response => {
 				console.log('response', response);
-			});
+			})
+			.catch(err => console.log('cash in token get err', err));
 	};
 };

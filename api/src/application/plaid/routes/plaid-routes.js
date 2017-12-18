@@ -3,8 +3,10 @@ const Boom = require('boom');
 module.exports = [
 	{
 		method: 'GET',
-		path: '/yo',
-		handler: function(request, h) {
+		path: '/get_access_token',
+		handler: (request, reply) => {
+			let token = request.payload;
+			console.log('token', token);
 			return 'you';
 		}
 	},

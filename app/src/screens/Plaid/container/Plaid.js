@@ -22,7 +22,7 @@ class Plaid extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		const { data: { action, eventName, metadata } } = this.state;
-		const { navigation: { goBack }, updatePublicToken } = this.props;
+		const { navigation: { goBack }, cashInToken } = this.props;
 		const prevEventName = prevState.data.eventName;
 		const prevAction = prevState.data.action;
 
