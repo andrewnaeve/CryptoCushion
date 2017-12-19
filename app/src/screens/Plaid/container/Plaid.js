@@ -33,8 +33,8 @@ class Plaid extends Component {
 		if (action !== undefined && action !== prevAction) {
 			const actionType = action.split('::')[1];
 			if (actionType === 'connected') {
-				const { publicToken } = metadata;
-				cashInToken(publicToken);
+				const { public_token } = metadata;
+				cashInToken(public_token);
 				goBack();
 			}
 		}

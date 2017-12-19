@@ -13,11 +13,11 @@ export const cashInToken = token => {
 	return dispatch => {
 		dispatch(updatePublicToken(token));
 		return axios
-			.get(`${API_URL}/get_access_token`, {
+			.post(`${API_URL}/get_access_token`, {
 				publicToken: token
 			})
 			.then(response => {
-				console.log('response', response);
+				console.log('response from axios', response);
 			})
 			.catch(err => console.log('cash in token get err', err));
 	};

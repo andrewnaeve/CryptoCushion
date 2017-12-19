@@ -1,3 +1,3 @@
-const routes = ['./src/application/plaid/routes/plaid-routes.js'];
+const routes = ['./src/application/plaid/routes/post_access_token.js'];
 
 module.exports = routes;
