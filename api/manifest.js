@@ -35,6 +35,9 @@ module.exports = {
 		debug: { log: ['error'], request: ['error'] },
 		connections: {
 			routes: {
+				cors: {
+					origin: ['*']
+				},
 				validate: {
 					options: { abortEarly: false },
 					failAction: (request, reply, source, error) => {
@@ -61,12 +64,7 @@ module.exports = {
 	},
 	connections: [
 		{
-			port: 8000,
-			routes: {
-				cors: {
-					origin: ['*']
-				}
-			}
+			port: 8000
 		}
 	],
 	registrations

@@ -1,6 +1,5 @@
 'use strict';
 require('dotenv').config();
-
 const Glue = require('glue');
 const manifest = require('./manifest');
 const routes = require('./routes');
@@ -19,7 +18,7 @@ Glue.compose(manifest, options, function(err, server) {
 	});
 
 	server.start(function() {
-		console.log('Server running at:', server.info.uri);
-		console.log('Environment:', process.env.NODE_ENV);
+		console.log(`Server running on port ${server.info.port}.`);
+		console.log(`Environment: ${process.env.NODE_ENV}.`);
 	});
 });

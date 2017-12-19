@@ -8,7 +8,6 @@ module.exports = [
 		path: '/get_access_token',
 		config: {
 			handler: (request, reply) => {
-				console.log('payload', request.payload);
 				const token = request.payload;
 				if (!token) {
 					reply(Boom.badData('Token empty'));
