@@ -1383,6 +1383,15 @@ globby@^5.0.0:
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
 
+glue@^4.1.0:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/glue/-/glue-4.2.1.tgz#a920f01aff53a8816604d9c38407f8c103ea1965"
+  dependencies:
+    hapi "11.x.x || 12.x.x || 13.x.x || 14.x.x || 15.x.x || 16.x.x"
+    hoek "4.x.x"
+    items "2.x.x"
+    joi "10.x.x"
+
 good-console@^6.4.1:
   version "6.4.1"
   resolved "https://registry.yarnpkg.com/good-console/-/good-console-6.4.1.tgz#5922974868bcf3bd9594372ba33818dc0d01a464"
@@ -1442,7 +1451,7 @@ handlebars@^4.0.3:
   optionalDependencies:
     uglify-js "^2.6"
 
-hapi@^16.6.2:
+"hapi@11.x.x || 12.x.x || 13.x.x || 14.x.x || 15.x.x || 16.x.x", hapi@^16.6.2:
   version "16.6.2"
   resolved "https://registry.yarnpkg.com/hapi/-/hapi-16.6.2.tgz#690554fc9c5ca7ad2f8030bbfe21d5e5886cdc14"
   dependencies:

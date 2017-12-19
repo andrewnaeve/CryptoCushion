@@ -1,5 +1,6 @@
 var mysql = require('mysql');
 const plaid = require('plaid');
+require('dotenv').config();
 
 const plaidClient = new plaid.Client(
 	process.env.PLAID_CLIENT_ID,
