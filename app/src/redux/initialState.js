@@ -1,7 +1,4 @@
 const initialState = {
-	app: {
-		appIsReady: false
-	},
 	plaid: {
 		publicToken: ''
 	}
