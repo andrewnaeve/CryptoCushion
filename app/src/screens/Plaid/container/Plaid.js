@@ -19,7 +19,7 @@ class Plaid extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		const { data: { action, eventName, metadata } } = this.state;
-		const { navigation: { goBack }, cashInToken } = this.props;
+		const { navigation: { goBack }, plaidConnected } = this.props;
 		const prevEventName = prevState.data.eventName;
 		const prevAction = prevState.data.action;
 
@@ -49,6 +49,7 @@ class Plaid extends Component {
 	};
 
 	render() {
+		console.log('plaid state', this.props.plaid);
 		return (
 			<View style={styles.container}>
 				<WebView
@@ -73,7 +74,7 @@ const mapStateToProps = ({ plaid }) => {
 };
 
 const mapDispatchToProps = dispatch => {
-	return bindActionCreators({ cashInToken }, dispatch);
+	return bindActionCreators({ plaidConnected }, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Plaid);

@@ -3,8 +3,9 @@ import { API_URL } from './config';
 
 export const SET_ACCOUNT_INFO = 'SET_ACCOUNT_INFO';
 export const setAccountInfo = info => {
-	return dispatch => {
-		dispatch({ type: SET_ACCOUNT_INFO, payload: info });
+	return {
+		type: SET_ACCOUNT_INFO,
+		payload: info
 	};
 };
 
@@ -14,10 +15,10 @@ export const plaidConnected = responseObj => {
 		dispatch(setAccountInfo(responseObj));
 		return axios
 			.post(`${API_URL}/getAccessToken`, {
-				responseObj: responseObj
+				publicToken: responseObj.public_token
 			})
 			.then(data => {
-				console.log('data from axios', data);
+				//console.log('data from axios', data);
 			})
 			.catch(err => console.log('cash in token get err', err));
 	};
