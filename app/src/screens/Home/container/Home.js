@@ -5,7 +5,6 @@ import styled from 'styled-components/native';
 import { StyleSheet, Text, View } from 'react-native';
 import { Plaid } from '../../Plaid/container/Plaid';
 import { height, width } from '../../../utils/styleConstants';
-import { updatePublicToken } from '../../../redux/actions/plaid-actions';
 
 class Home extends Component {
 	launchPlaid = () => {
@@ -46,12 +45,4 @@ const Button = styled.TouchableOpacity`
 	justify-content: center;
 `;
 
-const mapStateToProps = ({ plaid: { showPlaidModal } }) => {
-	return { showPlaidModal };
-};
-
-const mapDispatchToProps = dispatch => {
-	return bindActionCreators({ updatePublicToken }, dispatch);
-};
-
-export default connect(null, mapDispatchToProps)(Home);
+export default Home;

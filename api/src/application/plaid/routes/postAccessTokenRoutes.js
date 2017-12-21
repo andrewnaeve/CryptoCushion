@@ -1,11 +1,11 @@
 const Boom = require('boom');
-const payloadValidator = require('../validation/post_access_token')
+const payloadValidator = require('../validation/postAccessTokenValidation')
 	.payloadValidator;
 
 module.exports = [
 	{
 		method: 'POST',
-		path: '/get_access_token',
+		path: '/getAccessToken',
 		config: {
 			handler: (request, reply) => {
 				const token = request.payload;

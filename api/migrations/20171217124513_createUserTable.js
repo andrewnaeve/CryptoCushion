@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
 		usersTable.string('First Name').notNullable();
 		usersTable.string('Last Name').notNullable();
 		usersTable
-			.string('Email Name')
+			.string('Email')
 			.notNullable()
 			.unique();
 		usersTable.timestamp('created_at').notNullable();

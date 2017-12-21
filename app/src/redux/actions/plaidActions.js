@@ -1,19 +1,19 @@
 import axios from 'axios';
 import { API_URL } from './config';
 
-export const UPDATE_PUBLIC_TOKEN = 'UPDATE_PUBLIC_TOKEN';
-export const updatePublicToken = token => {
+export const SET_PUBLIC_TOKEN = 'SET_PUBLIC_TOKEN';
+export const setPublicToken = token => {
 	return dispatch => {
-		dispatch({ type: UPDATE_PUBLIC_TOKEN, payload: token });
+		dispatch({ type: SET_PUBLIC_TOKEN, payload: token });
 	};
 };
 
 export const CASH_IN_TOKEN = 'CASH_IN_TOKEN';
 export const cashInToken = token => {
 	return dispatch => {
-		dispatch(updatePublicToken(token));
+		dispatch(setPublicToken(token));
 		return axios
-			.post(`${API_URL}/get_access_token`, {
+			.post(`${API_URL}/getAccessToken`, {
 				publicToken: token
 			})
 			.then(response => {

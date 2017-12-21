@@ -1,10 +1,10 @@
-import { UPDATE_publicToken } from '../actions/plaid-actions';
+import { SET_PUBLIC_TOKEN } from '../actions/plaidActions';
 import { combineReducers } from 'redux';
 import initialState from '../initialState';
 
-export const plaidReducer = (state = initialState.plaid, action) => {
+export const setPublicToken = (state = initialState.plaid, action) => {
 	switch (action.type) {
-		case UPDATE_publicToken:
+		case SET_PUBLIC_TOKEN:
 			return {
 				...state,
 				publicToken: action.payload.publicToken

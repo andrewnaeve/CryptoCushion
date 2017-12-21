@@ -9,7 +9,7 @@ import {
 import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { cashInToken } from '../../../redux/actions/plaid-actions';
+import { cashInToken } from '../../../redux/actions/plaidActions';
 
 const PLAID_PUBLIC_KEY = '65ae65b2025490e611b70fb2854d95';
 const PLAID_ENV = 'sandbox';
