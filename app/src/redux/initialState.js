@@ -1,6 +1,6 @@
 const initialState = {
 	plaid: {
-		publicToken: ''
+		accountInfo: {}
 	}
 };
 

@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import { setPublicToken } from './plaidReducers';
+import { setAccountInfo } from './plaidReducers';
 
 const rootReducer = combineReducers({
-	plaid: setPublicToken
+	plaid: setAccountInfo
 });
 
 export default rootReducer;

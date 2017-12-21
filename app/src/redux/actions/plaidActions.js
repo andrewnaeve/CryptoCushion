@@ -1,23 +1,23 @@
 import axios from 'axios';
 import { API_URL } from './config';
 
-export const SET_PUBLIC_TOKEN = 'SET_PUBLIC_TOKEN';
-export const setPublicToken = token => {
+export const SET_ACCOUNT_INFO = 'SET_ACCOUNT_INFO';
+export const setAccountInfo = info => {
 	return dispatch => {
-		dispatch({ type: SET_PUBLIC_TOKEN, payload: token });
+		dispatch({ type: SET_ACCOUNT_INFO, payload: info });
 	};
 };
 
-export const CASH_IN_TOKEN = 'CASH_IN_TOKEN';
-export const cashInToken = token => {
+export const PLAID_CONNECTED = 'PLAID_CONNECTED';
+export const plaidConnected = responseObj => {
 	return dispatch => {
-		dispatch(setPublicToken(token));
+		dispatch(setAccountInfo(responseObj));
 		return axios
 			.post(`${API_URL}/getAccessToken`, {
-				publicToken: token
+				responseObj: responseObj
 			})
-			.then(response => {
-				console.log('response from axios', response);
+			.then(data => {
+				console.log('data from axios', data);
 			})
 			.catch(err => console.log('cash in token get err', err));
 	};

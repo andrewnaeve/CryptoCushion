@@ -9,11 +9,8 @@ import {
 import styled from 'styled-components/native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { cashInToken } from '../../../redux/actions/plaidActions';
-
-const PLAID_PUBLIC_KEY = '65ae65b2025490e611b70fb2854d95';
-const PLAID_ENV = 'sandbox';
-const PLAID_PRODUCT = 'auth,transactions';
+import { plaidConnected } from '../../../redux/actions/plaidActions';
+import { PLAID_PUBLIC_KEY, PLAID_ENV, PLAID_PRODUCT } from './plaidConfig';
 
 class Plaid extends Component {
 	state = {
@@ -33,8 +30,13 @@ class Plaid extends Component {
 		if (action !== undefined && action !== prevAction) {
 			const actionType = action.split('::')[1];
 			if (actionType === 'connected') {
-				const publicToken = metadata.public_token;
-				cashInToken(publicToken);
+				const responseObj = {
+					public_token: metadata.public_token,
+					accounts: metadata.accounts,
+					institution: metadata.institution,
+					link_session_id: metadata.link_session_id
+				};
+				plaidConnected(responseObj);
 				goBack();
 			}
 		}
@@ -66,8 +68,12 @@ const styles = StyleSheet.create({
 	}
 });
 
+const mapStateToProps = ({ plaid }) => {
+	return { plaid };
+};
+
 const mapDispatchToProps = dispatch => {
 	return bindActionCreators({ cashInToken }, dispatch);
 };
 
-export default connect(null, mapDispatchToProps)(Plaid);
+export default connect(mapStateToProps, mapDispatchToProps)(Plaid);
