@@ -34,10 +34,10 @@ module.exports = {
 	server: {
 		debug: { log: ['error'], request: ['error'] },
 		connections: {
+			router: {
+				stripTrailingSlash: true
+			},
 			routes: {
-				cors: {
-					origin: ['*']
-				},
 				validate: {
 					options: { abortEarly: false },
 					failAction: (request, reply, source, error) => {
@@ -64,7 +64,13 @@ module.exports = {
 	},
 	connections: [
 		{
-			port: 8000
+			port: 8000,
+			cors: {
+				origin: ['*']
+			},
+			payload: {
+				allow: ['application/json']
+			}
 		}
 	],
 	registrations
