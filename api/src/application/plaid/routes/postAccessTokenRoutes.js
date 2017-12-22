@@ -13,7 +13,7 @@ module.exports = [
 			handler: (request, reply) => {
 				exchangeToken(request, reply);
 				reply();
-			}
+			},
 			validate: {
 				payload: payloadValidator
 			}

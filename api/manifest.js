@@ -65,11 +65,16 @@ module.exports = {
 	connections: [
 		{
 			port: 8000,
-			cors: {
-				origin: ['*']
-			},
-			payload: {
-				allow: ['application/json']
+			routes: {
+				cors: true,
+				validate: {
+					options: {
+						stripUnknown: true
+					}
+				},
+				payload: {
+					allow: ['application/json']
+				}
 			}
 		}
 	],
