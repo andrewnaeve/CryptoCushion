@@ -5,19 +5,19 @@ exports.seed = function(knex, Promise) {
 		.then(function() {
 			return knex('users').insert([
 				{
-					'First Name': 'Andrew',
-					'Last Name': 'Naeve',
-					email: 'arnaeve@gmail.com'
+					First_Name: 'Andrew',
+					Last_Name: 'Naeve',
+					Email: 'arnaeve@gmail.com'
 				},
 				{
-					'First Name': 'Jim',
-					'Last Name': 'Jam',
-					email: 'JimJam@gmail.com'
+					First_Name: 'Jim',
+					Last_Name: 'Jam',
+					Email: 'JimJam@gmail.com'
 				},
 				{
-					'First Name': 'Matt',
-					'Last Name': 'Billings',
-					email: 'mbillings@gmail.com'
+					First_Name: 'Matt',
+					Last_Name: 'Billings',
+					Email: 'mbillings@gmail.com'
 				}
 			]);
 		})

@@ -12,8 +12,8 @@ const saveItem = (email, access_token, item_id) => {
 		})
 		.then(id => {
 			return new Item().save({
-				'Access Token': access_token,
-				'Item Id': item_id,
+				Access_Token: access_token,
+				Item_Id: item_id,
 				user_id: id
 			});
 		})

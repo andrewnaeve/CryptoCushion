@@ -3,6 +3,8 @@ const package = require('./package');
 const { apolloHapi, graphiqlHapi } = require('apollo-server');
 const graphqlSchema = require('./graphql/schema');
 const createResolvers = require('./graphql/resolvers');
+const { makeExecutableSchema } = require('graphql-tools');
+const User = require('./models/user');
 
 const executableSchema = makeExecutableSchema({
 	typeDefs: [graphqlSchema],

@@ -1,12 +1,24 @@
 const schema = `
   type User {
-    id: ID!
-	First Name: String!
-	Last Name: String!
-	Email: String!
+    id: id!
+    FirstName: String
+    LastName: String
+    Email: String
+  }
+  type id {
+    id: Int
+  }
+  type FirstName {
+    FirstName: String!
+  }
+  type LastName {
+    LastName: String!
+  }
+  type Email {
+    Email: String!
   }
   type Query {
-    getUserById(id: ID!): User
+    getUserById(id: id!): User
     getUserByEmail(email: String!): User
   }
   schema {
