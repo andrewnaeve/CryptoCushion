@@ -14,9 +14,9 @@ module.exports = [
 				exchangeToken(request, reply);
 				reply();
 			}
-			// validate: {
-			// 	payload: payloadValidator
-			// }
+			validate: {
+				payload: payloadValidator
+			}
 		}
 	}
 ];

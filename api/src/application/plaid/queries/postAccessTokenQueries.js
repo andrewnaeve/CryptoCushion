@@ -18,11 +18,11 @@ const saveItem = (email, access_token, item_id) => {
 			});
 		})
 		.then(model => {
-			console.log('model', model);
+			return model;
 		});
 };
 
-const exchangeToken = async (request, reply) => {
+const exchangeToken = (request, reply) => {
 	const options = {
 		headers: { 'content-type': 'application/json' },
 		payload: {
@@ -32,29 +32,16 @@ const exchangeToken = async (request, reply) => {
 		},
 		json: 'true'
 	};
-	try {
-		await Wreck.post(
-			'https://sandbox.plaid.com/item/public_token/exchange',
-			options,
-			(error, response, payload) => {
-				if (error) {
-					return Boom.notFound('Public Token Not Found');
-				}
-				saveItem(
-					'JimJam@gmail.com',
-					payload.access_token,
-					payload.item_id
-				);
-				return {
-					access_token: payload.access_token,
-					item_id: payload.item_id,
-					request_id: payload.request_id
-				};
+	Wreck.post(
+		'https://sandbox.plaid.com/item/public_token/exchange',
+		options,
+		(error, response, payload) => {
+			if (error) {
+				return Boom.notFound('Public Token Not Found');
 			}
-		);
-	} catch (err) {
-		console.log('wreck error');
-	}
+			saveItem('JimJam@gmail.com', payload.access_token, payload.item_id);
+		}
+	);
 };
 
 module.exports = {
