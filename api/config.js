@@ -1,13 +1,5 @@
 var mysql = require('mysql');
-const plaid = require('plaid');
 require('dotenv').config();
-
-const plaidClient = new plaid.Client(
-	process.env.PLAID_CLIENT_ID,
-	process.env.PLAID_SECRET,
-	process.env.PLAID_PUBLIC_KEY,
-	process.env.PLAID_ENV
-);
 
 const config = {
 	$filter: 'env',
