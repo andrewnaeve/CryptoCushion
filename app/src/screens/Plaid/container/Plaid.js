@@ -31,6 +31,7 @@ class Plaid extends Component {
 			const actionType = action.split('::')[1];
 			if (actionType === 'connected') {
 				const responseObj = {
+					email: 'arnaeve@gmail.com',
 					public_token: metadata.public_token,
 					accounts: metadata.accounts,
 					institution: metadata.institution,

@@ -1,6 +1,26 @@
 'use strict';
 const boom = require('boom');
 const Wreck = require('wreck');
+const Item = require('../../../../models/item.js');
+const User = require('../../../../models/user.js');
+
+const saveItem = (email, access_token, item_id) => {
+	new User({ email: email })
+		.fetch()
+		.then(model => {
+			return model.get('id');
+		})
+		.then(id => {
+			return new Item().save({
+				'Access Token': access_token,
+				'Item Id': item_id,
+				user_id: id
+			});
+		})
+		.then(model => {
+			console.log('model', model);
+		});
+};
 
 const exchangeToken = async (request, reply) => {
 	const options = {
@@ -12,21 +32,21 @@ const exchangeToken = async (request, reply) => {
 		},
 		json: 'true'
 	};
-	const details = await Wreck.post(
+	await Wreck.post(
 		'https://sandbox.plaid.com/item/public_token/exchange',
 		options,
 		(error, response, payload) => {
 			if (error) {
-				Boom.notFound('Public Token Not Found');
+				return Boom.notFound('Public Token Not Found');
 			}
+			saveItem('JimJam@gmail.com', payload.access_token, payload.item_id);
 			return {
 				access_token: payload.access_token,
 				item_id: payload.item_id,
-				request_id: payload.request
+				request_id: payload.request_id
 			};
 		}
 	);
-	console.log(details);
 };
 
 module.exports = {

@@ -11,13 +11,12 @@ module.exports = [
 		path: '/getAccessToken',
 		config: {
 			handler: (request, reply) => {
-				const cash = exchangeToken(request, reply);
-
+				exchangeToken(request, reply);
 				reply();
-			},
-			validate: {
-				payload: payloadValidator
 			}
+			// validate: {
+			// 	payload: payloadValidator
+			// }
 		}
 	}
 ];

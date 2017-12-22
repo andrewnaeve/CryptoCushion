@@ -7,8 +7,8 @@ exports.up = function(knex, Promise) {
 			.notNullable()
 			.references('id')
 			.inTable('users');
-		table.string('Item Id').notNullable();
 		table.string('Access Token').notNullable();
+		table.string('Item Id').notNullable();
 	});
 };
 
