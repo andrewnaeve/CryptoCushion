@@ -5,15 +5,15 @@ const Item = require('../../../../models/item.js');
 const User = require('../../../../models/user.js');
 
 const saveItem = (email, access_token, item_id) => {
-	new User({ email: email })
+	new User({ Email: email })
 		.fetch()
 		.then(model => {
 			return model.get('id');
 		})
 		.then(id => {
 			return new Item().save({
-				'Access Token': access_token,
-				'Item Id': item_id,
+				Access_Token: access_token,
+				Item_Id: item_id,
 				user_id: id
 			});
 		})
