@@ -1,6 +1,9 @@
 const Boom = require('boom');
+const Wreck = require('wreck');
 const payloadValidator = require('../validation/postAccessTokenValidation')
 	.payloadValidator;
+const exchangeToken = require('../queries/postAccessTokenQueries')
+	.exchangeToken;
 
 module.exports = [
 	{
@@ -8,11 +11,9 @@ module.exports = [
 		path: '/getAccessToken',
 		config: {
 			handler: (request, reply) => {
-				const token = request.payload;
-				if (!token) {
-					reply(Boom.badData('Token empty'));
-				}
-				return reply('token received');
+				const cash = exchangeToken(request, reply);
+
+				reply();
 			},
 			validate: {
 				payload: payloadValidator
