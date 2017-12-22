@@ -10,14 +10,19 @@ exports.seed = function(knex, Promise) {
 					Email: 'arnaeve@gmail.com'
 				},
 				{
-					First_Name: 'Jim',
-					Last_Name: 'Jam',
-					Email: 'JimJam@gmail.com'
-				},
-				{
 					First_Name: 'Matt',
 					Last_Name: 'Billings',
 					Email: 'mbillings@gmail.com'
+				},
+				{
+					First_Name: 'Ham',
+					Last_Name: 'Sandwhich',
+					Email: 'hamsandwhich@gmail.com'
+				},
+				{
+					First_Name: 'Jim',
+					Last_Name: 'Jam',
+					Email: 'JimJam@gmail.com'
 				}
 			]);
 		})
