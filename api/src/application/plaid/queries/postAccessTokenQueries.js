@@ -1,5 +1,5 @@
 'use strict';
-const boom = require('boom');
+const Boom = require('boom');
 const Wreck = require('wreck');
 const Item = require('../../../../models/item.js');
 const User = require('../../../../models/user.js');
