@@ -6,7 +6,7 @@ const User = require('../../../../models/user.js');
 
 const saveItem = (email, access_token, item_id) => {
 	new User({ email: email })
-		.fetch()
+		.fetch({ columns: 'id' })
 		.then(model => {
 			return model.get('id');
 		})

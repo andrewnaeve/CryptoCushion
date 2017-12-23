@@ -1,9 +1,8 @@
 const Boom = require('boom');
 const Wreck = require('wreck');
-const payloadValidator = require('../validation/postAccessTokenValidation')
-	.payloadValidator;
-const exchangeToken = require('../queries/postAccessTokenQueries')
-	.exchangeToken;
+const { payloadValidator } = require('../validation/postAccessTokenValidation');
+
+const { exchangeToken } = require('../queries/postAccessTokenQueries');
 
 module.exports = [
 	{

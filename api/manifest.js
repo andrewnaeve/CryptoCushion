@@ -1,15 +1,10 @@
 const Boom = require('boom');
 const package = require('./package');
 const { apolloHapi, graphiqlHapi } = require('apollo-server');
-const graphqlSchema = require('./graphql/schema');
-const createResolvers = require('./graphql/resolvers');
+const { graphqlHapi } = require('apollo-server-hapi');
 const { makeExecutableSchema } = require('graphql-tools');
-const User = require('./models/user');
 
-const executableSchema = makeExecutableSchema({
-	typeDefs: [graphqlSchema],
-	resolvers: createResolvers({ User })
-});
+const schema = require('./graphql');
 
 const registrations = [
 	{
@@ -30,7 +25,9 @@ const registrations = [
 								}
 							]
 						},
-						{ module: 'good-console' },
+						{
+							module: 'good-console'
+						},
 						'stdout'
 					]
 				}
@@ -39,13 +36,23 @@ const registrations = [
 	},
 	{
 		plugin: {
-			register: apolloHapi,
+			register: graphqlHapi,
 			options: {
 				path: '/graphql',
-				apolloOptions: () => ({
-					pretty: true,
-					schema: executableSchema
-				})
+				graphqlOptions: {
+					schema: schema
+				}
+			}
+		}
+	},
+	{
+		plugin: {
+			register: graphiqlHapi,
+			options: {
+				path: '/graphiql',
+				graphiqlOptions: {
+					endpointURL: '/graphql'
+				}
 			}
 		}
 	}
@@ -53,14 +60,19 @@ const registrations = [
 
 module.exports = {
 	server: {
-		debug: { log: ['error'], request: ['error'] },
+		debug: {
+			log: ['error'],
+			request: ['error']
+		},
 		connections: {
 			router: {
 				stripTrailingSlash: true
 			},
 			routes: {
 				validate: {
-					options: { abortEarly: false },
+					options: {
+						abortEarly: false
+					},
 					failAction: (request, reply, source, error) => {
 						if (!error.data || !error.data.details) {
 							if (error.isBoom) {
