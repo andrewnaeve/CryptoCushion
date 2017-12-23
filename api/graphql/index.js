@@ -1,12 +1,14 @@
 const gql = require('graphql');
+const { allUsers } = require('./queries/allUsers');
 const { userByEmail } = require('./queries/userByEmail');
 const { createUser } = require('./mutations/createUser');
-const { createItem } = require('./mutations/createItem');
+const { exchangeToken } = require('./mutations/exchangeToken');
 
 const schema = new gql.GraphQLSchema({
 	query: new gql.GraphQLObjectType({
 		name: 'RootQueryType',
 		fields: {
+			allUsers,
 			userByEmail
 		}
 	}),
@@ -14,7 +16,7 @@ const schema = new gql.GraphQLSchema({
 		name: 'RootMutationType',
 		fields: {
 			createUser,
-			createItem
+			exchangeToken
 		}
 	})
 });

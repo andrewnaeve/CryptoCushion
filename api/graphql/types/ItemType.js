@@ -4,9 +4,9 @@ const ItemType = new gql.GraphQLObjectType({
 	name: 'ItemType',
 	fields: {
 		id: { type: gql.GraphQLID },
-		user_id: { type: new gql.GraphQLNonNull(gql.GraphQLInt) },
-		access_token: { type: new gql.GraphQLNonNull(gql.GraphQLString) },
-		item_id: { type: new gql.GraphQLNonNull(gql.GraphQLString) }
+		user_id: { type: gql.GraphQLInt },
+		access_token: { type: gql.GraphQLString },
+		item_id: { type: gql.GraphQLString }
 	}
 });
 
