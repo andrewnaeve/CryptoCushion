@@ -3,6 +3,8 @@ require('dotenv').config();
 const Glue = require('glue');
 const manifest = require('./manifest');
 const routes = require('./routes');
+const { graphiqlHapi } = require('apollo-server');
+const { graphqlHapi } = require('apollo-server-hapi');
 
 const options = {
 	relativeTo: __dirname + '/src'

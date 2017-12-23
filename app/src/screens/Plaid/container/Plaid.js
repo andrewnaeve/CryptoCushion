@@ -50,7 +50,6 @@ class Plaid extends Component {
 	};
 
 	render() {
-		console.log('plaid state', this.props.plaid);
 		return (
 			<View style={styles.container}>
 				<WebView
