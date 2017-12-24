@@ -3,6 +3,7 @@ const gql = require('graphql');
 const { allUsers } = require('./queries/allUsers');
 const { userByEmail } = require('./queries/userByEmail');
 const { getTransactions } = require('./queries/getTransactions');
+const { getAccountBalances } = require('./queries/getAccountBalances');
 // mutations
 const { createUser } = require('./mutations/createUser');
 const { exchangeToken } = require('./mutations/exchangeToken');
@@ -13,7 +14,8 @@ const schema = new gql.GraphQLSchema({
 		fields: {
 			allUsers,
 			userByEmail,
-			getTransactions
+			getTransactions,
+			getAccountBalances
 		}
 	}),
 	mutation: new gql.GraphQLObjectType({

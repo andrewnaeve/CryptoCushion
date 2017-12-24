@@ -5,6 +5,7 @@ const User = require('../../models/user');
 const Item = require('../../models/item');
 const Wreck = require('wreck');
 const Boom = require('boom');
+const plaidUrl = require('../utilities/plaidUrl')[process.env.NODE_ENV]['url'];
 
 module.exports = {
 	getTransactions: {
@@ -13,8 +14,8 @@ module.exports = {
 			access_token: { type: new gql.GraphQLNonNull(gql.GraphQLString) }
 		},
 		resolve(_, { access_token }) {
-			return Promise.resolve(fetchTransactions(access_token)).then(
-				response => {
+			return Promise.resolve(
+				fetchTransactions(access_token).then(response => {
 					return response.map(x => {
 						return {
 							account_id: x.account_id,
@@ -27,7 +28,7 @@ module.exports = {
 							transaction_type: x.transaction_type
 						};
 					});
-				}
+				})
 			);
 		}
 	}
@@ -58,7 +59,7 @@ const fetchTransactions = token => {
 
 	return new Promise(resolve => {
 		Wreck.post(
-			'https://sandbox.plaid.com/transactions/get',
+			`${plaidUrl}/transactions/get`,
 			options,
 			(error, response, payload) => {
 				if (error) {
