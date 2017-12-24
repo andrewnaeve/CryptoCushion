@@ -3,6 +3,7 @@ const ItemType = require('../types/ItemType');
 const User = require('../../models/user');
 const Item = require('../../models/Item');
 const Wreck = require('wreck');
+const Boom = require('boom');
 
 module.exports = {
 	exchangeToken: {
@@ -59,7 +60,7 @@ const exchangeToken = token => {
 		options,
 		(error, response, payload) => {
 			if (error) {
-				return Boom.notFound('Public Token Not Found');
+				return Boom.notFound('Token exchange failed');
 			}
 			return {
 				access_token: payload.access_token,

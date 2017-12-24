@@ -4,6 +4,7 @@ const TransactionType = require('../types/TransactionType');
 const User = require('../../models/user');
 const Item = require('../../models/item');
 const Wreck = require('wreck');
+const Boom = require('boom');
 
 module.exports = {
 	getTransactions: {
@@ -61,9 +62,8 @@ const fetchTransactions = token => {
 			options,
 			(error, response, payload) => {
 				if (error) {
-					return Boom.notFound('Public Token Not Found');
+					return Boom.badImplementation('Account lookup failed.');
 				}
-
 				const checkingAccountId = payload.accounts.filter(account => {
 					if (account.subtype === 'checking') {
 						return account.account_id;
