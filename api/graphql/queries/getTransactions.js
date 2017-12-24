@@ -41,7 +41,7 @@ const getTodaysDate = () => {
 
 const getOneWeekAgo = () => {
 	return moment()
-		.subtract(7, 'd')
+		.subtract(1, 'm')
 		.format('YYYY-MM-DD');
 };
 
