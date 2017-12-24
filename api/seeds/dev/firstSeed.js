@@ -10,7 +10,6 @@ exports.seed = function(knex, Promise) {
 					email: 'arnaeve@gmail.com'
 				},
 				{
-<<<<<<< HEAD
 					first_name: 'Matt',
 					last_name: 'Billings',
 					email: 'mbillings@gmail.com'
@@ -24,16 +23,6 @@ exports.seed = function(knex, Promise) {
 					first_name: 'Jim',
 					last_name: 'Jam',
 					email: 'JimJam@gmail.com'
-=======
-					first_name: 'Jim',
-					last_name: 'Jam',
-					email: 'JimJam@gmail.com'
-				},
-				{
-					first_name: 'Matt',
-					last_name: 'Billings',
-					email: 'mbillings@gmail.com'
->>>>>>> apolloSetup
 				}
 			]);
 		})

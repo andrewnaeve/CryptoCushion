@@ -67,8 +67,4 @@ const exchangeToken = token => {
 			};
 		}
 	);
-	// return {
-	// 	access_token: 'mygod',
-	// 	item_id: 'pizza'
-	// };
 };

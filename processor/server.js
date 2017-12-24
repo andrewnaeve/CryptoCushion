@@ -2,6 +2,7 @@
 require('dotenv').config();
 const Glue = require('glue');
 const manifest = require('./manifest');
+const routes = require('./routes');
 const { graphiqlHapi } = require('apollo-server');
 const { graphqlHapi } = require('apollo-server-hapi');
 
@@ -13,6 +14,10 @@ Glue.compose(manifest, options, function(err, server) {
 	if (err) {
 		throw err;
 	}
+
+	routes.forEach(route => {
+		server.route(require(route));
+	});
 
 	server.start(function() {
 		console.log(`Server running on port ${server.info.port}.`);

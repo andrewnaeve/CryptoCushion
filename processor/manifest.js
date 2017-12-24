@@ -1,8 +1,5 @@
 const Boom = require('boom');
-//const package = require('./package');
-const { apolloHapi, graphiqlHapi } = require('apollo-server');
-const { graphqlHapi } = require('apollo-server-hapi');
-const schema = require('./graphql');
+const package = require('./package');
 
 const registrations = [
 	{
@@ -28,28 +25,6 @@ const registrations = [
 						},
 						'stdout'
 					]
-				}
-			}
-		}
-	},
-	{
-		plugin: {
-			register: graphqlHapi,
-			options: {
-				path: '/graphql',
-				graphqlOptions: {
-					schema: schema
-				}
-			}
-		}
-	},
-	{
-		plugin: {
-			register: graphiqlHapi,
-			options: {
-				path: '/graphiql',
-				graphiqlOptions: {
-					endpointURL: '/graphql'
 				}
 			}
 		}
@@ -95,7 +70,7 @@ module.exports = {
 	},
 	connections: [
 		{
-			port: 8000,
+			port: 9000,
 			routes: {
 				cors: {
 					origin: ['*']
