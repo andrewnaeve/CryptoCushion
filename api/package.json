@@ -26,8 +26,6 @@
 		"knex": "^0.14.2",
 		"moment": "^2.20.1",
 		"mysql": "^2.15.0",
-		"plaid": "^2.2.0",
-		"sequelize": "^4.28.1",
 		"wreck": "^10.0.0"
 	},
 	"devDependencies": {

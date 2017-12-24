@@ -1,6 +1,5 @@
 const Boom = require('boom');
-//const package = require('./package');
-const { apolloHapi, graphiqlHapi } = require('apollo-server');
+const { graphiqlHapi } = require('apollo-server');
 const { graphqlHapi } = require('apollo-server-hapi');
 const schema = require('./graphql');
 
