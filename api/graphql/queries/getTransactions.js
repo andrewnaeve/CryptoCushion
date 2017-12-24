@@ -36,7 +36,7 @@ const getTodaysDate = () => {
 	return moment().format('YYYY-MM-DD');
 };
 
-const getOneWeekAgo = () => {
+const getTwoWeeksAgo = () => {
 	return moment()
 		.subtract(14, 'm')
 		.format('YYYY-MM-DD');
@@ -49,7 +49,7 @@ const fetchTransactions = token => {
 			client_id: process.env.PLAID_CLIENT_ID,
 			secret: process.env.PLAID_SECRET,
 			access_token: token,
-			start_date: getOneWeekAgo(),
+			start_date: getTwoWeeksAgo(),
 			end_date: getTodaysDate()
 		},
 		json: 'true'
