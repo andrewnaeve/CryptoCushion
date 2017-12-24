@@ -9,15 +9,11 @@ module.exports = {
 	getTransactions: {
 		type: new gql.GraphQLList(TransactionType),
 		args: {
-			email: { type: new gql.GraphQLNonNull(gql.GraphQLString) }
+			access_token: { type: new gql.GraphQLNonNull(gql.GraphQLString) }
 		},
-		resolve(_, { email }) {
-			return Promise.resolve(getAccessToken(email))
-				.then(data => {
-					const token = data.access_token;
-					return fetchTransactions(token);
-				})
-				.then(response => {
+		resolve(_, { access_token }) {
+			return Promise.resolve(fetchTransactions(access_token)).then(
+				response => {
 					return response.map(x => {
 						return {
 							account_id: x.account_id,
@@ -30,7 +26,8 @@ module.exports = {
 							transaction_type: x.transaction_type
 						};
 					});
-				});
+				}
+			);
 		}
 	}
 };
@@ -43,20 +40,6 @@ const getOneWeekAgo = () => {
 	return moment()
 		.subtract(14, 'm')
 		.format('YYYY-MM-DD');
-};
-
-const getAccessToken = email => {
-	return new User({ email: email }).fetch({ columns: 'id' }).then(model => {
-		const { attributes: { id } } = model;
-		return new Item({ user_id: id })
-			.fetch({ columns: 'access_token' })
-			.then(result => {
-				const { attributes: { access_token } } = result;
-				return {
-					access_token: access_token
-				};
-			});
-	});
 };
 
 const fetchTransactions = token => {
