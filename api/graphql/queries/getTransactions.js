@@ -60,25 +60,12 @@ const fetchTransactions = token => {
 				});
 
 				resolve(
-					payload.transactions
-						.map(transaction => {
-							return {
-								account_id: transaction.account_id,
-								amount: transaction.amount,
-								category: transaction.category,
-								date: transaction.date,
-								name: transaction.name,
-								pending: transaction.pending,
-								transaction_id: transaction.transaction_id,
-								transaction_type: transaction.transaction_type
-							};
-						})
-						.filter(result => {
-							return (
-								result.account_id ===
-								checkingAccountId[0].account_id
-							);
-						})
+					payload.transactions.filter(result => {
+						return (
+							result.account_id ===
+							checkingAccountId[0].account_id
+						);
+					})
 				);
 			}
 		);
@@ -98,7 +85,6 @@ module.exports = {
 					return fetchTransactions(token);
 				})
 				.then(response => {
-					console.log('r', response);
 					return response.map(x => {
 						return {
 							account_id: x.account_id,
