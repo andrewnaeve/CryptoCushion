@@ -12,7 +12,7 @@ module.exports = {
 		args: {
 			access_token: { type: new gql.GraphQLNonNull(gql.GraphQLString) }
 		},
-		async resolve(_, { access_token }) {
+		resolve: async (_, { access_token }) => {
 			const balances = await fetchBalances(access_token);
 			if (!balances) {
 				return Boom.notFound('Balance lookup failed.', error);

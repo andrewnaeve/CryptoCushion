@@ -2,7 +2,7 @@ const gql = require('graphql');
 
 const TransactionType = new gql.GraphQLObjectType({
 	name: 'TransactionType',
-	fields: {
+	fields: () => ({
 		account_id: { type: gql.GraphQLString },
 		amount: { type: gql.GraphQLFloat },
 		category: { type: gql.GraphQLString },
@@ -11,7 +11,7 @@ const TransactionType = new gql.GraphQLObjectType({
 		pending: { type: gql.GraphQLBoolean },
 		transaction_id: { type: gql.GraphQLString },
 		transaction_type: { type: gql.GraphQLString }
-	}
+	})
 });
 
 module.exports = TransactionType;

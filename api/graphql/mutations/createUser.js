@@ -16,7 +16,7 @@ module.exports = {
 				type: new gql.GraphQLNonNull(gql.GraphQLString)
 			}
 		},
-		resolve(_, { first_name, last_name, email }) {
+		resolve: (_, { first_name, last_name, email }) => {
 			return new User()
 				.save({
 					first_name: first_name,

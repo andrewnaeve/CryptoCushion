@@ -9,7 +9,7 @@ module.exports = {
 		args: {
 			email: { type: new gql.GraphQLNonNull(gql.GraphQLString) }
 		},
-		resolve(_, { email }) {
+		resolve: (_, { email }) => {
 			return new User({ email: email })
 				.fetch({
 					columns: ['id', 'first_name', 'last_name']

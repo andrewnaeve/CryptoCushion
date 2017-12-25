@@ -2,7 +2,7 @@ const gql = require('graphql');
 
 const AccountType = new gql.GraphQLObjectType({
 	name: 'AccountType',
-	fields: {
+	fields: () => ({
 		account_id: { type: gql.GraphQLString },
 		balances: {
 			type: new gql.GraphQLObjectType({
@@ -19,7 +19,7 @@ const AccountType = new gql.GraphQLObjectType({
 		mask: { type: gql.GraphQLString },
 		name: { type: gql.GraphQLString },
 		subtype: { type: gql.GraphQLString }
-	}
+	})
 });
 
 module.exports = AccountType;

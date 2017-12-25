@@ -14,7 +14,7 @@ module.exports = {
 				type: new gql.GraphQLNonNull(gql.GraphQLString)
 			}
 		},
-		async resolve(_, { email, public_token }) {
+		resolve: async (_, { email, public_token }) => {
 			const token = await exchangeToken(public_token);
 			if (!token) {
 				return Boom.notFound('Exchange token failed.', error);

@@ -6,7 +6,7 @@ const Item = require('../../models/item');
 module.exports = {
 	allUsers: {
 		type: new gql.GraphQLList(UserType),
-		resolve() {
+		resolve: () => {
 			return new User().fetchAll().then(data => {
 				return data.map(x => {
 					return {
