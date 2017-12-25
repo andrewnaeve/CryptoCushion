@@ -14,6 +14,9 @@ module.exports = {
 		},
 		async resolve(_, { access_token }) {
 			const auth = await fetchAuth(access_token);
+			if (!auth) {
+				throw new Error('something went wrong getting auth data');
+			}
 			const accountArray = auth.accounts.map(x => {
 				return {
 					account_id: x.account_id,

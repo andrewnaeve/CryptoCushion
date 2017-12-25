@@ -15,6 +15,9 @@ module.exports = {
 		},
 		async resolve(_, { access_token }) {
 			const transactions = await fetchTransactions(access_token);
+			if (!transactions) {
+				throw new Error('Could not get transactions');
+			}
 			return response.map(x => {
 				return {
 					account_id: x.account_id,

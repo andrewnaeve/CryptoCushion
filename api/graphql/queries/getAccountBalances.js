@@ -14,6 +14,9 @@ module.exports = {
 		},
 		async resolve(_, { access_token }) {
 			const balances = await fetchBalances(access_token);
+			if (!balances) {
+				throw new Error('Could not retrieve balances');
+			}
 			return balances.accounts.map(x => {
 				return {
 					account_id: x.account_id,

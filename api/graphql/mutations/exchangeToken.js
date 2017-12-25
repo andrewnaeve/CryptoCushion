@@ -18,6 +18,9 @@ module.exports = {
 			const { access_token, item_id, request_id } = await exchangeToken(
 				public_token
 			);
+			if (!access_token) {
+				throw new Error('Token exchange failed');
+			}
 			new User({ email: email })
 				.fetch({ columns: 'id' })
 				.then(model => {
@@ -61,7 +64,6 @@ const exchangeToken = async token => {
 			'https://sandbox.plaid.com/item/public_token/exchange',
 			options
 		);
-		console.log('p', payload);
 		return payload;
 	} catch (error) {
 		return Boom.notFound('Token exchange failed');
