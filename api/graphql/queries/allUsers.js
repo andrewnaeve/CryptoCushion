@@ -6,15 +6,16 @@ const Item = require('../../models/item');
 module.exports = {
 	allUsers: {
 		type: new gql.GraphQLList(UserType),
-		async resolve() {
-			const users = await new User().fetchAll();
-			return users.map(x => {
-				return {
-					id: x.attributes.id,
-					first_name: x.attributes.first_name,
-					last_name: x.attributes.last_name,
-					email: x.attributes.email
-				};
+		resolve() {
+			return new User().fetchAll().then(data => {
+				return data.map(x => {
+					return {
+						id: x.attributes.id,
+						first_name: x.attributes.first_name,
+						last_name: x.attributes.last_name,
+						email: x.attributes.email
+					};
+				});
 			});
 		}
 	}
