@@ -12,29 +12,30 @@ module.exports = {
 		args: {
 			access_token: { type: new gql.GraphQLNonNull(gql.GraphQLString) }
 		},
-		resolve(_, { access_token }) {
-			return Promise.resolve(
-				fetchBalances(access_token).then(data => {
-					return data.accounts.map(x => {
-						return {
-							account_id: x.account_id,
-							balances: {
-								available: x.balances.available,
-								current: x.balances.current,
-								limit: x.balances.limit
-							},
-							mask: x.mask,
-							name: x.name,
-							subtype: x.subtype
-						};
-					});
-				})
-			);
+		async resolve(_, { access_token }) {
+			try {
+				const balances = await fetchBalances(access_token);
+				return balances.accounts.map(x => {
+					return {
+						account_id: x.account_id,
+						balances: {
+							available: x.balances.available,
+							current: x.balances.current,
+							limit: x.balances.limit
+						},
+						mask: x.mask,
+						name: x.name,
+						subtype: x.subtype
+					};
+				});
+			} catch (error) {
+				return Boom.badImplementation(error);
+			}
 		}
 	}
 };
 
-const fetchBalances = token => {
+const fetchBalances = async token => {
 	const options = {
 		headers: { 'content-type': 'application/json' },
 		payload: {
@@ -44,17 +45,13 @@ const fetchBalances = token => {
 		},
 		json: 'true'
 	};
-
-	return new Promise(resolve => {
-		Wreck.post(
+	try {
+		const { payload } = await Wreck.post(
 			`${plaidUrl}/accounts/balance/get`,
-			options,
-			(error, response, payload) => {
-				if (error) {
-					return Boom.badImplementation('Balance lookup failed.');
-				}
-				resolve(payload);
-			}
+			options
 		);
-	});
+		return payload;
+	} catch (error) {
+		return Boom.badImplementation('Balance lookup failed.', error);
+	}
 };

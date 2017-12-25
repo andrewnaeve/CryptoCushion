@@ -17,25 +17,23 @@ module.exports = {
 			}
 		},
 		resolve(_, { first_name, last_name, email }) {
-			return Promise.resolve(
-				new User()
-					.save({
+			return new User()
+				.save({
+					first_name: first_name,
+					last_name: last_name,
+					email: email
+				})
+				.then(model => {
+					const {
+						attributes: { first_name, last_name, email, id }
+					} = model;
+					return {
 						first_name: first_name,
 						last_name: last_name,
-						email: email
-					})
-					.then(model => {
-						const {
-							attributes: { first_name, last_name, email, id }
-						} = model;
-						return {
-							first_name: first_name,
-							last_name: last_name,
-							email: email,
-							id: id
-						};
-					})
-			);
+						email: email,
+						id: id
+					};
+				});
 		}
 	}
 };

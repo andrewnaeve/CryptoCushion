@@ -7,45 +7,46 @@ const Boom = require('boom');
 
 module.exports = {
 	exchangeToken: {
-		type: ItemType,
+		type: gql.GraphQLBoolean,
 		args: {
 			email: { type: new gql.GraphQLNonNull(gql.GraphQLString) },
 			public_token: {
 				type: new gql.GraphQLNonNull(gql.GraphQLString)
 			}
 		},
-		resolve(_, { email, public_token }) {
-			return Promise.resolve(exchangeToken(public_token)).then(data => {
-				new User({ email: email })
-					.fetch({ columns: 'id' })
-					.then(model => {
-						return model.get('id');
-					})
-					.then(id => {
-						new Item({ user_id: id }).fetch().then(result => {
-							if (result === null) {
-								Item.save({
-									user_id: id,
-									access_token: data.access_token,
-									item_id: data.item_id
-								});
-							} else {
-								Item.where({ user_id: id }).save(
-									{
-										access_token: data.access_token,
-										item_id: data.item_id
-									},
-									{ patch: true }
-								);
-							}
-						});
+		async resolve(_, { email, public_token }) {
+			const { access_token, item_id, request_id } = await exchangeToken(
+				public_token
+			);
+			new User({ email: email })
+				.fetch({ columns: 'id' })
+				.then(model => {
+					return model.get('id');
+				})
+				.then(id => {
+					new Item({ user_id: id }).fetch().then(result => {
+						if (result === null) {
+							Item.save({
+								user_id: id,
+								access_token: access_token,
+								item_id: item_id
+							});
+						} else {
+							Item.where({ user_id: id }).save(
+								{
+									access_token: access_token,
+									item_id: item_id
+								},
+								{ patch: true }
+							);
+						}
 					});
-			});
+				});
 		}
 	}
 };
 
-const exchangeToken = token => {
+const exchangeToken = async token => {
 	const options = {
 		headers: { 'content-type': 'application/json' },
 		payload: {
@@ -55,17 +56,14 @@ const exchangeToken = token => {
 		},
 		json: 'true'
 	};
-	Wreck.post(
-		'https://sandbox.plaid.com/item/public_token/exchange',
-		options,
-		(error, response, payload) => {
-			if (error) {
-				return Boom.notFound('Token exchange failed');
-			}
-			return {
-				access_token: payload.access_token,
-				item_id: payload.item_id
-			};
-		}
-	);
+	try {
+		const { payload } = await Wreck.post(
+			'https://sandbox.plaid.com/item/public_token/exchange',
+			options
+		);
+		console.log('p', payload);
+		return payload;
+	} catch (error) {
+		return Boom.notFound('Token exchange failed');
+	}
 };

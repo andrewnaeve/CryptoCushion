@@ -13,23 +13,20 @@ module.exports = {
 		args: {
 			access_token: { type: new gql.GraphQLNonNull(gql.GraphQLString) }
 		},
-		resolve(_, { access_token }) {
-			return Promise.resolve(
-				fetchTransactions(access_token).then(response => {
-					return response.map(x => {
-						return {
-							account_id: x.account_id,
-							amount: x.amount,
-							category: x.category,
-							date: x.date,
-							name: x.name,
-							pending: x.pending,
-							transaction_id: x.transaction_id,
-							transaction_type: x.transaction_type
-						};
-					});
-				})
-			);
+		async resolve(_, { access_token }) {
+			const transactions = await fetchTransactions(access_token);
+			return response.map(x => {
+				return {
+					account_id: x.account_id,
+					amount: x.amount,
+					category: x.category,
+					date: x.date,
+					name: x.name,
+					pending: x.pending,
+					transaction_id: x.transaction_id,
+					transaction_type: x.transaction_type
+				};
+			});
 		}
 	}
 };
@@ -44,7 +41,7 @@ const getTwoWeeksAgo = () => {
 		.format('YYYY-MM-DD');
 };
 
-const fetchTransactions = token => {
+const fetchTransactions = async token => {
 	const options = {
 		headers: { 'content-type': 'application/json' },
 		payload: {
@@ -57,29 +54,20 @@ const fetchTransactions = token => {
 		json: 'true'
 	};
 
-	return new Promise(resolve => {
-		Wreck.post(
+	try {
+		const { payload } = await Wreck.post(
 			`${plaidUrl}/transactions/get`,
-			options,
-			(error, response, payload) => {
-				if (error) {
-					return Boom.badImplementation('Account lookup failed.');
-				}
-				const checkingAccountId = payload.accounts.filter(account => {
-					if (account.subtype === 'checking') {
-						return account.account_id;
-					}
-				});
-
-				resolve(
-					payload.transactions.filter(result => {
-						return (
-							result.account_id ===
-							checkingAccountId[0].account_id
-						);
-					})
-				);
-			}
+			options
 		);
-	});
+		const checkingAccountId = payload.accounts.filter(account => {
+			if (account.subtype === 'checking') {
+				return account.account_id;
+			}
+		});
+		return payload.transactions.filter(result => {
+			return result.account_id === checkingAccountId[0].account_id;
+		});
+	} catch (error) {
+		return Boom.badImplementation('Account lookup failed.', error);
+	}
 };

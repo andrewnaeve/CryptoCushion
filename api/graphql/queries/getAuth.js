@@ -12,41 +12,38 @@ module.exports = {
 		args: {
 			access_token: { type: new gql.GraphQLNonNull(gql.GraphQLString) }
 		},
-		resolve(_, { access_token }) {
-			return Promise.resolve(
-				fetchAuth(access_token).then(data => {
-					const accountArray = data.accounts.map(x => {
-						return {
-							account_id: x.account_id,
-							balances: {
-								available: x.balances.available,
-								current: x.balances.current,
-								limit: x.balances.limit
-							},
-							mask: x.mask,
-							name: x.name,
-							subtype: x.subtype
-						};
-					});
-					const numbersArray = data.numbers.map(y => {
-						return {
-							account: y.account,
-							account_id: y.account_id,
-							routing: y.routing,
-							wire_routing: y.wire_routing
-						};
-					});
-					return {
-						accounts: accountArray,
-						numbers: numbersArray
-					};
-				})
-			);
+		async resolve(_, { access_token }) {
+			const auth = await fetchAuth(access_token);
+			const accountArray = auth.accounts.map(x => {
+				return {
+					account_id: x.account_id,
+					balances: {
+						available: x.balances.available,
+						current: x.balances.current,
+						limit: x.balances.limit
+					},
+					mask: x.mask,
+					name: x.name,
+					subtype: x.subtype
+				};
+			});
+			const numbersArray = auth.numbers.map(y => {
+				return {
+					account: y.account,
+					account_id: y.account_id,
+					routing: y.routing,
+					wire_routing: y.wire_routing
+				};
+			});
+			return {
+				accounts: accountArray,
+				numbers: numbersArray
+			};
 		}
 	}
 };
 
-const fetchAuth = token => {
+const fetchAuth = async token => {
 	const options = {
 		headers: { 'content-type': 'application/json' },
 		payload: {
@@ -56,17 +53,10 @@ const fetchAuth = token => {
 		},
 		json: 'true'
 	};
-
-	return new Promise(resolve => {
-		Wreck.post(
-			`${plaidUrl}/auth/get`,
-			options,
-			(error, response, payload) => {
-				if (error) {
-					return Boom.badImplementation('Balance lookup failed.');
-				}
-				resolve(payload);
-			}
-		);
-	});
+	try {
+		const { payload } = await Wreck.post(`${plaidUrl}/auth/get`, options);
+		return payload;
+	} catch (error) {
+		return Boom.badImplementation('Balance lookup failed.', error);
+	}
 };

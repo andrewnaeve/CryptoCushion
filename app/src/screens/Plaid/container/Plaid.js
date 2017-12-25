@@ -37,6 +37,7 @@ class Plaid extends Component {
 					institution: metadata.institution,
 					link_session_id: metadata.link_session_id
 				};
+				console.log('pt', responseObj.public_token);
 				plaidConnected(responseObj);
 				goBack();
 			}
