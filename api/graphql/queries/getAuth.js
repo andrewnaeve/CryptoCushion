@@ -28,7 +28,7 @@ module.exports = {
 							subtype: x.subtype
 						};
 					});
-					const numbersObject = data.numbers.map(y => {
+					const numbersArray = data.numbers.map(y => {
 						return {
 							account: y.account,
 							account_id: y.account_id,
@@ -36,14 +36,10 @@ module.exports = {
 							wire_routing: y.wire_routing
 						};
 					});
-					console.log(numbersObject);
 					return {
 						accounts: accountArray,
-						numbers: numbersObject
+						numbers: numbersArray
 					};
-					// return data.accounts.map(x => {
-
-					// });
 				})
 			);
 		}
