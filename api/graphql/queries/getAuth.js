@@ -15,7 +15,7 @@ module.exports = {
 		async resolve(_, { access_token }) {
 			const auth = await fetchAuth(access_token);
 			if (!auth) {
-				throw new Error('something went wrong getting auth data');
+				return Boom.notFound('Balance lookup failed.', error);
 			}
 			const accountArray = auth.accounts.map(x => {
 				return {
@@ -56,10 +56,6 @@ const fetchAuth = async token => {
 		},
 		json: 'true'
 	};
-	try {
-		const { payload } = await Wreck.post(`${plaidUrl}/auth/get`, options);
-		return payload;
-	} catch (error) {
-		return Boom.badImplementation('Balance lookup failed.', error);
-	}
+	const { payload } = await Wreck.post(`${plaidUrl}/auth/get`, options);
+	return payload;
 };

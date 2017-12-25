@@ -15,12 +15,11 @@ module.exports = {
 			}
 		},
 		async resolve(_, { email, public_token }) {
-			const { access_token, item_id, request_id } = await exchangeToken(
-				public_token
-			);
-			if (!access_token) {
-				throw new Error('Token exchange failed');
+			const token = await exchangeToken(public_token);
+			if (!token) {
+				return Boom.notFound('Exchange token failed.', error);
 			}
+			const { access_token, item_id, request_id } = token;
 			new User({ email: email })
 				.fetch({ columns: 'id' })
 				.then(model => {
@@ -59,13 +58,9 @@ const exchangeToken = async token => {
 		},
 		json: 'true'
 	};
-	try {
-		const { payload } = await Wreck.post(
-			'https://sandbox.plaid.com/item/public_token/exchange',
-			options
-		);
-		return payload;
-	} catch (error) {
-		return Boom.notFound('Token exchange failed');
-	}
+	const { payload } = await Wreck.post(
+		'https://sandbox.plaid.com/item/public_token/exchange',
+		options
+	);
+	return payload;
 };

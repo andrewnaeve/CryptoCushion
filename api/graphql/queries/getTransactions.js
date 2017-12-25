@@ -16,7 +16,7 @@ module.exports = {
 		async resolve(_, { access_token }) {
 			const transactions = await fetchTransactions(access_token);
 			if (!transactions) {
-				throw new Error('Could not get transactions');
+				return Boom.notFound('Transaction lookup failed.', error);
 			}
 			return response.map(x => {
 				return {
@@ -56,21 +56,16 @@ const fetchTransactions = async token => {
 		},
 		json: 'true'
 	};
-
-	try {
-		const { payload } = await Wreck.post(
-			`${plaidUrl}/transactions/get`,
-			options
-		);
-		const checkingAccountId = payload.accounts.filter(account => {
-			if (account.subtype === 'checking') {
-				return account.account_id;
-			}
-		});
-		return payload.transactions.filter(result => {
-			return result.account_id === checkingAccountId[0].account_id;
-		});
-	} catch (error) {
-		return Boom.badImplementation('Account lookup failed.', error);
-	}
+	const { payload } = await Wreck.post(
+		`${plaidUrl}/transactions/get`,
+		options
+	);
+	const checkingAccountId = payload.accounts.filter(account => {
+		if (account.subtype === 'checking') {
+			return account.account_id;
+		}
+	});
+	return payload.transactions.filter(result => {
+		return result.account_id === checkingAccountId[0].account_id;
+	});
 };
