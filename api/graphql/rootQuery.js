@@ -5,15 +5,15 @@ const { getTransactions } = require('./queries/getTransactions');
 const { getAccountBalances } = require('./queries/getAccountBalances');
 const { getAuth } = require('./queries/getAuth');
 
-const rootQuery = new gql.GraphQLObjectType({
-	name: 'RootQuery',
-	fields: () => ({
-		allUsers,
-		userByEmail,
-		getTransactions,
-		getAccountBalances,
-		getAuth
+module.exports = {
+	query: new gql.GraphQLObjectType({
+		name: 'RootQueryType',
+		fields: () => ({
+			allUsers,
+			userByEmail,
+			getTransactions,
+			getAccountBalances,
+			getAuth
+		})
 	})
-});
-
-module.exports = rootQuery;
+};
