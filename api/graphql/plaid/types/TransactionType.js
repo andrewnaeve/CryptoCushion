@@ -5,7 +5,7 @@ const TransactionType = new gql.GraphQLObjectType({
 	fields: () => ({
 		account_id: { type: gql.GraphQLString },
 		amount: { type: gql.GraphQLFloat },
-		category: { type: gql.GraphQLString },
+		category: { type: new gql.GraphQLList(gql.GraphQLString) },
 		date: { type: gql.GraphQLString },
 		name: { type: gql.GraphQLString },
 		pending: { type: gql.GraphQLBoolean },
