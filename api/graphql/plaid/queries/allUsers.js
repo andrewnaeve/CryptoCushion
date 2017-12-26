@@ -1,7 +1,7 @@
 const gql = require('graphql');
 const UserType = require('../types/UserType');
-const User = require('../../models/user');
-const Item = require('../../models/item');
+const User = require('../../../models/user');
+const Item = require('../../../models/item');
 
 module.exports = {
 	allUsers: {

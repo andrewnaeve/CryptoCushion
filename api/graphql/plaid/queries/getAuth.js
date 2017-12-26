@@ -1,10 +1,12 @@
 const gql = require('graphql');
 const AuthType = require('../types/AuthType');
-const User = require('../../models/user');
-const Item = require('../../models/item');
+const User = require('../../../models/user');
+const Item = require('../../../models/item');
 const Wreck = require('wreck');
 const Boom = require('boom');
-const plaidUrl = require('../utilities/plaidUrl')[process.env.NODE_ENV]['url'];
+const plaidUrl = require('../../utilities/plaidUrl')[process.env.NODE_ENV][
+	'url'
+];
 
 module.exports = {
 	getAuth: {

@@ -1,13 +1,11 @@
 const gql = require('graphql');
-const { createUser } = require('./mutations/createUser');
-const { exchangeToken } = require('./mutations/exchangeToken');
+const plaidMutations = require('./plaid/plaidMutations');
 
-const rootMutation = new gql.GraphQLObjectType({
-	name: 'RootMutationType',
-	fields: () => ({
-		createUser,
-		exchangeToken
+module.exports = {
+	mutation: new gql.GraphQLObjectType({
+		name: 'RootMutationType',
+		fields: () => ({
+			...plaidMutations
+		})
 	})
-});
-
-module.exports = rootMutation;
+};

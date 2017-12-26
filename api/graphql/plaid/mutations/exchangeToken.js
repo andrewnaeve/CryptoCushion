@@ -1,7 +1,7 @@
 const gql = require('graphql');
 const ItemType = require('../types/ItemType');
-const User = require('../../models/user');
-const Item = require('../../models/Item');
+const User = require('../../../models/user');
+const Item = require('../../../models/Item');
 const Wreck = require('wreck');
 const Boom = require('boom');
 

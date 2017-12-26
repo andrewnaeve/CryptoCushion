@@ -1,11 +1,13 @@
 const gql = require('graphql');
 const moment = require('moment');
 const TransactionType = require('../types/TransactionType');
-const User = require('../../models/user');
-const Item = require('../../models/item');
+const User = require('../../../models/user');
+const Item = require('../../../models/item');
 const Wreck = require('wreck');
 const Boom = require('boom');
-const plaidUrl = require('../utilities/plaidUrl')[process.env.NODE_ENV]['url'];
+const plaidUrl = require('../../utilities/plaidUrl')[process.env.NODE_ENV][
+	'url'
+];
 
 module.exports = {
 	getTransactions: {
@@ -18,7 +20,7 @@ module.exports = {
 			if (!transactions) {
 				return Boom.notFound('Transaction lookup failed.', error);
 			}
-			return response.map(x => {
+			return transactions.map(x => {
 				return {
 					account_id: x.account_id,
 					amount: x.amount,
