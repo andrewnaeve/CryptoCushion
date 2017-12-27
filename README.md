@@ -1,1 +1,1 @@
-# bitCushion
+# CryptoCushion
