@@ -3,16 +3,11 @@ import { Text } from 'react-native';
 import styled from 'styled-components/native';
 import { width } from '../../../utils/styleConstants';
 
-class Coinbase extends Component {
-	render() {
-		const { handlePress } = this.props;
-		return (
-			<Button onPress={handlePress}>
-				<Text>Open Coinbase</Text>
-			</Button>
-		);
-	}
-}
+const Coinbase = props => (
+	<Button onPress={props.handlePress}>
+		<Text>Open Coinbase</Text>
+	</Button>
+);
 
 const Button = styled.TouchableOpacity`
 	width: ${width * 0.8};

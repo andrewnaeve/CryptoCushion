@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components/native';
-import { Text, Linking } from 'react-native';
+import { Text } from 'react-native';
 import { width } from '../../../utils/styleConstants';
 import { coinbase } from '../../../../config.json';
 import { AuthSession } from 'expo';
@@ -27,6 +27,7 @@ class Home extends Component {
 			</HomeContainer>
 		);
 	}
+
 	_handlePressAsync = async () => {
 		const { COINBASE_CLIENT_ID } = coinbase.development;
 		// let redirectUrl = encodeURIComponent(AuthSession.getRedirectUrl());
