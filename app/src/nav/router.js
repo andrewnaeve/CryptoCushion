@@ -2,6 +2,7 @@ import React from 'react';
 import { StackNavigator } from 'react-navigation';
 import Home from '../screens/Home/container/Home';
 import Plaid from '../screens/Plaid/container/Plaid';
+import Coinbase from '../screens/Coinbase/container/Coinbase';
 
 export const MainNavigator = StackNavigator(
 	{
@@ -17,7 +18,8 @@ export const MainNavigator = StackNavigator(
 export const Router = StackNavigator(
 	{
 		Main: { screen: MainNavigator },
-		Plaid: { screen: Plaid }
+		Plaid: { screen: Plaid },
+		Coinbase: { screen: Coinbase }
 	},
 	{
 		headerMode: 'none',

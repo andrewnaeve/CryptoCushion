@@ -14,6 +14,7 @@
 		"bookshelf": "^0.12.0",
 		"boom": "^4.2.0",
 		"dotenv": "^4.0.0",
+		"global": "^4.3.2",
 		"glue": "^4.1.0",
 		"good": "^7.3.0",
 		"good-console": "^6.4.1",
@@ -30,8 +31,8 @@
 	},
 	"devDependencies": {
 		"eslint": "^4.13.1",
+		"eslint-plugin-import": "^2.8.0",
 		"eslint-plugin-jest": "^21.5.0",
-		"jest": "^21.2.1",
-		"nodemon": "^1.12.7"
+		"jest": "^21.2.1"
 	}
 }

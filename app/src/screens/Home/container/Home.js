@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import styled from 'styled-components/native';
-import { StyleSheet, Text, View } from 'react-native';
-import { Plaid } from '../../Plaid/container/Plaid';
-import { height, width } from '../../../utils/styleConstants';
+import { Text } from 'react-native';
+import { width } from '../../../utils/styleConstants';
 
 class Home extends Component {
 	launchPlaid = () => {
 		const { navigation: { navigate } } = this.props;
 		navigate('Plaid');
+	};
+	launchCoinbase = () => {
+		const { navigation: { navigate } } = this.props;
+		navigate('Coinbase');
 	};
 
 	render() {
@@ -18,6 +19,9 @@ class Home extends Component {
 				<Body />
 				<Button onPress={this.launchPlaid}>
 					<Text>Launch Plaid</Text>
+				</Button>
+				<Button onPress={this.launchCoinbase}>
+					<Text>Launch Coinbase</Text>
 				</Button>
 			</HomeContainer>
 		);

@@ -1,7 +1,6 @@
 require('dotenv').config();
 const Glue = require('glue');
 const manifest = require('./manifest');
-
 const options = {
 	relativeTo: __dirname + '/src'
 };
@@ -10,6 +9,15 @@ Glue.compose(manifest, options, function(err, server) {
 	if (err) {
 		throw err;
 	}
+
+	server.route({
+		method: 'GET',
+		path: '/oauth/{user?}',
+		handler: function(request, reply) {
+			console.log('code', request.url);
+			reply(request.params);
+		}
+	});
 
 	server.start(function() {
 		console.log(`Server running on port ${server.info.port}.`);

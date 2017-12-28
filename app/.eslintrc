@@ -7,12 +7,15 @@
 			"modules": true
 		}
 	},
-	"extends": [
-		"eslint:recommended",
-		"plugin:react/recommended",
-		"airbnb-base"
-	],
+	"env": {
+		"es6": true,
+		"node": true,
+		"browser": true
+	},
+	"extends": ["eslint:recommended", "plugin:react/recommended"],
 	"rules": {
-		"arrow-body-style": "warn"
+		"arrow-body-style": "warn",
+		"no-console": "off",
+		"react/prop-types": "off"
 	}
 }

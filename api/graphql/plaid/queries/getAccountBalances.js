@@ -2,24 +2,21 @@ const gql = require('graphql');
 const BalanceType = require('../types/BalanceType');
 const Wreck = require('wreck');
 const Boom = require('boom');
-const plaidUrl = require('../../utilities/plaidUrl')[process.env.NODE_ENV][
-	'url'
-];
+const PLAID_URL = require('../../../../config.json').plaid[process.env.NODE_ENV].PLAID_URL;
+const CLIENT_ID = require('../../../../config.json').plaid[process.env.NODE_ENV].PLAID_CLIENT_ID;
+const SECRET = require('../../../../config.json').plaid[process.env.NODE_ENV].PLAID_SECRET;
 
 const fetchBalances = async token => {
 	const options = {
 		headers: { 'content-type': 'application/json' },
 		payload: {
-			client_id: process.env.PLAID_CLIENT_ID,
-			secret: process.env.PLAID_SECRET,
+			client_id: CLIENT_ID,
+			secret: SECRET,
 			access_token: token
 		},
 		json: 'true'
 	};
-	const { payload } = await Wreck.post(
-		`${plaidUrl}/accounts/balance/get`,
-		options
-	);
+	const { payload } = await Wreck.post(`${PLAID_URL}/accounts/balance/get`, options);
 	return payload;
 };
 

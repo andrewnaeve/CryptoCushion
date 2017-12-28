@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { API_URL } from './config';
+import config from '../../../config.json';
 
 export const SET_ACCOUNT_INFO = 'SET_ACCOUNT_INFO';
 export const setAccountInfo = info => {
@@ -11,10 +11,11 @@ export const setAccountInfo = info => {
 
 export const PLAID_CONNECTED = 'PLAID_CONNECTED';
 export const plaidConnected = responseObj => {
+	const { api: { URL } } = config;
 	return dispatch => {
 		dispatch(setAccountInfo(responseObj));
 		return axios
-			.post(`${API_URL}/getAccessToken`, {
+			.post(`${URL}/getAccessToken`, {
 				publicToken: responseObj.public_token
 			})
 			.then(data => {
