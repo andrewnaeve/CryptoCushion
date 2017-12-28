@@ -18,8 +18,7 @@ export const MainNavigator = StackNavigator(
 export const Router = StackNavigator(
 	{
 		Main: { screen: MainNavigator },
-		Plaid: { screen: Plaid },
-		Coinbase: { screen: Coinbase }
+		Plaid: { screen: Plaid }
 	},
 	{
 		headerMode: 'none',
