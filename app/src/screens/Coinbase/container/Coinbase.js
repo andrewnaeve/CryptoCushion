@@ -1,23 +1,45 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { Text, View, WebView, Linking } from 'react-native';
 import styled from 'styled-components/native';
 import { width } from '../../../utils/styleConstants';
+import { coinbase } from '../../../../config.json';
+class Coinbase extends Component {
+	constructor(props) {
+		super(props);
+	}
 
-const Coinbase = props => (
-	<Button onPress={props.handlePress}>
-		<Text>Open Coinbase</Text>
-	</Button>
-);
+	componentDidMount() {
+		Linking.addEventListener('url', this.handleLinking);
+	}
 
-const Button = styled.TouchableOpacity`
-	width: ${width * 0.8};
-	height: 50;
-	margin-bottom: 30;
-	border-width: 2;
-	border-color: blue;
-	border-radius: 10;
-	align-items: center;
-	justify-content: center;
-`;
+	handleLinking = event => {
+		console.log('please god work', event);
+	};
+
+	onMessage = e => {
+		console.log('sup', e);
+	};
+
+	render() {
+		console.log('hey');
+		const { COINBASE_CLIENT_ID } = coinbase.development;
+		let bummer = 'urn:ietf:wg:oauth:2.0:oob';
+		let url = `https://www.coinbase.com/oauth/authorize?response_type=code&client_id=${COINBASE_CLIENT_ID}&redirect_uri=${bummer}&scope=wallet:user:read,wallet:accounts:read`;
+		return (
+			<Container>
+				<WebView
+					source={{
+						uri: url
+					}}
+					onMessage={e => this.onMessage(e)}
+				/>
+			</Container>
+		);
+	}
+}
 
 export default Coinbase;
+
+const Container = styled.View`
+	flex: 1;
+`;

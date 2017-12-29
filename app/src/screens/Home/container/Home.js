@@ -1,20 +1,26 @@
 import React, { Component } from 'react';
 import styled from 'styled-components/native';
-import { Text } from 'react-native';
+import { Text, Linking } from 'react-native';
 import { width } from '../../../utils/styleConstants';
 import { coinbase } from '../../../../config.json';
 import Coinbase from '../../Coinbase/container/Coinbase';
 
 class Home extends Component {
-	linkListener = event => {
-		console.log('event', event.url);
-	};
+	componentDidMount() {
+		Linking.addEventListener('url', this._handleOpenURL);
+	}
 
-	launchPlaid = () => {
-		const { navigation: { navigate } } = this.props;
-		navigate('Plaid');
-	};
-
+	componentWillUnmount() {
+		Linking.removeEventListener('url', this._handleOpenURL);
+	}
+	_handleOpenURL(event) {
+		const url = event.url;
+		const regex = /=(.+)/;
+		const code = url.match(regex);
+		if (code) {
+			console.log('code', code[1]);
+		}
+	}
 	render() {
 		return (
 			<HomeContainer>
@@ -22,20 +28,18 @@ class Home extends Component {
 				<Button onPress={this.launchPlaid}>
 					<Text>Launch Plaid</Text>
 				</Button>
-				<Coinbase handlePress={this._handlePressAsync} />
+				<Button onPress={this._launchCoinbase}>
+					<Text>Launch Plaid</Text>
+				</Button>
 			</HomeContainer>
 		);
 	}
 
-	_handlePressAsync = async () => {
+	_launchCoinbase = () => {
 		const { COINBASE_CLIENT_ID } = coinbase.development;
-		// let redirectUrl = encodeURIComponent(AuthSession.getRedirectUrl());
-		let bummer = 'exp://localhost:19000/urn:ietf:wg:oauth:2.0:oob';
-		let url = `https://www.coinbase.com/oauth/authorize?response_type=code&client_id=${COINBASE_CLIENT_ID}&redirect_uri=${bummer}&scope=wallet:user:read,wallet:accounts:read`;
-		let result = await AuthSession.startAsync({
-			authUrl: url
-		});
-		this.setState({ result });
+		let callbackUrl = 'cryptocushion://auth';
+		let url = `https://www.coinbase.com/oauth/authorize?response_type=code&client_id=${COINBASE_CLIENT_ID}&redirect_uri=${callbackUrl}&scope=wallet:user:read,wallet:accounts:read`;
+		Linking.openURL(url).catch(err => console.error('An error occurred', err));
 	};
 }
 
