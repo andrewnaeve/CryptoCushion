@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import styled from 'styled-components/native';
-import { Text } from 'react-native';
+import { Text, Linking } from 'react-native';
 import { width } from '../../../utils/styleConstants';
 import { coinbase } from '../../../../config.json';
 import { AuthSession } from 'expo';
 import Coinbase from '../../Coinbase/container/Coinbase';
 
 class Home extends Component {
+	componentDidMount() {
+		Linking.addEventListener('url', this.linkListener);
+	}
 	linkListener = event => {
 		console.log('event', event.url);
 	};
@@ -31,7 +34,7 @@ class Home extends Component {
 	_handlePressAsync = async () => {
 		const { COINBASE_CLIENT_ID } = coinbase.development;
 		// let redirectUrl = encodeURIComponent(AuthSession.getRedirectUrl());
-		let bummer = 'exp://localhost:19000/urn:ietf:wg:oauth:2.0:oob';
+		let bummer = 'urn:ietf:wg:oauth:2.0:oob';
 		let url = `https://www.coinbase.com/oauth/authorize?response_type=code&client_id=${COINBASE_CLIENT_ID}&redirect_uri=${bummer}&scope=wallet:user:read,wallet:accounts:read`;
 		let result = await AuthSession.startAsync({
 			authUrl: url
