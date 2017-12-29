@@ -1,23 +1,35 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { WebView } from 'react-native';
 import styled from 'styled-components/native';
-import { width } from '../../../utils/styleConstants';
+import { coinbase } from '../../../../config.json';
+class Coinbase extends Component {
+	constructor(props) {
+		super(props);
+	}
 
-const Coinbase = props => (
-	<Button onPress={props.handlePress}>
-		<Text>Open Coinbase</Text>
-	</Button>
-);
+	render() {
+		const { COINBASE_CLIENT_ID } = coinbase.development;
+		// let redirectUrl = encodeURIComponent(AuthSession.getRedirectUrl());
+		let url = `https://www.coinbase.com/oauth/authorize?response_type=code&client_id=${COINBASE_CLIENT_ID}&scope=wallet:user:read,wallet:accounts:read`;
+		return (
+			<Container>
+				<WebView
+					source={{
+						uri: url
+					}}
+					onNavigationStateChange={this._onNavigationStateChange}
+				/>
+			</Container>
+		);
+	}
 
-const Button = styled.TouchableOpacity`
-	width: ${width * 0.8};
-	height: 50;
-	margin-bottom: 30;
-	border-width: 2;
-	border-color: blue;
-	border-radius: 10;
-	align-items: center;
-	justify-content: center;
+	_onNavigationStateChange = event => {
+		console.log('event', event.title);
+	};
+}
+
+const Container = styled.View`
+	flex: 1;
 `;
 
 export default Coinbase;
