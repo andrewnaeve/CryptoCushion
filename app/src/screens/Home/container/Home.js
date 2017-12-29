@@ -3,7 +3,6 @@ import styled from 'styled-components/native';
 import { Text } from 'react-native';
 import { width } from '../../../utils/styleConstants';
 import { coinbase } from '../../../../config.json';
-import { AuthSession } from 'expo';
 import Coinbase from '../../Coinbase/container/Coinbase';
 
 class Home extends Component {
