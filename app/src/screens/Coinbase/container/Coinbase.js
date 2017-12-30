@@ -26,10 +26,12 @@ class Coinbase extends Component {
 	}
 
 	_onNavigationStateChange = event => {
-		const accessCode = event.title;
-		const { navigation: { goBack } } = this.props;
-		if (accessCode !== '' && accessCode !== 'Authorize Crypto Cushion - Coinbase') {
-			coinbaseConnected({ code: accessCode });
+		const code = event.title;
+		const { navigation: { goBack }, coinbaseConnected } = this.props;
+		const base64Regex = /^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$/i;
+		const isBase64Valid = base64Regex.test(code);
+		if (isBase64Valid) {
+			coinbaseConnected({ code: code });
 			goBack();
 		}
 	};
@@ -42,4 +44,4 @@ const Container = styled.View`
 
 const mapDispatchToProps = dispatch => bindActionCreators({ coinbaseConnected }, dispatch);
 
-export default connect(null, mapDispatchToProps)(Coinbase);
+export default connect(({ coinbase }) => ({ coinbase }), mapDispatchToProps)(Coinbase);
