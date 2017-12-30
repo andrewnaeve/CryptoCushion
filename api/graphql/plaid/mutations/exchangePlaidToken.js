@@ -1,13 +1,13 @@
 const gql = require('graphql');
-const User = require('../../../models/user');
-const Item = require('../../../models/Item');
+const User = require('../../common/models/user');
+const Item = require('../models/item');
 const Wreck = require('wreck');
 const Boom = require('boom');
-const PLAID_URL = require('../../../../config.json').plaid[process.env.NODE_ENV].PLAID_URL;
-const CLIENT_ID = require('../../../../config.json').plaid[process.env.NODE_ENV].PLAID_CLIENT_ID;
-const SECRET = require('../../../../config.json').plaid[process.env.NODE_ENV].PLAID_SECRET;
+const PLAID_URL = require('../../../config.json').plaid[process.env.NODE_ENV].PLAID_URL;
+const CLIENT_ID = require('../../../config.json').plaid[process.env.NODE_ENV].PLAID_CLIENT_ID;
+const SECRET = require('../../../config.json').plaid[process.env.NODE_ENV].PLAID_SECRET;
 
-const exchangeToken = async token => {
+const exchangePlaidToken = async token => {
 	const options = {
 		headers: {
 			'content-type': 'application/json'
@@ -35,7 +35,7 @@ module.exports = {
 			}
 		},
 		resolve: async (_, { email, public_token }) => {
-			const token = await exchangeToken(public_token);
+			const token = await exchangePlaidToken(public_token);
 			if (!token) {
 				return Boom.notFound('Exchange token failed.');
 			}

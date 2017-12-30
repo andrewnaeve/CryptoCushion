@@ -1,6 +1,6 @@
 const gql = require('graphql');
 const UserType = require('../types/UserType');
-const User = require('../../../models/user');
+const User = require('../../common/models/user');
 
 module.exports = {
 	createUser: {
@@ -24,9 +24,7 @@ module.exports = {
 					email: email
 				})
 				.then(model => {
-					const {
-						attributes: { first_name, last_name, email, id }
-					} = model;
+					const { attributes: { first_name, last_name, email, id } } = model;
 					return {
 						first_name: first_name,
 						last_name: last_name,

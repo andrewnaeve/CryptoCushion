@@ -1,18 +1,18 @@
 const gql = require('graphql');
-const queries = require('./rootQueries');
-const mutations = require('./rootMutations');
+const plaidMutations = require('./plaid/plaidMutations');
+const plaidQueries = require('./plaid/plaidQueries');
 
 const schema = new gql.GraphQLSchema({
 	query: new gql.GraphQLObjectType({
 		name: 'RootQueryType',
 		fields: () => ({
-			...queries
+			plaidQueries
 		})
 	}),
 	mutation: new gql.GraphQLObjectType({
 		name: 'RootMutationType',
 		fields: () => ({
-			...mutations
+			plaidMutations
 		})
 	})
 });

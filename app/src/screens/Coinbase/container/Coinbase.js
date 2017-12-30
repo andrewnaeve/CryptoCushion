@@ -27,6 +27,7 @@ class Coinbase extends Component {
 		const base64Regex = /^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$/i;
 		const isBase64Valid = base64Regex.test(code);
 		if (isBase64Valid) {
+			console.log(code);
 			coinbaseConnected({ code: code });
 			goBack();
 		}

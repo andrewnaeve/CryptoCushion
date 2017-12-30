@@ -1,7 +1,7 @@
 const { createUser } = require('./mutations/createUser');
-const { exchangeToken } = require('./mutations/exchangeToken');
+const { exchangePlaidToken } = require('./mutations/exchangePlaidToken');
 
 module.exports = {
 	createUser,
-	exchangeToken
+	exchangePlaidToken
 };

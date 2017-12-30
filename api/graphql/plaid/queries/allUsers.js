@@ -1,6 +1,6 @@
 const gql = require('graphql');
 const UserType = require('../types/UserType');
-const User = require('../../../models/user');
+const User = require('../../common/models/user');
 
 module.exports = {
 	allUsers: {

@@ -3,9 +3,9 @@ const moment = require('moment');
 const TransactionType = require('../types/TransactionType');
 const Wreck = require('wreck');
 const Boom = require('boom');
-const PLAID_URL = require('../../../../config.json').plaid[process.env.NODE_ENV].PLAID_URL;
-const CLIENT_ID = require('../../../../config.json').plaid[process.env.NODE_ENV].PLAID_CLIENT_ID;
-const SECRET = require('../../../../config.json').plaid[process.env.NODE_ENV].PLAID_SECRET;
+const PLAID_URL = require('../../../config.json').plaid[process.env.NODE_ENV].PLAID_URL;
+const CLIENT_ID = require('../../../config.json').plaid[process.env.NODE_ENV].PLAID_CLIENT_ID;
+const SECRET = require('../../../config.json').plaid[process.env.NODE_ENV].PLAID_SECRET;
 
 const getTodaysDate = () => {
 	return moment().format('YYYY-MM-DD');

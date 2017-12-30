@@ -1,5 +1,5 @@
-// Update with your config settings.
-const config = require('../config.json').mysql[process.env.NODE_ENV];
+require('dotenv').config();
+const config = require('./config.json').mysql[process.env.NODE_ENV];
 
 module.exports = {
 	development: {
