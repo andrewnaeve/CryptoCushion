@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import { setAccountInfo } from './plaidReducers';
+import { setPlaidAccountInfo } from './plaidReducers';
+import { setCoinbaseInfo } from './coinbaseReducers';
 
 const rootReducer = combineReducers({
-	plaid: setAccountInfo
+	plaid: setPlaidAccountInfo,
+	coinbase: setCoinbaseInfo
 });
 
 export default rootReducer;

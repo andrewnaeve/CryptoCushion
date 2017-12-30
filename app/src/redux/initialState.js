@@ -1,6 +1,9 @@
 const initialState = {
 	plaid: {
 		accountInfo: {}
+	},
+	coinbase: {
+		code: ''
 	}
 };
 

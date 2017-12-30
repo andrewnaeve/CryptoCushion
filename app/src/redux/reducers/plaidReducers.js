@@ -1,10 +1,9 @@
-import { SET_ACCOUNT_INFO } from '../actions/plaidActions';
-import { combineReducers } from 'redux';
+import { SET_PLAID_ACCOUNT_INFO } from '../actions/plaidActions';
 import initialState from '../initialState';
 
-export const setAccountInfo = (state = initialState.plaid, action) => {
+export const setPlaidAccountInfo = (state = initialState.plaid, action) => {
 	switch (action.type) {
-		case SET_ACCOUNT_INFO:
+		case SET_PLAID_ACCOUNT_INFO:
 			return {
 				...state,
 				accountInfo: {
