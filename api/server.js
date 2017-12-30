@@ -10,15 +10,6 @@ Glue.compose(manifest, options, function(err, server) {
 		throw err;
 	}
 
-	server.route({
-		method: 'GET',
-		path: '/oauth/{user?}',
-		handler: function(request, reply) {
-			console.log('code', request.url);
-			reply(request.params);
-		}
-	});
-
 	server.start(function() {
 		console.log(`Server running on port ${server.info.port}.`);
 		console.log(`Environment: ${process.env.NODE_ENV}.`);
