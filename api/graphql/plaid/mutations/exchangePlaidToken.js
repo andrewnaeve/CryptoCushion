@@ -1,11 +1,12 @@
 const gql = require('graphql');
-const User = require('../../common/user/models/user');
-const Item = require('../models/item');
+const { userIdByEmail } = require('../../common/user/models/userMethods');
+const { saveItem } = require('../models/itemMethods');
 const Wreck = require('wreck');
 const Boom = require('boom');
 const PLAID_URL = require('../../../config.json').plaid[process.env.NODE_ENV].PLAID_URL;
 const CLIENT_ID = require('../../../config.json').plaid[process.env.NODE_ENV].PLAID_CLIENT_ID;
 const SECRET = require('../../../config.json').plaid[process.env.NODE_ENV].PLAID_SECRET;
+// const PublicTokenInputType = require('../types/PublicTokenInputType');
 
 const exchangePlaidToken = async token => {
 	const options = {
@@ -39,43 +40,9 @@ module.exports = {
 			if (!token) {
 				return Boom.notFound('Exchange token failed.');
 			}
-			const { access_token, item_id, request_id } = token;
-			new User({
-				email: email
-			})
-				.fetch({
-					columns: 'id'
-				})
-				.then(model => {
-					return model.get('id');
-				})
-				.then(id => {
-					new Item({
-						user_id: id
-					})
-						.fetch()
-						.then(result => {
-							if (result === null) {
-								Item.save({
-									user_id: id,
-									access_token: access_token,
-									item_id: item_id
-								});
-							} else {
-								Item.where({
-									user_id: id
-								}).save(
-									{
-										access_token: access_token,
-										item_id: item_id
-									},
-									{
-										patch: true
-									}
-								);
-							}
-						});
-				});
+			const { access_token, item_id } = token;
+			const id = await userIdByEmail(email);
+			saveItem(id, access_token, item_id);
 		}
 	}
 };

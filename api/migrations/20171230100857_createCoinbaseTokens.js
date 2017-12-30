@@ -10,7 +10,7 @@ exports.up = function(knex, Promise) {
 		table.string('access_token').notNullable();
 		table.string('token_type').notNullable();
 		table.integer('expires_in').notNullable();
-		table.integer('refresh_token').notNullable();
+		table.string('refresh_token').notNullable();
 		table.string('scope').notNullable();
 	});
 };

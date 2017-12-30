@@ -3,6 +3,7 @@ const userQueries = require('./common/user/userQueries');
 const userMutations = require('./common/user/userMutations');
 const plaidMutations = require('./plaid/plaidMutations');
 const plaidQueries = require('./plaid/plaidQueries');
+const coinbaseMutations = require('./coinbase/coinbaseMutations');
 
 const schema = new gql.GraphQLSchema({
 	query: new gql.GraphQLObjectType({
@@ -16,7 +17,8 @@ const schema = new gql.GraphQLSchema({
 		name: 'RootMutationType',
 		fields: () => ({
 			...userMutations,
-			...plaidMutations
+			...plaidMutations,
+			...coinbaseMutations
 		})
 	})
 });

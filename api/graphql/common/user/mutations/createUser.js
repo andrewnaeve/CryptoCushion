@@ -4,19 +4,13 @@ const { createUser } = require('../models/userMethods');
 
 module.exports = {
 	createUser: {
-		type: UserInputType,
+		type: gql.GraphQLBoolean,
 		args: {
-			first_name: {
-				type: new gql.GraphQLNonNull(gql.GraphQLString)
-			},
-			last_name: {
-				type: new gql.GraphQLNonNull(gql.GraphQLString)
-			},
-			email: {
-				type: new gql.GraphQLNonNull(gql.GraphQLString)
+			user: {
+				type: UserInputType
 			}
 		},
-		resolve: (_, { first_name, last_name, email }) => {
+		resolve: (_, { user: { first_name, last_name, email } }) => {
 			createUser(first_name, last_name, email);
 		}
 	}
