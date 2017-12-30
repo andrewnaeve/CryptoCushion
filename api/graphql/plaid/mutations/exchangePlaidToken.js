@@ -1,5 +1,5 @@
 const gql = require('graphql');
-const User = require('../../common/models/user');
+const User = require('../../common/user/models/user');
 const Item = require('../models/item');
 const Wreck = require('wreck');
 const Boom = require('boom');
@@ -24,7 +24,7 @@ const exchangePlaidToken = async token => {
 };
 
 module.exports = {
-	exchangeToken: {
+	exchangePlaidPublicToken: {
 		type: gql.GraphQLBoolean,
 		args: {
 			email: {

@@ -1,5 +1,5 @@
 const bookshelf = require('../../../bookshelf');
-const User = require('../../common/models/user');
+const User = require('../../common/user/models/user');
 
 const CoinbaseToken = bookshelf.Model.extend({
 	tableName: 'coinbase_tokens',

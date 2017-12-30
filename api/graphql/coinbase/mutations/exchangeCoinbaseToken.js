@@ -1,8 +1,10 @@
 const gql = require('graphql');
-const User = require('../../../models/user');
-const Item = require('../../../models/Item');
+const TokenType = require('../types/coinbaseTokenType');
 const Wreck = require('wreck');
 const Boom = require('boom');
+const { userIdByEmail } = require('../../common/user/models/userMethods');
+const { saveCoinbaseToken } = require('../models/coinbaseTokenMethods');
+
 const COINBASE_URL = require('../../../config.json').coinbase[process.env.NODE_ENV].COINBASE_URL;
 const COINBASE_CLIENT_ID = require('../../../config.json').coinbase[process.env.NODE_ENV]
 	.COINBASE_CLIENT_ID;
@@ -31,10 +33,10 @@ const exchangeToken = async code => {
 
 module.exports = {
 	exchangeToken: {
-		type: gql.GraphQLBoolean,
+		type: TokenType,
 		args: {
 			email: {
-				type: new gql.GraphQLNonNull(gql.GraphQLString)
+				type: new gql.GraphQLInt()
 			},
 			code: {
 				type: new gql.GraphQLNonNull(gql.GraphQLString)
@@ -46,42 +48,9 @@ module.exports = {
 				return Boom.notFound('Exchange token failed.');
 			}
 			const { access_token, token_type, expires_in, refresh_token, scope } = token;
-			new User({
-				email: email
-			})
-				.fetch({
-					columns: 'id'
-				})
-				.then(model => {
-					return model.get('id');
-				})
-				.then(id => {
-					new Item({
-						user_id: id
-					})
-						.fetch()
-						.then(result => {
-							if (result === null) {
-								Item.save({
-									user_id: id,
-									access_token: access_token,
-									item_id: item_id
-								});
-							} else {
-								Item.where({
-									user_id: id
-								}).save(
-									{
-										access_token: access_token,
-										item_id: item_id
-									},
-									{
-										patch: true
-									}
-								);
-							}
-						});
-				});
+			const id = await userIdByEmail(email);
+			console.log('id', id);
+			saveCoinbaseToken(id, access_token, token_type, expires_in, refresh_token, scope);
 		}
 	}
 };
