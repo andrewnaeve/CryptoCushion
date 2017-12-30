@@ -6,10 +6,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { coinbaseConnected } from '../../../redux/actions/coinbaseActions';
 class Coinbase extends Component {
-	constructor(props) {
-		super(props);
-	}
-
 	render() {
 		const { COINBASE_CLIENT_ID } = coinbase.development;
 		let url = `https://www.coinbase.com/oauth/authorize?response_type=code&client_id=${COINBASE_CLIENT_ID}&scope=wallet:user:read,wallet:accounts:read`;
