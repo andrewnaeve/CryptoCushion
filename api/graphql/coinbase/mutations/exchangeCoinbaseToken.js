@@ -42,7 +42,6 @@ module.exports = {
 			}
 		},
 		resolve: async (_, { email, code }) => {
-			console.log('hi');
 			const token = await exchangeToken(code);
 			if (!token) {
 				return Boom.badData('Exchange token failed.');

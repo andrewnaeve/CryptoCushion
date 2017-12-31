@@ -16,8 +16,12 @@ const fetchBalances = async token => {
 		},
 		json: 'true'
 	};
-	const { payload } = await Wreck.post(`${PLAID_URL}/accounts/balance/get`, options);
-	return payload;
+	try {
+		const { payload } = await Wreck.post(`${PLAID_URL}/accounts/balance/get`, options);
+		return payload;
+	} catch (error) {
+		Boom.badRequest('Get account balance failed.', error);
+	}
 };
 
 module.exports = {
@@ -29,7 +33,7 @@ module.exports = {
 		resolve: async (_, { access_token }) => {
 			const balances = await fetchBalances(access_token);
 			if (!balances) {
-				return Boom.notFound('Balance lookup failed.');
+				return;
 			}
 			return balances.accounts.map(x => {
 				return {

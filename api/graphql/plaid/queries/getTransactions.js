@@ -29,15 +29,19 @@ const fetchTransactions = async token => {
 		},
 		json: 'true'
 	};
-	const { payload } = await Wreck.post(`${PLAID_URL}/transactions/get`, options);
-	const checkingAccountId = payload.accounts.filter(account => {
-		if (account.subtype === 'checking') {
-			return account.account_id;
-		}
-	});
-	return payload.transactions.filter(result => {
-		return result.account_id === checkingAccountId[0].account_id;
-	});
+	try {
+		const { payload } = await Wreck.post(`${PLAID_URL}/transactions/get`, options);
+		const checkingAccountId = payload.accounts.filter(account => {
+			if (account.subtype === 'checking') {
+				return account.account_id;
+			}
+		});
+		return payload.transactions.filter(result => {
+			return result.account_id === checkingAccountId[0].account_id;
+		});
+	} catch (error) {
+		Boom.badRequest('Cannot get Plaid transactions', error);
+	}
 };
 
 module.exports = {

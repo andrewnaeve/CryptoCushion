@@ -1,6 +1,11 @@
 import axios from 'axios';
 import config from '../../../config.json';
 
+export const isBase64 = code => {
+	const base64Regex = /^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$/i;
+	return base64Regex.test(code);
+};
+
 export const SET_COINBASE_INFO = 'SET_COINBASE_INFO';
 export const setCoinbaseInfo = payload => ({
 	type: SET_COINBASE_INFO,

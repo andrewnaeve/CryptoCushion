@@ -16,8 +16,12 @@ const fetchAuth = async token => {
 		},
 		json: 'true'
 	};
-	const { payload } = await Wreck.post(`${PLAID_URL}/auth/get`, options);
-	return payload;
+	try {
+		const { payload } = await Wreck.post(`${PLAID_URL}/auth/get`, options);
+		return payload;
+	} catch (error) {
+		Boom.badRequest('Cannot get Plaid Auth.', error);
+	}
 };
 
 module.exports = {
@@ -29,7 +33,7 @@ module.exports = {
 		resolve: async (_, { access_token }) => {
 			const auth = await fetchAuth(access_token);
 			if (!auth) {
-				return Boom.notFound('Balance lookup failed.');
+				return;
 			}
 			const accountArray = auth.accounts.map(x => {
 				return {

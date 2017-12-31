@@ -4,7 +4,8 @@ import styled from 'styled-components/native';
 import { coinbase } from '../../../../config.json';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { coinbaseConnected } from '../../../redux/actions/coinbaseActions';
+import { coinbaseConnected, isBase64 } from '../../../redux/actions/coinbaseActions';
+
 class Coinbase extends Component {
 	render() {
 		const { COINBASE_CLIENT_ID } = coinbase.development;
@@ -24,10 +25,8 @@ class Coinbase extends Component {
 	_onNavigationStateChange = event => {
 		const code = event.title;
 		const { navigation: { goBack }, coinbaseConnected } = this.props;
-		const base64Regex = /^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$/i;
-		const isBase64Valid = base64Regex.test(code);
-		if (isBase64Valid) {
-			console.log(code);
+		const titleIsCode = isBase64(code);
+		if (titleIsCode) {
 			coinbaseConnected({ code: code });
 			goBack();
 		}

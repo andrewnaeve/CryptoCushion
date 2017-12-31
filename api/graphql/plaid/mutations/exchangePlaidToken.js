@@ -20,8 +20,12 @@ const exchangePlaidToken = async token => {
 		},
 		json: 'true'
 	};
-	const { payload } = await Wreck.post(`${PLAID_URL}/item/public_token/exchange}`, options);
-	return payload;
+	try {
+		const { payload } = await Wreck.post(`${PLAID_URL}/item/public_token/exchange}`, options);
+		return payload;
+	} catch (error) {
+		Boom.badRequest('Request for Plaid access token rejected', error);
+	}
 };
 
 module.exports = {
@@ -38,7 +42,7 @@ module.exports = {
 		resolve: async (_, { email, public_token }) => {
 			const token = await exchangePlaidToken(public_token);
 			if (!token) {
-				return Boom.notFound('Exchange token failed.');
+				return;
 			}
 			const { access_token, item_id } = token;
 			const id = await userIdByEmail(email);
