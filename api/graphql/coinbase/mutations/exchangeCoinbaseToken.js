@@ -1,7 +1,6 @@
 const gql = require('graphql');
 const Wreck = require('wreck');
 const Boom = require('boom');
-const Querystring = require('querystring');
 const { userIdByEmail } = require('../../common/user/models/userMethods');
 const { saveCoinbaseToken } = require('../models/coinbaseTokenMethods');
 // const TokenType = require('../types/coinbaseTokenType');
@@ -24,10 +23,10 @@ const exchangeToken = async code => {
 		json: true
 	};
 	try {
-		const { res, payload } = await Wreck.post(`https://api.coinbase.com/oauth/token`, options);
+		const { payload } = await Wreck.post(`${COINBASE_URL}/oauth/token`, options);
 		return payload;
 	} catch (error) {
-		console.log('ERRRROR', error);
+		Boom.badRequest('Request for access token rejected', error.data.payload);
 	}
 };
 
@@ -43,9 +42,10 @@ module.exports = {
 			}
 		},
 		resolve: async (_, { email, code }) => {
+			console.log('hi');
 			const token = await exchangeToken(code);
 			if (!token) {
-				return Boom.notFound('Exchange token failed.');
+				return Boom.badData('Exchange token failed.');
 			}
 			const { access_token, token_type, expires_in, refresh_token, scope } = token;
 			const id = await userIdByEmail(email);
