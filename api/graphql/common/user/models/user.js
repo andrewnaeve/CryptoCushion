@@ -1,8 +1,8 @@
 const bookshelf = require('../../../../bookshelf');
-// const Item = require('../../../plaid/models/item');
-// const CoinbaseToken = require('../../../coinbase/models/coinbaseToken');
-require('../../../plaid/models/item');
-require('../../../coinbase/models/coinbaseToken');
+const Item = require('../../../plaid/models/item');
+const CoinbaseToken = require('../../../coinbase/models/coinbaseToken');
+// require('../../../plaid/models/item');
+// require('../../../coinbase/models/coinbaseToken');
 
 const User = bookshelf.Model.extend({
 	tableName: 'users',
@@ -13,5 +13,5 @@ const User = bookshelf.Model.extend({
 		this.hasOne('CoinbaseToken');
 	}
 });
-
-module.exports = bookshelf.model('User', User);
+module.exports = User;
+// module.exports = bookshelf.model('User', User);

@@ -2,12 +2,11 @@ const gql = require('graphql');
 const Wreck = require('wreck');
 const Boom = require('boom');
 const { userIdByEmail } = require('../../common/user/models/userMethods');
-const { saveCoinbaseToken } = require('../models/coinbaseTokenMethods');
+const { saveCoinbaseTokenByUserId } = require('../models/coinbaseTokenMethods');
 // const TokenType = require('../types/coinbaseTokenType');
 
 const COINBASE_URL = require('../../../config.json').coinbase[process.env.NODE_ENV].COINBASE_URL;
-const COINBASE_CLIENT_ID = require('../../../config.json').coinbase[process.env.NODE_ENV]
-	.COINBASE_CLIENT_ID;
+const COINBASE_CLIENT_ID = require('../../../config.json').coinbase[process.env.NODE_ENV].COINBASE_CLIENT_ID;
 const COINBASE_CLIENT_SECRET = require('../../../config.json').coinbase[process.env.NODE_ENV]
 	.COINBASE_CLIENT_SECRET;
 const COINBASE_CALLBACK_URL = require('../../../config.json').coinbase[process.env.NODE_ENV]
@@ -26,12 +25,12 @@ const exchangeToken = async code => {
 		const { payload } = await Wreck.post(`${COINBASE_URL}/oauth/token`, options);
 		return payload;
 	} catch (error) {
-		Boom.badRequest('Request for access token rejected', error.data.payload);
+		return Boom.badRequest('Request for access token rejected', error.data.payload);
 	}
 };
 
 module.exports = {
-	exchangeCoinbaseToken: {
+	getAccessCode: {
 		type: gql.GraphQLBoolean,
 		args: {
 			email: {
@@ -43,12 +42,12 @@ module.exports = {
 		},
 		resolve: async (_, { email, code }) => {
 			const token = await exchangeToken(code);
-			if (!token) {
+			if (token instanceof Boom) {
 				return Boom.badData('Exchange token failed.');
 			}
 			const { access_token, token_type, expires_in, refresh_token, scope } = token;
 			const id = await userIdByEmail(email);
-			saveCoinbaseToken(id, access_token, token_type, expires_in, refresh_token, scope);
+			saveCoinbaseTokenByUserId(id, access_token, token_type, expires_in, refresh_token, scope);
 		}
 	}
 };

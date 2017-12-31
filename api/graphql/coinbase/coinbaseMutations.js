@@ -1,5 +1,7 @@
-const { exchangeCoinbaseToken } = require('./mutations/exchangeCoinbaseToken');
+const { getAccessCode } = require('./mutations/getAccessCode');
+const { refreshAccessToken } = require('./mutations/refreshAccessToken');
 
 module.exports = {
-	exchangeCoinbaseToken
+	getAccessCode,
+	refreshAccessToken
 };

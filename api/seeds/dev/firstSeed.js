@@ -44,22 +44,18 @@ exports.seed = function(knex, Promise) {
 			return knex('coinbase_tokens').insert([
 				{
 					user_id: 1,
-					access_token:
-						'ffda0317e0ea101a68edff041428267bc91b7fe51c8b41e5399e6aa1c63be2be',
+					access_token: 'ffda0317e0ea101a68edff041428267bc91b7fe51c8b41e5399e6aa1c63be2be',
 					token_type: 'bearer',
 					expires_in: 7200,
-					refresh_token:
-						'ab2acff534f48eee64e9769c83412f8427ddb90980be2acc904b161d43dfe7c3',
+					refresh_token: '87463e59cfa4186f947e98491fda123f98f2d7fde29dc4d0863da927d93da0a6',
 					scope: 'wallet:user:read wallet:accounts:read'
 				},
 				{
 					user_id: 2,
-					access_token:
-						'cd7ce1b767e650a70c549f47d8b73b6c90f3d01262d3bad458eb2fba2a64c45e',
+					access_token: 'cd7ce1b767e650a70c549f47d8b73b6c90f3d01262d3bad458eb2fba2a64c45e',
 					token_type: 'bearer',
 					expires_in: 7200,
-					refresh_token:
-						'954442c2b4f8bdb307fc8bb19d7bd4fb08d93b9a764dc62c453cd0387bbcea41',
+					refresh_token: '954442c2b4f8bdb307fc8bb19d7bd4fb08d93b9a764dc62c453cd0387bbcea41',
 					scope: 'wallet:user:read wallet:accounts:read'
 				}
 			]);
