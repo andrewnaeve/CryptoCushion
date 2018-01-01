@@ -1,8 +1,8 @@
-const gql = require('graphql');
+const { Boolean, NonNull, String } = require('../../utilities/GraphQLTypeUtilities');
 const Wreck = require('wreck');
 const Boom = require('boom');
-const { userIdByEmail } = require('../../common/user/models/userMethods');
-const { saveCoinbaseTokenByUserId } = require('../models/coinbaseTokenMethods');
+const { userIdByEmail } = require('../../common/user/db/queries');
+const { saveCoinbaseTokenByUserId } = require('../db/queries');
 // const TokenType = require('../types/coinbaseTokenType');
 
 const COINBASE_URL = require('../../../config.json').coinbase[process.env.NODE_ENV].COINBASE_URL;
@@ -31,13 +31,13 @@ const exchangeToken = async code => {
 
 module.exports = {
 	getAccessCode: {
-		type: gql.GraphQLBoolean,
+		type: Boolean,
 		args: {
 			email: {
-				type: new gql.GraphQLNonNull(gql.GraphQLString)
+				type: NonNull(String)
 			},
 			code: {
-				type: new gql.GraphQLNonNull(gql.GraphQLString)
+				type: NonNull(String)
 			}
 		},
 		resolve: async (_, { email, code }) => {

@@ -1,10 +1,10 @@
-const gql = require('graphql');
+const { List } = require('../../../utilities/GraphQLTypeUtilities');
 const UserType = require('../types/UserType');
-const { getAllUsers } = require('../models/userMethods');
+const { getAllUsers } = require('../db/queries');
 
 module.exports = {
 	allUsers: {
-		type: new gql.GraphQLList(UserType),
+		type: List(UserType),
 		resolve: async () => {
 			const allUsers = await getAllUsers();
 			return allUsers;

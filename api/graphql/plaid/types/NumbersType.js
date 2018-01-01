@@ -1,12 +1,12 @@
-const gql = require('graphql');
+const { ObjectType, String, Float } = require('../../utilities/GraphQLTypeUtilities');
 
-const NumbersType = new gql.GraphQLObjectType({
+const NumbersType = ObjectType({
 	name: 'NumbersType',
 	fields: () => ({
-		account: { type: gql.GraphQLFloat },
-		account_id: { type: gql.GraphQLString },
-		routing: { type: gql.GraphQLFloat },
-		wire_routing: { type: gql.GraphQLFloat }
+		account: { type: Float },
+		account_id: { type: String },
+		routing: { type: Float },
+		wire_routing: { type: Float }
 	})
 });
 

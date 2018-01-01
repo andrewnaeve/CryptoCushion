@@ -1,16 +1,16 @@
-const gql = require('graphql');
+const { ObjectType, List, String, Float, Boolean } = require('../../utilities/GraphQLTypeUtilities');
 
-const TransactionType = new gql.GraphQLObjectType({
+const TransactionType = ObjectType({
 	name: 'TransactionType',
 	fields: () => ({
-		account_id: { type: gql.GraphQLString },
-		amount: { type: gql.GraphQLFloat },
-		category: { type: new gql.GraphQLList(gql.GraphQLString) },
-		date: { type: gql.GraphQLString },
-		name: { type: gql.GraphQLString },
-		pending: { type: gql.GraphQLBoolean },
-		transaction_id: { type: gql.GraphQLString },
-		transaction_type: { type: gql.GraphQLString }
+		account_id: { type: String },
+		amount: { type: Float },
+		category: { type: List(String) },
+		date: { type: String },
+		name: { type: String },
+		pending: { type: Boolean },
+		transaction_id: { type: String },
+		transaction_type: { type: String }
 	})
 });
 

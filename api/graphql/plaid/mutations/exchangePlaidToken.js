@@ -1,6 +1,6 @@
-const gql = require('graphql');
-const { userIdByEmail } = require('../../common/user/models/userMethods');
-const { saveItem } = require('../models/itemMethods');
+const { Boolean, String, NonNull } = require('../../utilities/GraphQLTypeUtilities');
+const { userIdByEmail } = require('../../common/user/db/queries');
+const { saveItem } = require('../db/queries');
 const Wreck = require('wreck');
 const Boom = require('boom');
 const PLAID_URL = require('../../../config.json').plaid[process.env.NODE_ENV].PLAID_URL;
@@ -30,13 +30,13 @@ const exchangePlaidToken = async token => {
 
 module.exports = {
 	exchangePlaidPublicToken: {
-		type: gql.GraphQLBoolean,
+		type: Boolean,
 		args: {
 			email: {
-				type: new gql.GraphQLNonNull(gql.GraphQLString)
+				type: NonNull(String)
 			},
 			public_token: {
-				type: new gql.GraphQLNonNull(gql.GraphQLString)
+				type: NonNull(String)
 			}
 		},
 		resolve: async (_, { email, public_token }) => {

@@ -1,22 +1,22 @@
-const gql = require('graphql');
+const { String, ObjectType, Float } = require('../../utilities/GraphQLTypeUtilities');
 
-const BalanceType = new gql.GraphQLObjectType({
+const BalanceType = ObjectType({
 	name: 'BalanceType',
 	fields: () => ({
-		account_id: { type: gql.GraphQLString },
+		account_id: { type: String },
 		balances: {
-			type: new gql.GraphQLObjectType({
+			type: ObjectType({
 				name: 'BalanceObject',
 				fields: {
-					available: { type: gql.GraphQLFloat },
-					current: { type: gql.GraphQLFloat },
-					limit: { type: gql.GraphQLFloat }
+					available: { type: Float },
+					current: { type: Float },
+					limit: { type: Float }
 				}
 			})
 		},
-		mask: { type: gql.GraphQLString },
-		name: { type: gql.GraphQLString },
-		subtype: { type: gql.GraphQLString }
+		mask: { type: String },
+		name: { type: String },
+		subtype: { type: String }
 	})
 });
 

@@ -1,4 +1,4 @@
-const gql = require('graphql');
+const { List, NonNull, String } = require('../../utilities/GraphQLTypeUtilities');
 const BalanceType = require('../types/BalanceType');
 const Wreck = require('wreck');
 const Boom = require('boom');
@@ -26,9 +26,9 @@ const fetchBalances = async token => {
 
 module.exports = {
 	getAccountBalances: {
-		type: new gql.GraphQLList(BalanceType),
+		type: List(BalanceType),
 		args: {
-			access_token: { type: new gql.GraphQLNonNull(gql.GraphQLString) }
+			access_token: { type: NonNull(String) }
 		},
 		resolve: async (_, { access_token }) => {
 			const balances = await fetchBalances(access_token);

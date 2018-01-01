@@ -1,4 +1,4 @@
-const gql = require('graphql');
+const { NonNull, String } = require('../../utilities/GraphQLTypeUtilities');
 const AuthType = require('../types/AuthType');
 const Wreck = require('wreck');
 const Boom = require('boom');
@@ -28,7 +28,7 @@ module.exports = {
 	getAuth: {
 		type: AuthType,
 		args: {
-			access_token: { type: new gql.GraphQLNonNull(gql.GraphQLString) }
+			access_token: { type: NonNull(String) }
 		},
 		resolve: async (_, { access_token }) => {
 			const auth = await fetchAuth(access_token);

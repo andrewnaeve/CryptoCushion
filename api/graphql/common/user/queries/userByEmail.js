@@ -1,14 +1,13 @@
-const gql = require('graphql');
+const { NonNull, String } = require('../../../utilities/GraphQLTypeUtilities');
 const Boom = require('boom');
-
 const UserType = require('../types/UserType');
-const { userByEmail } = require('../models/userMethods');
+const { userByEmail } = require('../db/queries');
 
 module.exports = {
 	userByEmail: {
 		type: UserType,
 		args: {
-			email: { type: new gql.GraphQLNonNull(gql.GraphQLString) }
+			email: { type: NonNull(String) }
 		},
 		resolve: async (_, { email }) => {
 			const userInfo = await userByEmail(email);

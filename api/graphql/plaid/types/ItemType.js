@@ -1,12 +1,12 @@
-const gql = require('graphql');
+const { ObjectType, ID, Int } = require('../../utilities/GraphQLTypeUtilities');
 
-const ItemType = new gql.GraphQLObjectType({
+const ItemType = ObjectType({
 	name: 'ItemType',
 	fields: () => ({
-		id: { type: gql.GraphQLID },
-		user_id: { type: gql.GraphQLInt },
-		access_token: { type: gql.GraphQLString },
-		item_id: { type: gql.GraphQLString }
+		id: { type: ID },
+		user_id: { type: Int },
+		access_token: { type: String },
+		item_id: { type: String }
 	})
 });
 

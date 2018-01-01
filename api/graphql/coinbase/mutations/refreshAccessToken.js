@@ -1,7 +1,7 @@
-const gql = require('graphql');
 const Boom = require('boom');
 const Wreck = require('wreck');
-const { saveRefreshToken, getRefreshTokenByUserId } = require('../models/coinbaseTokenMethods');
+const { NonNull, Int, Boolean } = require('../../utilities/GraphQLTypeUtilities');
+const { saveRefreshTokenByUserId, getRefreshTokenByUserId } = require('../db/queries');
 // const TokenType = require('../types/coinbaseTokenType');
 
 const COINBASE_URL = require('../../../config.json').coinbase[process.env.NODE_ENV].COINBASE_URL;
@@ -22,21 +22,21 @@ const exchangeRefreshToken = async refreshToken => {
 		const { payload } = await Wreck.post(`${COINBASE_URL}/oauth/token`, options);
 		return payload;
 	} catch (error) {
-		Boom.badRequest('Request for access token rejected', error.data.payload);
+		return Boom.badRequest('Request for access token rejected', error.data.payload);
 	}
 };
 
 module.exports = {
 	refreshAccessToken: {
-		type: gql.GraphQLBoolean,
+		type: Boolean,
 		args: {
 			user_id: {
-				type: new gql.GraphQLNonNull(gql.GraphQLInt)
+				type: NonNull(Int)
 			}
 		},
 		resolve: async (_, { user_id }) => {
 			const refreshToken = await getRefreshTokenByUserId(user_id);
-			if (!refreshToken) {
+			if (refreshToken.isBoom) {
 				return Boom.badData('Refresh token failed.');
 			}
 			const newCoinbaseToken = await exchangeRefreshToken(refreshToken);
@@ -44,7 +44,7 @@ module.exports = {
 				return Boom.badData('Token empty');
 			}
 			const { access_token, token_type, expires_in, refresh_token, scope } = newCoinbaseToken;
-			saveRefreshToken(user_id, access_token, token_type, expires_in, refresh_token, scope);
+			saveRefreshTokenByUserId(user_id, access_token, token_type, expires_in, refresh_token, scope);
 		}
 	}
 };

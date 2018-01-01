@@ -1,12 +1,12 @@
-const gql = require('graphql');
+const { ObjectType, List } = require('../../utilities/GraphQLTypeUtilities');
 const AccountType = require('./AccountType');
 const NumbersType = require('./NumbersType');
 
-const AuthType = new gql.GraphQLObjectType({
+const AuthType = ObjectType({
 	name: 'AuthType',
 	fields: () => ({
-		accounts: { type: new gql.GraphQLList(AccountType) },
-		numbers: { type: new gql.GraphQLList(NumbersType) }
+		accounts: { type: List(AccountType) },
+		numbers: { type: List(NumbersType) }
 	})
 });
 

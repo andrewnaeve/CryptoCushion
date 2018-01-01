@@ -1,13 +1,13 @@
-const gql = require('graphql');
+const { InputObjectType, String, Int } = require('../../utilities/GraphQLTypeUtilities');
 
-const TokenType = new gql.GraphQLInputObjectType({
+const TokenType = InputObjectType({
 	name: 'TokenType',
 	fields: () => ({
-		access_token: { type: gql.GraphQLString },
-		token_type: { type: gql.GraphQLString },
-		expires_in: { type: gql.GraphQLInt },
-		refresh_token: { type: gql.GraphQLString },
-		scope: { type: gql.GraphQLString }
+		access_token: { type: String },
+		token_type: { type: String },
+		expires_in: { type: Int },
+		refresh_token: { type: String },
+		scope: { type: String }
 	})
 });
 

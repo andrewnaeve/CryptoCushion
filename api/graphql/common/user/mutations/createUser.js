@@ -1,10 +1,10 @@
-const gql = require('graphql');
+const { Boolean } = require('../../../utilities/GraphQLTypeUtilities');
 const UserInputType = require('../types/UserInputType');
-const { createUser } = require('../models/userMethods');
+const { createUser } = require('../db/queries');
 
 module.exports = {
 	createUser: {
-		type: gql.GraphQLBoolean,
+		type: Boolean,
 		args: {
 			user: {
 				type: UserInputType

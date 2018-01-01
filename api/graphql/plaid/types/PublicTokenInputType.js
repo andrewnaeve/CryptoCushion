@@ -1,10 +1,10 @@
-const gql = require('graphql');
+const { InputObjectType, String } = require('../../utilities/GraphQLTypeUtilities');
 
-const PublicTokenInput = new gql.GraphQLInputObjectType({
+const PublicTokenInput = InputObjectType({
 	name: 'PublicTokenInput',
 	fields: () => ({
-		email: { type: gql.GraphQLString },
-		public_token: { type: gql.GraphQLString }
+		email: { type: String },
+		public_token: { type: String }
 	})
 });
 

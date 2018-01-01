@@ -1,4 +1,4 @@
-const CoinbaseToken = require('./coinbaseToken');
+const { CoinbaseToken } = require('./models');
 const Boom = require('boom');
 
 const saveCoinbaseTokenByUserId = (id, access_token, token_type, expires_in, refresh_token, scope) => {
@@ -13,7 +13,7 @@ const saveCoinbaseTokenByUserId = (id, access_token, token_type, expires_in, ref
 			scope: scope
 		})
 		.catch(error => {
-			Boom.badData();
+			return Boom.badData();
 		});
 };
 
@@ -25,11 +25,11 @@ const getRefreshTokenByUserId = user_id => {
 			return refresh_token;
 		})
 		.catch(error => {
-			Boom.notFound('refresh lookup failed', error);
+			return Boom.notFound('refresh lookup failed', error);
 		});
 };
 
-const saveRefreshToken = (id, access_token, token_type, expires_in, refresh_token, scope) => {
+const saveRefreshTokenByUserId = (id, access_token, token_type, expires_in, refresh_token, scope) => {
 	return new CoinbaseToken()
 		.where({ user_id: id })
 		.save(
@@ -44,12 +44,12 @@ const saveRefreshToken = (id, access_token, token_type, expires_in, refresh_toke
 			{ patch: true }
 		)
 		.catch(error => {
-			Boom.badData();
+			return Boom.badData();
 		});
 };
 
 module.exports = {
 	saveCoinbaseTokenByUserId,
 	getRefreshTokenByUserId,
-	saveRefreshToken
+	saveRefreshTokenByUserId
 };

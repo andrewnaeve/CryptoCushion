@@ -1,4 +1,4 @@
-const gql = require('graphql');
+const { List, NonNull, String } = require('../../utilities/GraphQLTypeUtilities');
 const moment = require('moment');
 const TransactionType = require('../types/TransactionType');
 const Wreck = require('wreck');
@@ -46,9 +46,9 @@ const fetchTransactions = async token => {
 
 module.exports = {
 	getTransactions: {
-		type: new gql.GraphQLList(TransactionType),
+		type: List(TransactionType),
 		args: {
-			access_token: { type: new gql.GraphQLNonNull(gql.GraphQLString) }
+			access_token: { type: NonNull(String) }
 		},
 		resolve: async (_, { access_token }) => {
 			const transactions = await fetchTransactions(access_token);

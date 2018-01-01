@@ -1,4 +1,4 @@
-const User = require('./user');
+const { User } = require('./models');
 
 const createUser = (first_name, last_name, email) => {
 	return new User().save({

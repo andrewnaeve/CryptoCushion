@@ -1,19 +1,18 @@
-const gql = require('graphql');
-const userQueries = require('./common/user/userQueries');
-const userMutations = require('./common/user/userMutations');
-const plaidMutations = require('./plaid/plaidMutations');
-const plaidQueries = require('./plaid/plaidQueries');
-const coinbaseMutations = require('./coinbase/coinbaseMutations');
+const { Schema, ObjectType } = require('./utilities/GraphQLTypeUtilities');
 
-const schema = new gql.GraphQLSchema({
-	query: new gql.GraphQLObjectType({
+const { plaidQueries, plaidMutations } = require('./plaid');
+const { userQueries, userMutations } = require('./common/user');
+const { coinbaseMutations } = require('./coinbase');
+
+const schema = Schema({
+	query: ObjectType({
 		name: 'RootQueryType',
 		fields: () => ({
 			...userQueries,
 			...plaidQueries
 		})
 	}),
-	mutation: new gql.GraphQLObjectType({
+	mutation: ObjectType({
 		name: 'RootMutationType',
 		fields: () => ({
 			...userMutations,

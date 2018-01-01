@@ -1,12 +1,12 @@
-const gql = require('graphql');
+const { InputObjectType, String, ID } = require('../../../utilities/GraphQLTypeUtilities');
 
-const UserInputType = new gql.GraphQLInputObjectType({
+const UserInputType = InputObjectType({
 	name: 'UserInputType',
 	fields: () => ({
-		id: { type: gql.GraphQLID },
-		first_name: { type: gql.GraphQLString },
-		last_name: { type: gql.GraphQLString },
-		email: { type: gql.GraphQLString }
+		id: { type: ID },
+		first_name: { type: String },
+		last_name: { type: String },
+		email: { type: String }
 	})
 });
 
