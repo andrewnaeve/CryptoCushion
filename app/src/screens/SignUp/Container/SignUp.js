@@ -4,7 +4,10 @@ import { bindActionCreators } from 'redux';
 import styled from 'styled-components/native';
 import { Text } from 'react-native';
 import { width } from '../../../utils/styleConstants';
+import { FirstName } from './components/FirstName';
+import { LastName } from './components/LastName';
 import { Email } from './components/Email';
+import { Password } from './components/password';
 
 class Home extends Component {
 	constructor() {
@@ -19,7 +22,10 @@ class Home extends Component {
 	render() {
 		return (
 			<SignUpContainer>
+				<FirstName handleChange={this._handleFirstNameChange} />
+				<LastName handleChange={this._handleLastNameChange} />
 				<Email handleChange={this._handleEmailChange} />
+				<Password handleChange={this._handlePasswordChange} />
 			</SignUpContainer>
 		);
 	}

@@ -1,9 +1,12 @@
 import React from 'react';
+import { View } from 'react-native';
 import styled from 'styled-components/native';
 import { width } from '../../../utils/styleConstants';
 
 export const FirstName = props => (
-	<Input keyboardType={'default'} placeholder="First Name" onChangeText={props.handleChange} />
+	<View>
+		<Input keyboardType={'default'} placeholder="First Name" onChangeText={props.handleChange} />
+	</View>
 );
 
 const Input = styled.TextInput`
