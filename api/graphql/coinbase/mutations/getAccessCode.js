@@ -1,7 +1,7 @@
 const { Boolean, NonNull, String } = require('../../utilities/GraphQLTypeUtilities');
 const Wreck = require('wreck');
 const Boom = require('boom');
-const { userIdByEmail } = require('../../common/user/db/queries');
+const { userIdByEmail } = require('../../common/userInfo/db/queries');
 const { saveCoinbaseTokenByUserId } = require('../db/queries');
 // const TokenType = require('../types/coinbaseTokenType');
 

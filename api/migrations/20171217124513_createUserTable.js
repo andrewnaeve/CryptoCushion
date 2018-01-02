@@ -7,6 +7,7 @@ exports.up = function(knex, Promise) {
 			.string('email')
 			.notNullable()
 			.unique();
+		table.string('password').notNullable();
 		table.timestamp('created_at').notNullable();
 	});
 };

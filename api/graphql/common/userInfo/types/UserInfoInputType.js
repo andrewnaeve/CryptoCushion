@@ -1,7 +1,7 @@
 const { InputObjectType, String, ID } = require('../../../utilities/GraphQLTypeUtilities');
 
-const UserInputType = InputObjectType({
-	name: 'UserInputType',
+const UserInfoInputType = InputObjectType({
+	name: 'UserInfoInputType',
 	fields: () => ({
 		id: { type: ID },
 		first_name: { type: String },
@@ -10,4 +10,4 @@ const UserInputType = InputObjectType({
 	})
 });
 
-module.exports = UserInputType;
+module.exports = UserInfoInputType;

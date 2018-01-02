@@ -1,5 +1,5 @@
 const { Boolean, String, NonNull } = require('../../utilities/GraphQLTypeUtilities');
-const { userIdByEmail } = require('../../common/user/db/queries');
+const { userIdByEmail } = require('../../common/userInfo/db/queries');
 const { saveItem } = require('../db/queries');
 const Wreck = require('wreck');
 const Boom = require('boom');

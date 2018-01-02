@@ -1,7 +1,7 @@
 const { ObjectType, String, ID } = require('../../../utilities/GraphQLTypeUtilities');
 
-const UserType = ObjectType({
-	name: 'UserType',
+const UserInfoType = ObjectType({
+	name: 'UserInfoType',
 	fields: () => ({
 		id: { type: ID },
 		first_name: { type: String },
@@ -10,4 +10,4 @@ const UserType = ObjectType({
 	})
 });
 
-module.exports = UserType;
+module.exports = UserInfoType;

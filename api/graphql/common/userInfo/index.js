@@ -1,12 +1,7 @@
 const { allUsers } = require('./queries/allUsers');
 const { userByEmail } = require('./queries/userByEmail');
-const { createUser } = require('./mutations/createUser');
 
-exports.userQueries = {
+exports.userInfoQueries = {
 	allUsers,
 	userByEmail
-};
-
-exports.userMutations = {
-	createUser
 };

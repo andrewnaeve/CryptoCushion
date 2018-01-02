@@ -10,8 +10,8 @@ module.exports = {
 				type: UserInputType
 			}
 		},
-		resolve: (_, { user: { first_name, last_name, email } }) => {
-			createUser(first_name, last_name, email);
+		resolve: (_, { user: { first_name, last_name, email, password } }) => {
+			createUser(first_name, last_name, email, password);
 		}
 	}
 };

@@ -1,11 +1,11 @@
 const { NonNull, String } = require('../../../utilities/GraphQLTypeUtilities');
 const Boom = require('boom');
-const UserType = require('../types/UserType');
+const UserInfoType = require('../types/UserInfoType');
 const { userByEmail } = require('../db/queries');
 
 module.exports = {
 	userByEmail: {
-		type: UserType,
+		type: UserInfoType,
 		args: {
 			email: { type: NonNull(String) }
 		},

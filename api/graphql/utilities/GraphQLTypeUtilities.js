@@ -3,6 +3,8 @@ const {
 	GraphQLNonNull,
 	GraphQLObjectType,
 	GraphQLInputObjectType,
+	GraphQLInterfaceType,
+	GraphQLEnumType,
 	GraphQLList,
 	GraphQLString,
 	GraphQLInt,
@@ -23,8 +25,14 @@ exports.ObjectType = object => {
 exports.InputObjectType = object => {
 	return new GraphQLInputObjectType(object);
 };
+exports.InterfaceType = interfaceType => {
+	return new GraphQLInterfaceType(interfaceType);
+};
 exports.List = list => {
 	return new GraphQLList(list);
+};
+exports.EnumType = enumType => {
+	return new GraphQLEnumType(enumType);
 };
 exports.String = GraphQLString;
 exports.Int = GraphQLInt;
