@@ -22,7 +22,7 @@ const exchangeRefreshToken = async refreshToken => {
 		const { payload } = await Wreck.post(`${COINBASE_URL}/oauth/token`, options);
 		return payload;
 	} catch (error) {
-		return Boom.badRequest('Request for access token rejected', error.data.payload);
+		console.log(error.data.payload);
 	}
 };
 
@@ -41,7 +41,7 @@ module.exports = {
 			}
 			const newCoinbaseToken = await exchangeRefreshToken(refreshToken);
 			if (!newCoinbaseToken) {
-				return Boom.badData('Token empty');
+				console.log('Token empty');
 			}
 			const { access_token, token_type, expires_in, refresh_token, scope } = newCoinbaseToken;
 			saveRefreshTokenByUserId(user_id, access_token, token_type, expires_in, refresh_token, scope);

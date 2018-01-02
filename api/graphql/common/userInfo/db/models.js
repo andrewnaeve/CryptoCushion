@@ -4,7 +4,7 @@ const { CoinbaseToken } = require('../../../coinbase/db/models');
 // require('../../../plaid/models/item');
 // require('../../../coinbase/models/coinbaseToken');
 
-const User = bookshelf.Model.extend({
+const UserInfo = bookshelf.Model.extend({
 	tableName: 'users',
 	item: () => {
 		this.hasOne(Item);
@@ -14,5 +14,5 @@ const User = bookshelf.Model.extend({
 	}
 });
 
-module.exports = User;
-// module.exports = bookshelf.model('User', User);
+module.exports = UserInfo;
+// module.exports = bookshelf.model('UserInfo', UserInfo);

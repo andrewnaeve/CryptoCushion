@@ -1,17 +1,17 @@
 const { Boolean } = require('../../../utilities/GraphQLTypeUtilities');
-const UserInputType = require('../types/UserInputType');
-const { createUser } = require('../db/queries');
+const UserSignUpInputType = require('../types/UserSignUpInputType');
+const { saveUser } = require('../db/queries');
 
 module.exports = {
-	createUser: {
+	signUp: {
 		type: Boolean,
 		args: {
 			user: {
-				type: UserInputType
+				type: UserSignUpInputType
 			}
 		},
 		resolve: (_, { user: { first_name, last_name, email, password } }) => {
-			createUser(first_name, last_name, email, password);
+			saveUser(first_name, last_name, email, password);
 		}
 	}
 };
