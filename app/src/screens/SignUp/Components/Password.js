@@ -6,12 +6,7 @@ import { Field } from './Field';
 
 export const Password = props => (
 	<View>
-		<Field
-			keyboardType={'default'}
-			placeholder="Password"
-			secureTextEntry
-			onChangeText={props.handleChange}
-		/>
+		<Field placeholder="Password" secureTextEntry onChangeText={props.handleChange} />
 		<LockIcon name="lock" size={25} color="#D7D7D7" />
 	</View>
 );

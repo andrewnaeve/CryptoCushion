@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Field } from './Field';
@@ -17,12 +17,3 @@ const EmailIcon = styled(Icon)`
 	left: 7px;
 	background-color: transparent;
 `;
-
-// const styles = StyleSheet.create({
-// 	icon: {
-// 		position: 'absolute',
-// 		top: 5,
-// 		left: 7,
-// 		backgroundColor: 'transparent'
-// 	}
-// });

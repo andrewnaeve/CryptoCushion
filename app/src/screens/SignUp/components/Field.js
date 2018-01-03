@@ -2,13 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import { width } from '../../../utils/styleConstants';
 
-export const Field = props => (
-	<Input
-		keyboardType={props.keyboardType || 'default'}
-		placeholder={props.placeholder}
-		onChangeText={props.handleChange}
-	/>
-);
+export const Field = props => <Input {...props} />;
 
 const Input = styled.TextInput`
 	height: 35px;

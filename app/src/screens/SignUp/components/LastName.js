@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export const LastName = props => (
 	<View>
-		<Field keyboardType="default" placeholder="Last Name" onChangeText={props.handleChange} />
+		<Field placeholder="Last Name" onChangeText={props.handleChange} />
 		<PersonIcon name="person" size={25} color="#D7D7D7" />
 	</View>
 );
