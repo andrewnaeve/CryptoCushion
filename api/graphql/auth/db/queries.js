@@ -3,40 +3,41 @@ const User = require('./models');
 
 const hashPassword = plainText => {
 	const saltRounds = 10;
-	bcrypt
-		.hash(plainText, saltRounds)
-		.then(hash => {
-			return hash;
-		})
-		.catch(err => err);
+	try {
+		return bcrypt.hash(plainText, saltRounds);
+	} catch (err) {
+		throw new Error(err.message);
+	}
 };
 
-const retrieveUserHashByEmail = email => {
-	return new User({ email: email })
-		.fetch()
-		.then(model => {
-			return model.get('password');
-		})
-		.catch(err => err);
+const retrieveUserHashByEmail = async email => {
+	try {
+		const storedHash = await new User({ email: email }).fetch();
+		return storedHash.get('password');
+	} catch (err) {
+		throw new Error(err.message);
+	}
 };
 
-exports.saveUser = (first_name, last_name, email, password) => {
-	Promise.resolve(hashPassword(password))
-		.then(hashedPassword => {
-			return new User().save({
-				first_name: first_name,
-				last_name: last_name,
-				email: email,
-				password: hashedPassword
-			});
-		})
-		.catch(err => err);
+exports.saveUser = async (first_name, last_name, email, password) => {
+	try {
+		const hashedPassword = await hashPassword(password);
+		return User.forge({
+			first_name: first_name,
+			last_name: last_name,
+			email: email,
+			password: hashedPassword
+		}).save();
+	} catch (err) {
+		throw new Error(err.message);
+	}
 };
 
-exports.comparePassword = (email, plainText) => {
-	Promise.resolve(retrieveUserHashByEmail(email))
-		.then(hash => {
-			return bcrypt.compare(plainText, hash);
-		})
-		.catch(err => err);
+exports.comparePassword = async (email, plainText) => {
+	try {
+		const storedHash = await retrieveUserHashByEmail(email);
+		return bcrypt.compare(plainText, storedHash);
+	} catch (err) {
+		throw new Error(err.message);
+	}
 };

@@ -1,6 +1,6 @@
 const bookshelf = require('../../../bookshelf');
-const { Item } = require('../../../plaid/db/models');
-const { CoinbaseToken } = require('../../../coinbase/db/models');
+const { Item } = require('../../plaid/db/models');
+const { CoinbaseToken } = require('../../coinbase/db/models');
 // require('../../../plaid/models/item');
 // require('../../../coinbase/models/coinbaseToken');
 

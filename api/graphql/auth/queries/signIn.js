@@ -1,13 +1,13 @@
-const { Boolean } = require('../../../utilities/GraphQLTypeUtilities');
-const UserSignInType = require('../types/UserSignInType');
+const { Boolean } = require('../../utilities/GraphQLTypeUtilities');
+const UserSignInInputType = require('../types/UserSignInInputType');
 const { comparePassword } = require('../db/queries');
 
 module.exports = {
-	signUp: {
+	signIn: {
 		type: Boolean,
 		args: {
 			user: {
-				type: UserSignInType
+				type: UserSignInInputType
 			}
 		},
 		resolve: async (_, { user: { email, password } }) => {

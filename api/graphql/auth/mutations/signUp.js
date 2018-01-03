@@ -1,4 +1,4 @@
-const { Boolean } = require('../../../utilities/GraphQLTypeUtilities');
+const { Boolean } = require('../../utilities/GraphQLTypeUtilities');
 const UserSignUpInputType = require('../types/UserSignUpInputType');
 const { saveUser } = require('../db/queries');
 
