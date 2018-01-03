@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components/native';
-import { Text } from 'react-native';
-import { width } from '../../../utils/styleConstants';
-import { FirstName } from './components/FirstName';
-import { LastName } from './components/LastName';
-import { Email } from './components/Email';
-import { Password } from './components/password';
+import { height } from '../../../utils/styleConstants';
+import { FirstName } from '../components/FirstName';
+import { LastName } from '../components/LastName';
+import { Email } from '../components/Email';
+import { Password } from '../components/Password';
 
 class Home extends Component {
 	constructor() {
@@ -55,7 +54,8 @@ const SignUpContainer = styled.View`
 	flex: 1;
 	background-color: #fff;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-start;
+	padding-top: ${height * 0.2};
 `;
 
 export default connect(state => state, null)(Home);

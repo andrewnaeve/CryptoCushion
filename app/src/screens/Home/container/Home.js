@@ -32,6 +32,9 @@ class Home extends Component {
 				<Button onPress={this._launchCoinbase}>
 					<Text>Launch Coinbase</Text>
 				</Button>
+				<Button onPress={this._launchSignUp}>
+					<Text>Launch Sign Up</Text>
+				</Button>
 			</HomeContainer>
 		);
 	}
@@ -44,6 +47,11 @@ class Home extends Component {
 	_launchCoinbase = () => {
 		const { navigation: { navigate } } = this.props;
 		navigate('Coinbase');
+	};
+
+	_launchSignUp = () => {
+		const { navigation: { navigate } } = this.props;
+		navigate('SignUp');
 	};
 
 	_handleDeepLinkAuth = url => {

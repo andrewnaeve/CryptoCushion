@@ -1,7 +1,7 @@
 const { CoinbaseToken } = require('./models');
 const Boom = require('boom');
 
-const saveCoinbaseTokenByUserId = (id, access_token, token_type, expires_in, refresh_token, scope) => {
+exports.saveCoinbaseTokenByUserId = (id, access_token, token_type, expires_in, refresh_token, scope) => {
 	return new CoinbaseToken()
 		.where({ user_id: id })
 		.save({
@@ -17,7 +17,7 @@ const saveCoinbaseTokenByUserId = (id, access_token, token_type, expires_in, ref
 		});
 };
 
-const getRefreshTokenByUserId = user_id => {
+exports.getRefreshTokenByUserId = user_id => {
 	return new CoinbaseToken({ user_id: user_id })
 		.fetch()
 		.then(model => {
@@ -29,7 +29,7 @@ const getRefreshTokenByUserId = user_id => {
 		});
 };
 
-const saveRefreshTokenByUserId = (id, access_token, token_type, expires_in, refresh_token, scope) => {
+exports.saveRefreshTokenByUserId = (id, access_token, token_type, expires_in, refresh_token, scope) => {
 	return new CoinbaseToken()
 		.where({ user_id: id })
 		.save(
@@ -46,10 +46,4 @@ const saveRefreshTokenByUserId = (id, access_token, token_type, expires_in, refr
 		.catch(error => {
 			return Boom.badData();
 		});
-};
-
-module.exports = {
-	saveCoinbaseTokenByUserId,
-	getRefreshTokenByUserId,
-	saveRefreshTokenByUserId
 };

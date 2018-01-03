@@ -2,7 +2,7 @@ import { StackNavigator } from 'react-navigation';
 import Home from '../screens/Home/container/Home';
 import Plaid from '../screens/Plaid/container/Plaid';
 import Coinbase from '../screens/Coinbase/container/Coinbase';
-import SignUp from '../screens/SignUp/Container/SignUp';
+import SignUp from '../screens/SignUp/container/SignUp';
 
 export const MainNavigator = StackNavigator(
 	{

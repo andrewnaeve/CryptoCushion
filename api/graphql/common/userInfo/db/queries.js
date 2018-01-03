@@ -1,6 +1,6 @@
 const { User } = require('./models');
 
-const createUser = (first_name, last_name, email) => {
+exports.createUser = (first_name, last_name, email) => {
 	return new User().save({
 		first_name: first_name,
 		last_name: last_name,
@@ -8,7 +8,7 @@ const createUser = (first_name, last_name, email) => {
 	});
 };
 
-const getAllUsers = () => {
+exports.getAllUsers = () => {
 	return new User().fetchAll().then(data => {
 		return data.map(x => {
 			return {
@@ -21,7 +21,7 @@ const getAllUsers = () => {
 	});
 };
 
-const userByEmail = email => {
+exports.userByEmail = email => {
 	return new User({ email: email }).fetch().then(model => {
 		const { attributes: { id, first_name, last_name } } = model;
 		return {
@@ -32,15 +32,8 @@ const userByEmail = email => {
 	});
 };
 
-const userIdByEmail = email => {
+exports.userIdByEmail = email => {
 	return new User({ email: email }).fetch({ columns: 'id' }).then(model => {
 		return model.get('id');
 	});
-};
-
-module.exports = {
-	createUser,
-	getAllUsers,
-	userIdByEmail,
-	userByEmail
 };

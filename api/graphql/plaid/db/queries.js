@@ -1,6 +1,6 @@
 const { Item } = require('./models');
 
-const saveItem = (id, access_token, item_id) => {
+exports.saveItem = (id, access_token, item_id) => {
 	return new Item({ user_id: id }).fetch().then(result => {
 		if (result === null) {
 			Item.save({
@@ -18,8 +18,4 @@ const saveItem = (id, access_token, item_id) => {
 			);
 		}
 	});
-};
-
-module.exports = {
-	saveItem
 };
