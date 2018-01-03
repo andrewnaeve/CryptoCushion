@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-	StyleSheet,
-	WebView,
-	TouchableOpacity,
-	Text,
-	View
-} from 'react-native';
-import styled from 'styled-components/native';
+import { StyleSheet, WebView, View } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { plaidConnected } from '../../../redux/actions/plaidActions';
