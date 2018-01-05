@@ -9,15 +9,12 @@ import { Password } from '../components/Password';
 import { width } from '../../../utils/styleConstants';
 
 class Home extends Component {
-	constructor() {
-		super();
-		this.state = {
-			firstName: '',
-			lastName: '',
-			email: '',
-			password: ''
-		};
-	}
+	state = {
+		firstName: '',
+		lastName: '',
+		email: '',
+		password: ''
+	};
 
 	render() {
 		return (
@@ -28,11 +25,12 @@ class Home extends Component {
 				<Password handleChange={this._handlePasswordChange} />
 				<Separator />
 				<Submit>
-					<SubmitText>Sign Up</SubmitText>
+					<SubmitText onPress={this._handleSubmit}>Sign Up</SubmitText>
 				</Submit>
 			</SignUpContainer>
 		);
 	}
+
 	_handleFirstNameChange = character => {
 		this.setState({
 			firstName: character
@@ -53,6 +51,9 @@ class Home extends Component {
 			password: character
 		});
 	};
+	_handleSubmit = () => {
+		console.log('pressed submit');
+	};
 }
 
 const SignUpContainer = styled.View`
@@ -67,7 +68,7 @@ const Separator = styled.View`
 	flex: 1;
 `;
 
-const Submit = styled.TouchableHighlight`
+const Submit = styled.TouchableOpacity`
 	align-items: center;
 	justify-content: center;
 	height: 40px;
