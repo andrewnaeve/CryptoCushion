@@ -24,9 +24,9 @@ class Home extends Component {
 				<Email handleChange={this._handleEmailChange} />
 				<Password handleChange={this._handlePasswordChange} />
 				<Separator />
-				<Submit>
+				<SubmitButton>
 					<SubmitText onPress={this._handleSubmit}>Sign Up</SubmitText>
-				</Submit>
+				</SubmitButton>
 			</SignUpContainer>
 		);
 	}
@@ -63,12 +63,10 @@ const SignUpContainer = styled.View`
 	justify-content: flex-start;
 	background-color: #fff;
 `;
-
 const Separator = styled.View`
 	flex: 1;
 `;
-
-const Submit = styled.TouchableOpacity`
+const SubmitButton = styled.TouchableOpacity`
 	align-items: center;
 	justify-content: center;
 	height: 40px;
@@ -79,7 +77,6 @@ const Submit = styled.TouchableOpacity`
 	border-width: 1px;
 	margin-bottom: 50px;
 `;
-
 const SubmitText = styled.Text`
 	color: #c8c8c8;
 	font-size: 20px;
