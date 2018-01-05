@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Text } from 'react-native';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components/native';
 import { height } from '../../../utils/styleConstants';
@@ -7,6 +8,7 @@ import { FirstName } from '../components/FirstName';
 import { LastName } from '../components/LastName';
 import { Email } from '../components/Email';
 import { Password } from '../components/Password';
+import { width } from '../../../utils/styleConstants';
 
 class Home extends Component {
 	constructor() {
@@ -26,6 +28,10 @@ class Home extends Component {
 				<LastName handleChange={this._handleLastNameChange} />
 				<Email handleChange={this._handleEmailChange} />
 				<Password handleChange={this._handlePasswordChange} />
+				<Separator />
+				<Submit>
+					<SubmitText>Sign Up</SubmitText>
+				</Submit>
 			</SignUpContainer>
 		);
 	}
@@ -53,10 +59,32 @@ class Home extends Component {
 
 const SignUpContainer = styled.View`
 	flex: 1;
-	background-color: #fff;
+	padding-top: ${height * 0.2};
 	align-items: center;
 	justify-content: flex-start;
-	padding-top: ${height * 0.2};
+	background-color: #fff;
+`;
+
+const Separator = styled.View`
+	flex: 1;
+`;
+
+const Submit = styled.TouchableHighlight`
+	align-items: center;
+	justify-content: center;
+	height: 40px;
+	width: ${width * 0.8};
+	background-color: transparent;
+	border-color: #c8c8c8;
+	border-radius: 5px;
+	border-width: 1px;
+	margin-bottom: 50px;
+`;
+
+const SubmitText = styled.Text`
+	color: #c8c8c8;
+	font-size: 20px;
+	font-family: Arial;
 `;
 
 export default connect(state => state, null)(Home);
