@@ -37,12 +37,6 @@ class Plaid extends Component {
 		}
 	}
 
-	onMessage = e => {
-		this.setState({
-			data: JSON.parse(e.nativeEvent.data)
-		});
-	};
-
 	render() {
 		return (
 			<View style={styles.container}>
@@ -50,11 +44,17 @@ class Plaid extends Component {
 					source={{
 						uri: `https://cdn.plaid.com/link/v2/stable/link.html?key=${PLAID_PUBLIC_KEY}&env=${PLAID_ENV}&product=${PLAID_PRODUCT}&clientName=Bit Cushion&isWebView=true&webhook=http://google.com`
 					}}
-					onMessage={e => this.onMessage(e)}
+					onMessage={e => this._onMessage(e)}
 				/>
 			</View>
 		);
 	}
+
+	_onMessage = e => {
+		this.setState({
+			data: JSON.parse(e.nativeEvent.data)
+		});
+	};
 }
 
 const styles = StyleSheet.create({
