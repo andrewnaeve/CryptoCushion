@@ -9,15 +9,12 @@ import { Password } from '../components/Password';
 import { width } from '../../../utils/styleConstants';
 
 class Home extends Component {
-	constructor() {
-		super();
-		this.state = {
-			firstName: '',
-			lastName: '',
-			email: '',
-			password: ''
-		};
-	}
+	state = {
+		firstName: '',
+		lastName: '',
+		email: '',
+		password: ''
+	};
 
 	render() {
 		return (
@@ -27,12 +24,13 @@ class Home extends Component {
 				<Email handleChange={this._handleEmailChange} />
 				<Password handleChange={this._handlePasswordChange} />
 				<Separator />
-				<Submit>
-					<SubmitText>Sign Up</SubmitText>
-				</Submit>
+				<SubmitButton>
+					<SubmitText onPress={this._handleSubmit}>Sign Up</SubmitText>
+				</SubmitButton>
 			</SignUpContainer>
 		);
 	}
+
 	_handleFirstNameChange = character => {
 		this.setState({
 			firstName: character
@@ -53,6 +51,9 @@ class Home extends Component {
 			password: character
 		});
 	};
+	_handleSubmit = () => {
+		console.log('pressed submit');
+	};
 }
 
 const SignUpContainer = styled.View`
@@ -62,12 +63,10 @@ const SignUpContainer = styled.View`
 	justify-content: flex-start;
 	background-color: #fff;
 `;
-
 const Separator = styled.View`
 	flex: 1;
 `;
-
-const Submit = styled.TouchableHighlight`
+const SubmitButton = styled.TouchableOpacity`
 	align-items: center;
 	justify-content: center;
 	height: 40px;
@@ -78,7 +77,6 @@ const Submit = styled.TouchableHighlight`
 	border-width: 1px;
 	margin-bottom: 50px;
 `;
-
 const SubmitText = styled.Text`
 	color: #c8c8c8;
 	font-size: 20px;
