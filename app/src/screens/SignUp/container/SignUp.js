@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Text } from 'react-native';
-import { bindActionCreators } from 'redux';
 import styled from 'styled-components/native';
 import { height } from '../../../utils/styleConstants';
 import { FirstName } from '../components/FirstName';
