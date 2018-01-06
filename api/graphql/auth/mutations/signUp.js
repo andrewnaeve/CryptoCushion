@@ -11,7 +11,7 @@ module.exports = {
 			}
 		},
 		resolve: (_, { user: { first_name, last_name, email, password } }) => {
-			saveUser(first_name, last_name, email, password);
+			return saveUser(first_name, last_name, email, password);
 		}
 	}
 };

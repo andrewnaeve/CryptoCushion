@@ -27,7 +27,9 @@ exports.saveUser = async (first_name, last_name, email, password) => {
 			last_name: last_name,
 			email: email,
 			password: hashedPassword
-		}).save();
+		})
+			.save()
+			.then(() => true);
 	} catch (err) {
 		throw new Error(err.message);
 	}

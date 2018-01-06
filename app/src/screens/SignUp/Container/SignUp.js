@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { graphql } from 'react-apollo';
 import styled from 'styled-components/native';
 import { height } from '../../../utils/styleConstants';
 import { FirstName } from '../components/FirstName';
@@ -6,6 +7,7 @@ import { LastName } from '../components/LastName';
 import { Email } from '../components/Email';
 import { Password } from '../components/Password';
 import { SubmitButton } from '../components/SubmitButton';
+import { signUpMutation } from './SignUpMutations';
 
 class SignUp extends Component {
 	state = {
@@ -49,7 +51,16 @@ class SignUp extends Component {
 		});
 	};
 	_handleSubmit = () => {
-		console.log('pressed submit');
+		const { mutate } = this.props;
+		const { firstName, lastName, email, password } = this.state;
+		mutate({
+			variables: {
+				first_name: firstName,
+				last_name: lastName,
+				email: email,
+				password: password
+			}
+		});
 	};
 }
 
@@ -64,4 +75,4 @@ const Separator = styled.View`
 	flex: 1;
 `;
 
-export default SignUp;
+export default graphql(signUpMutation)(SignUp);
