@@ -1,13 +1,13 @@
 import React from 'react';
 import ComposedApp from './src/ComposedApp';
-import { store } from './src/redux/configureStore';
-import { Provider } from 'react-redux';
+import ApolloProvider from 'react-apollo';
+import { client } from './ApolloClient';
 // import './ReactotronConfig';
 
 const App = () => (
-	<Provider store={store}>
+	<ApolloProvider client={client}>
 		<ComposedApp />
-	</Provider>
+	</ApolloProvider>
 );
 
 export default App;

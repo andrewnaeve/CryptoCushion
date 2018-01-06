@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import styled from 'styled-components/native';
 import { height } from '../../../utils/styleConstants';
 import { FirstName } from '../components/FirstName';
 import { LastName } from '../components/LastName';
 import { Email } from '../components/Email';
 import { Password } from '../components/Password';
-import { width } from '../../../utils/styleConstants';
+import { SubmitButton } from '../components/SubmitButton';
 
 class SignUp extends Component {
 	state = {
@@ -24,9 +23,7 @@ class SignUp extends Component {
 				<Email handleChange={this._handleEmailChange} />
 				<Password handleChange={this._handlePasswordChange} />
 				<Separator />
-				<SubmitButton>
-					<SubmitText onPress={this._handleSubmit}>Sign Up</SubmitText>
-				</SubmitButton>
+				<SubmitButton handlePress={this._handleSubmit} />
 			</SignUpContainer>
 		);
 	}
@@ -66,21 +63,5 @@ const SignUpContainer = styled.View`
 const Separator = styled.View`
 	flex: 1;
 `;
-const SubmitButton = styled.TouchableOpacity`
-	align-items: center;
-	justify-content: center;
-	height: 40px;
-	width: ${width * 0.8};
-	background-color: transparent;
-	border-color: #c8c8c8;
-	border-radius: 5px;
-	border-width: 1px;
-	margin-bottom: 50px;
-`;
-const SubmitText = styled.Text`
-	color: #c8c8c8;
-	font-size: 20px;
-	font-family: Arial;
-`;
 
-export default connect(state => state, null)(SignUp);
+export default SignUp;

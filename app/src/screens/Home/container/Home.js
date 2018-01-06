@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import styled from 'styled-components/native';
 import { Text, Linking } from 'react-native';
 import { width } from '../../../utils/styleConstants';
-import { coinbaseConnected, isBase64 } from '../../../redux/actions/coinbaseActions';
+import { isBase64 } from '../../utils/helpers';
 
 class Home extends Component {
 	constructor() {
@@ -58,7 +56,7 @@ class Home extends Component {
 		const code = url.split('+')[1];
 		const codeInUrl = isBase64(code);
 		if (codeInUrl) {
-			coinbaseConnected(code);
+			console.log('codeInUrl', codeInUrl);
 		}
 	};
 }
@@ -84,6 +82,4 @@ const Button = styled.TouchableOpacity`
 	justify-content: center;
 `;
 
-const mapDispatchToProps = dispatch => bindActionCreators({ coinbaseConnected }, dispatch);
-
-export default connect(({ coinbase }) => ({ coinbase }), mapDispatchToProps)(Home);
+export default Home;

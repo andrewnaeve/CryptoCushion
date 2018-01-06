@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import { WebView } from 'react-native';
 import styled from 'styled-components/native';
 import { coinbase } from '../../../../config.json';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { coinbaseConnected, isBase64 } from '../../../redux/actions/coinbaseActions';
+import { isBase64 } from '../../utils/helpers';
+const { development: { COINBASE_CLIENT_ID } } = coinbase;
 
 class Coinbase extends Component {
 	render() {
-		const { COINBASE_CLIENT_ID } = coinbase.development;
 		let url = `https://www.coinbase.com/oauth/authorize?response_type=code&client_id=${COINBASE_CLIENT_ID}&scope=wallet:user:read,wallet:accounts:read`;
 		return (
 			<Container>
@@ -24,10 +22,9 @@ class Coinbase extends Component {
 
 	_onNavigationStateChange = event => {
 		const code = event.title;
-		const { navigation: { goBack }, coinbaseConnected } = this.props;
+		const { navigation: { goBack } } = this.props;
 		const titleIsCode = isBase64(code);
 		if (titleIsCode) {
-			coinbaseConnected({ code: code });
 			goBack();
 		}
 	};
@@ -38,6 +35,4 @@ const Container = styled.View`
 	background-color: #164a7c;
 `;
 
-const mapDispatchToProps = dispatch => bindActionCreators({ coinbaseConnected }, dispatch);
-
-export default connect(({ coinbase }) => ({ coinbase }), mapDispatchToProps)(Coinbase);
+export default Coinbase;

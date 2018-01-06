@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components/native';
-import { Text, View } from 'react-native';
 import { Router } from './nav/router';
 
 export default class ComposedApp extends Component {

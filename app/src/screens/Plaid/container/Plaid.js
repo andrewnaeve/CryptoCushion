@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, WebView, View } from 'react-native';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { plaidConnected } from '../../../redux/actions/plaidActions';
-import { PLAID_PUBLIC_KEY, PLAID_ENV, PLAID_PRODUCT } from './plaidConfig';
+import { plaid } from '../../../../config.json';
+const { development: { PLAID_PUBLIC_KEY, PLAID_ENV, PLAID_PRODUCT } } = plaid;
 
 class Plaid extends Component {
 	state = {
@@ -12,7 +10,7 @@ class Plaid extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		const { data: { action, eventName, metadata } } = this.state;
-		const { navigation: { goBack }, plaidConnected } = this.props;
+		const { navigation: { goBack } } = this.props;
 		const prevEventName = prevState.data.eventName;
 		const prevAction = prevState.data.action;
 
@@ -31,7 +29,6 @@ class Plaid extends Component {
 					link_session_id: metadata.link_session_id
 				};
 				console.log('pt', responseObj.public_token);
-				plaidConnected(responseObj);
 				goBack();
 			}
 		}
@@ -63,12 +60,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-const mapStateToProps = ({ plaid }) => {
-	return { plaid };
-};
-
-const mapDispatchToProps = dispatch => {
-	return bindActionCreators({ plaidConnected }, dispatch);
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Plaid);
+export default Plaid;
