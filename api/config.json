@@ -1,0 +1,35 @@
+{
+	"api": {
+		"development": {
+			"URL": "http://127.0.0.1:8000"
+		}
+	},
+	"mysql": {
+		"development": {
+			"MYSQL_HOST": "127.0.0.1",
+			"MYSQL_USER": "root",
+			"MYSQL_PASSWORD": "dolphinbench",
+			"MYSQL_DATABASE": "CryptoCushion_dev",
+			"MYSQL_PORT": "3306"
+		}
+	},
+	"plaid": {
+		"development": {
+			"PLAID_CLIENT_ID": "5a2f53464e95b836d37e3e99",
+			"PLAID_SECRET": "92c503ab67546d5c72d26269b1fb02",
+			"PLAID_PUBLIC_KEY": "51714a53c9375443b3156193601f62",
+			"PLAID_ENV": "sandbox",
+			"PLAID_URL": "https://sandbox.plaid.com"
+		}
+	},
+	"coinbase": {
+		"development": {
+			"COINBASE_CLIENT_ID":
+				"1865729a2a9665d8e4e8a1f0d5928194696f80b814f37041a770f9078325d33d",
+			"COINBASE_CLIENT_SECRET":
+				"80348a8a7a51eeb96e29c0fd1a1042d7375e7dcf8fb5af4e1b3f9fadb729f336",
+			"COINBASE_CALLBACK_URL": "urn:ietf:wg:oauth:2.0:oob",
+			"COINBASE_URL": "https://api.coinbase.com"
+		}
+	}
+}
