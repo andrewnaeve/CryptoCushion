@@ -8,7 +8,7 @@ import { Email } from '../components/Email';
 import { Password } from '../components/Password';
 import { width } from '../../../utils/styleConstants';
 
-class Home extends Component {
+class SignUp extends Component {
 	state = {
 		firstName: '',
 		lastName: '',
@@ -83,4 +83,4 @@ const SubmitText = styled.Text`
 	font-family: Arial;
 `;
 
-export default connect(state => state, null)(Home);
+export default connect(state => state, null)(SignUp);
