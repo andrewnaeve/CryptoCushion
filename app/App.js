@@ -1,9 +1,8 @@
 import React from 'react';
+import { ApolloProvider } from 'react-apollo';
 import ComposedApp from './src/ComposedApp';
-import ApolloProvider from 'react-apollo';
 import { client } from './ApolloClient';
 // import './ReactotronConfig';
-
 const App = () => (
 	<ApolloProvider client={client}>
 		<ComposedApp />
