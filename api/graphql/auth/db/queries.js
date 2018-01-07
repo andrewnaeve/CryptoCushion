@@ -3,43 +3,44 @@ const User = require('./models');
 
 const hashPassword = plainText => {
 	const saltRounds = 10;
-	try {
-		return bcrypt.hash(plainText, saltRounds);
-	} catch (err) {
-		throw new Error(err.message);
-	}
+	return bcrypt.hash(plainText, saltRounds);
 };
 
-const retrieveUserHashByEmail = async email => {
-	try {
-		const storedHash = await new User({ email: email }).fetch();
-		return storedHash.get('password');
-	} catch (err) {
-		throw new Error(err.message);
-	}
+const retrieveUserHashByEmail = email => {
+	new User({ email: email })
+		.fetch()
+		.then(result => {
+			return result.get('password');
+		})
+		.catch(e => e.code);
 };
 
-exports.saveUser = async (first_name, last_name, email, password) => {
-	try {
-		const hashedPassword = await hashPassword(password);
+exports.saveUser = (first_name, last_name, email, password) => {
+	return hashPassword(password).then(hash => {
 		return User.forge({
 			first_name: first_name,
 			last_name: last_name,
 			email: email,
-			password: hashedPassword
+			password: hash
 		})
 			.save()
-			.then(() => true);
-	} catch (err) {
-		throw new Error(err.message);
-	}
+			.then(result => {
+				return {
+					result: 'success',
+					id: result.get('id'),
+					email: result.get('email')
+				};
+			})
+			.catch(e => {
+				return {
+					result: e.code
+				};
+			});
+	});
 };
 
-exports.comparePassword = async (email, plainText) => {
-	try {
-		const storedHash = await retrieveUserHashByEmail(email);
+exports.comparePassword = (email, plainText) => {
+	return retrieveUserHashByEmail(email).then(storedHash => {
 		return bcrypt.compare(plainText, storedHash);
-	} catch (err) {
-		throw new Error(err.message);
-	}
+	});
 };

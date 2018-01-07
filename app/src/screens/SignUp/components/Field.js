@@ -7,7 +7,7 @@ export const Field = props => <Input {...props} />;
 const Input = styled.TextInput`
 	height: 35px;
 	width: ${width * 0.8};
-	background-color: white;
+	background-color: transparent;
 	border-radius: 5px;
 	padding-left: 40px;
 	border-width: 1px;
