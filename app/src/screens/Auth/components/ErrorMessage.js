@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Animated, Easing, Text, View } from 'react-native';
+import { Animated, Easing } from 'react-native';
 import styled from 'styled-components/native';
 import { width } from '../../../utils/styleConstants';
 
@@ -9,8 +9,15 @@ export class ErrorMessage extends Component {
 		this.slideAnimation = new Animated.Value(1);
 		this.opaqueAnimation = new Animated.Value(0);
 	}
-	componentWillReceiveProps() {
+	componentWillUpdate() {
 		this._animate();
+	}
+	shouldComponentUpdate(nextProps) {
+		const nextError = nextProps.error;
+		if (nextError === '') {
+			return false;
+		}
+		return true;
 	}
 	render() {
 		const { error } = this.props;
@@ -29,9 +36,10 @@ export class ErrorMessage extends Component {
 		);
 	}
 	_animate = () => {
+		const { resetError } = this.props;
 		this.slideAnimation.setValue(20);
 		this.opaqueAnimation.setValue(0);
-		Animated.stagger(3000, [
+		Animated.stagger(2000, [
 			Animated.parallel([
 				Animated.timing(this.opaqueAnimation, {
 					toValue: 1,
@@ -59,7 +67,7 @@ export class ErrorMessage extends Component {
 					useNativeDriver: true
 				})
 			])
-		]).start();
+		]).start(() => resetError());
 	};
 }
 
@@ -75,4 +83,5 @@ const ErrorText = styled.Text`
 	color: red;
 `;
 
+// necessary for styled components only. Otherwise, Animated.Text or Animated.View etc.
 const AnimatedErrorText = Animated.createAnimatedComponent(ErrorText);

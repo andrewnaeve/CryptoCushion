@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
 import { graphql } from 'react-apollo';
 import styled from 'styled-components/native';
-import { height } from '../../../utils/styleConstants';
-import { FirstName } from '../components/FirstName';
-import { LastName } from '../components/LastName';
-import { Email } from '../components/Email';
-import { Password } from '../components/Password';
-import { ErrorMessage } from '../components/ErrorMessage';
-import { SubmitButton } from '../components/SubmitButton';
-import { signUpMutation } from '../graphql/SignUpMutations';
+import { height } from '../../utils/styleConstants';
+import { FirstName } from './components/FirstName';
+import { LastName } from './components/LastName';
+import { Email } from './components/Email';
+import { Password } from './components/Password';
+import { ErrorMessage } from './components/ErrorMessage';
+import { SubmitButton } from './components/SubmitButton';
+import { signUpMutation } from './authMutations';
 
 class SignUp extends Component {
 	state = {
@@ -20,16 +19,6 @@ class SignUp extends Component {
 		errorMessage: ''
 	};
 
-	comonentDidUpdate(nextProps, nextState) {
-		const { errorMessage } = this.state;
-		const nextError = nextState.errorMessage;
-		if (errorMessage !== nextError) {
-			this.setState({
-				showError: true
-			});
-		}
-	}
-
 	render() {
 		const { firstName, lastName, email, password, errorMessage } = this.state;
 		return (
@@ -38,9 +27,9 @@ class SignUp extends Component {
 				<LastName handleChange={this._handleLastNameChange} value={lastName} />
 				<Email handleChange={this._handleEmailChange} value={email} />
 				<Password handleChange={this._handlePasswordChange} value={password} />
-				<ErrorMessage error={errorMessage} />
+				<ErrorMessage error={errorMessage} resetError={this._resetError} />
 				<Separator />
-				<SubmitButton handlePress={this._handleSubmit} />
+				<SubmitButton handlePress={this._handleSubmit} label={'Sign Up'} />
 			</SignUpContainer>
 		);
 	}
@@ -68,30 +57,27 @@ class SignUp extends Component {
 	_handleSubmit = () => {
 		const { mutate } = this.props;
 		const { firstName, lastName, email, password } = this.state;
-		mutate({
-			variables: {
-				first_name: firstName,
-				last_name: lastName,
-				email: email,
-				password: password
-			}
-		}).then(data => {
-			const { email, id, result } = data.data.signUp;
-			this._handleResult(email, id, result);
-			console.log(result);
-		});
-		// this._resetForm();
-	};
-	_resetForm = () => {
-		this.setState({
-			firstName: '',
-			lastName: '',
-			email: '',
-			password: ''
-		});
+		if (firstName && lastName && email && password) {
+			mutate({
+				variables: {
+					first_name: firstName,
+					last_name: lastName,
+					email: email,
+					password: password
+				}
+			}).then(response => {
+				const { email, id, result } = response.data.signUp;
+				this._handleResult(email, id, result);
+				this._resetPassword();
+			});
+		} else {
+			this.setState({
+				errorMessage: 'Please fill out the form completely.'
+			});
+		}
 	};
 	_handleResult = (email, id, result) => {
-		const { navigation: { navigate: { goBack } } } = this.props;
+		const { navigation: { goBack } } = this.props;
 		switch (result) {
 			case 'success':
 				return goBack();
@@ -102,6 +88,16 @@ class SignUp extends Component {
 			default:
 				return;
 		}
+	};
+	_resetPassword = () => {
+		this.setState({
+			password: ''
+		});
+	};
+	_resetError = () => {
+		this.setState({
+			errorMessage: ''
+		});
 	};
 }
 

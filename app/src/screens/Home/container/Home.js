@@ -33,6 +33,9 @@ class Home extends Component {
 				<Button onPress={this._launchSignUp}>
 					<Text>Launch Sign Up</Text>
 				</Button>
+				<Button onPress={this._launchSignIn}>
+					<Text>Launch Sign In</Text>
+				</Button>
 			</HomeContainer>
 		);
 	}
@@ -41,17 +44,18 @@ class Home extends Component {
 		const { navigation: { navigate } } = this.props;
 		navigate('Plaid');
 	};
-
 	_launchCoinbase = () => {
 		const { navigation: { navigate } } = this.props;
 		navigate('Coinbase');
 	};
-
 	_launchSignUp = () => {
 		const { navigation: { navigate } } = this.props;
 		navigate('SignUp');
 	};
-
+	_launchSignIn = () => {
+		const { navigation: { navigate } } = this.props;
+		navigate('SignIn');
+	};
 	_handleDeepLinkAuth = url => {
 		const code = url.split('+')[1];
 		const codeInUrl = isBase64(code);

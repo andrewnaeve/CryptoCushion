@@ -2,15 +2,14 @@ const { Schema, ObjectType } = require('./utilities/GraphQLTypeUtilities');
 const { plaidQueries, plaidMutations } = require('./plaid');
 const { userInfoQueries } = require('./common/userInfo');
 const { coinbaseMutations } = require('./coinbase');
-const { authMutations, authQueries } = require('./auth');
+const { authMutations } = require('./auth');
 
 const schema = Schema({
 	query: ObjectType({
 		name: 'RootQueryType',
 		fields: () => ({
 			...userInfoQueries,
-			...plaidQueries,
-			...authQueries
+			...plaidQueries
 		})
 	}),
 	mutation: ObjectType({

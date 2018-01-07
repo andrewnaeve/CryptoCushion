@@ -7,10 +7,17 @@ const hashPassword = plainText => {
 };
 
 const retrieveUserHashByEmail = email => {
-	new User({ email: email })
+	return new User({ email: email })
 		.fetch()
 		.then(result => {
-			return result.get('password');
+			if (result) {
+				return {
+					password: result.get('password'),
+					id: result.get('id')
+				};
+			} else {
+				return result;
+			}
 		})
 		.catch(e => e.code);
 };
@@ -40,7 +47,17 @@ exports.saveUser = (first_name, last_name, email, password) => {
 };
 
 exports.comparePassword = (email, plainText) => {
-	return retrieveUserHashByEmail(email).then(storedHash => {
-		return bcrypt.compare(plainText, storedHash);
+	return retrieveUserHashByEmail(email).then(data => {
+		if (data) {
+			return {
+				result: bcrypt.compare(plainText, data.password),
+				id: data.id
+			};
+		} else {
+			return {
+				result: false,
+				id: null
+			};
+		}
 	});
 };

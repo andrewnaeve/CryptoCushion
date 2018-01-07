@@ -1,5 +1,4 @@
 const { signUp } = require('./mutations/signUp');
-const { signIn } = require('./queries/signIn');
+const { signIn } = require('./mutations/signIn');
 
-exports.authMutations = { signUp };
-exports.authQueries = { signIn };
+exports.authMutations = { signIn, signUp };

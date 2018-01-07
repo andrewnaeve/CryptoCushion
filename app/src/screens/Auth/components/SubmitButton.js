@@ -4,7 +4,7 @@ import { width } from '../../../utils/styleConstants';
 
 export const SubmitButton = props => (
 	<Button onPress={props.handlePress}>
-		<SubmitText>Sign Up</SubmitText>
+		<SubmitText>{props.label}</SubmitText>
 	</Button>
 );
 
