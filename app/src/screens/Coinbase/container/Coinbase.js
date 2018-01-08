@@ -9,14 +9,13 @@ class Coinbase extends Component {
 	render() {
 		let url = `https://www.coinbase.com/oauth/authorize?response_type=code&client_id=${COINBASE_CLIENT_ID}&scope=wallet:user:read,wallet:accounts:read`;
 		return (
-			<Container>
-				<WebView
-					source={{
-						uri: url
-					}}
-					onNavigationStateChange={this._onNavigationStateChange}
-				/>
-			</Container>
+			<WebContainer
+				source={{
+					uri: url
+				}}
+				onLoadEnd={() => console.log('loaded')}
+				onNavigationStateChange={this._onNavigationStateChange}
+			/>
 		);
 	}
 
@@ -30,9 +29,9 @@ class Coinbase extends Component {
 	};
 }
 
-const Container = styled.View`
+const WebContainer = styled.WebView`
 	flex: 1;
-	background-color: #164a7c;
+	background: #164a7c;
 `;
 
 export default Coinbase;

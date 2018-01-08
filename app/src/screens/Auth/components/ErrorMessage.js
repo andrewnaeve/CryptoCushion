@@ -9,15 +9,12 @@ export class ErrorMessage extends Component {
 		this.slideAnimation = new Animated.Value(1);
 		this.opaqueAnimation = new Animated.Value(0);
 	}
-	componentWillUpdate() {
-		this._animate();
-	}
-	shouldComponentUpdate(nextProps) {
+	componentWillReceiveProps(nextProps) {
+		const { error } = this.props;
 		const nextError = nextProps.error;
-		if (nextError === '') {
-			return false;
+		if (error !== nextError && nextError !== '') {
+			this._animate();
 		}
-		return true;
 	}
 	render() {
 		const { error } = this.props;
