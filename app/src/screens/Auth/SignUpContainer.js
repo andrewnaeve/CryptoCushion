@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Auth from './Auth';
 import { graphql } from 'react-apollo';
 import styled from 'styled-components/native';
 import { height } from '../../utils/styleConstants';
@@ -10,54 +11,54 @@ import { ErrorMessage } from './components/ErrorMessage';
 import { SubmitButton } from './components/SubmitButton';
 import { signUpMutation } from './authMutations';
 
-class SignUp extends Component {
-	state = {
-		firstName: '',
-		lastName: '',
-		email: '',
-		password: '',
-		errorMessage: ''
-	};
-
+class SignUpContainer extends Component {
 	render() {
-		const { firstName, lastName, email, password, errorMessage } = this.state;
 		return (
-			<SignUpContainer>
-				<FirstName handleChange={this._handleFirstNameChange} value={firstName} />
-				<LastName handleChange={this._handleLastNameChange} value={lastName} />
-				<Email handleChange={this._handleEmailChange} value={email} />
-				<Password handleChange={this._handlePasswordChange} value={password} />
-				<ErrorMessage error={errorMessage} resetError={this._resetError} />
-				<Separator />
-				<SubmitButton handlePress={this._handleSubmit} label={'Sign Up'} />
-			</SignUpContainer>
+			<Auth
+				render={props => (
+					<Container>
+						<FirstName handleChange={props.handleFirstNameChange} value={props.firstName} />
+						<LastName handleChange={props.handleLastNameChange} value={props.lastName} />
+						<Email
+							handleChange={props.handleEmailChange}
+							handleEmailBlur={props.handleEmailBlur}
+							value={props.email}
+						/>
+						<Password
+							handleChange={props.handlePasswordChange}
+							handleBlur={props.handlePasswordBlur}
+							value={props.password}
+						/>
+						<Password
+							handleChange={props.handleConfirmationPasswordChange}
+							handleBlur={props.handleConfirmationPasswordBlur}
+							value={props.confirmationPassword}
+						/>
+						<ErrorMessage error={props.error} resetError={props.resetError} />
+						<Separator />
+						<SubmitButton
+							handlePress={() =>
+								this._handleSubmit(
+									props.firstName,
+									props.lastName,
+									props.email,
+									props.password,
+									props.validEmail,
+									props.validPassword,
+									props.handleErrorChange
+								)
+							}
+							label={'Sign Up'}
+						/>
+					</Container>
+				)}
+			/>
 		);
 	}
 
-	_handleFirstNameChange = character => {
-		this.setState({
-			firstName: character
-		});
-	};
-	_handleLastNameChange = character => {
-		this.setState({
-			lastName: character
-		});
-	};
-	_handleEmailChange = character => {
-		this.setState({
-			email: character
-		});
-	};
-	_handlePasswordChange = character => {
-		this.setState({
-			password: character
-		});
-	};
-	_handleSubmit = () => {
+	_handleSubmit = (firstName, lastName, email, password, validEmail, validPassword, handleErrorChange) => {
 		const { mutate } = this.props;
-		const { firstName, lastName, email, password } = this.state;
-		if (firstName && lastName && email && password) {
+		if (firstName && lastName && validEmail && validPassword) {
 			mutate({
 				variables: {
 					first_name: firstName,
@@ -67,41 +68,28 @@ class SignUp extends Component {
 				}
 			}).then(response => {
 				const { email, id, result } = response.data.signUp;
-				this._handleResult(email, id, result);
-				this._resetPassword();
+				this._handleResult(email, id, result, handleErrorChange);
 			});
-		} else {
-			this.setState({
-				errorMessage: 'Please fill out the form completely.'
-			});
+		} else if (!validEmail || !validPassword) {
+			handleErrorChange('Email or password is invalid.');
+		} else if (!firstName || !lastName || !email || !password) {
+			handleErrorChange('Please fill out the form completely.');
 		}
 	};
-	_handleResult = (email, id, result) => {
+	_handleResult = (email, id, result, handleErrorChange) => {
 		const { navigation: { goBack } } = this.props;
 		switch (result) {
 			case 'success':
 				return goBack();
 			case 'ER_DUP_ENTRY':
-				return this.setState({
-					errorMessage: 'There is already an account registered to this email.'
-				});
+				return handleErrorChange('There is already an account registered to this email.');
 			default:
 				return;
 		}
 	};
-	_resetPassword = () => {
-		this.setState({
-			password: ''
-		});
-	};
-	_resetError = () => {
-		this.setState({
-			errorMessage: ''
-		});
-	};
 }
 
-const SignUpContainer = styled.View`
+const Container = styled.View`
 	flex: 1;
 	padding-top: ${height * 0.2};
 	align-items: center;
@@ -112,4 +100,4 @@ const Separator = styled.View`
 	flex: 1;
 `;
 
-export default graphql(signUpMutation)(SignUp);
+export default graphql(signUpMutation)(SignUpContainer);

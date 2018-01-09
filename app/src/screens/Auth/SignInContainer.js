@@ -19,7 +19,7 @@ class SignIn extends Component {
 		const { email, password, errorMessage } = this.state;
 		return (
 			<SignInContainer>
-				<Email handleChange={this._handleEmailChange} value={email} />
+				<Email handleChange={this._handleEmailChange} updateError={this._updateError} value={email} />
 				<Password handleChange={this._handlePasswordChange} value={password} />
 				<ErrorMessage error={errorMessage} resetError={this._resetError} />
 				<Separator />
@@ -52,9 +52,7 @@ class SignIn extends Component {
 				this._handleResult(result);
 			});
 		} else {
-			this.setState({
-				errorMessage: 'Please fill out the form completely.'
-			});
+			this._updateError('Please fill out the form completely.');
 		}
 	};
 	_handleResult = result => {
@@ -63,14 +61,17 @@ class SignIn extends Component {
 			goBack();
 			this._resetPassword();
 		} else if (result === false) {
-			this.setState({
-				errorMessage: 'Your email or password is incorrect.'
-			});
+			this._updateError('Your email or password is incorrect.');
 		}
 	};
 	_resetPassword = () => {
 		this.setState({
 			password: ''
+		});
+	};
+	_updateError = message => {
+		this.setState({
+			errorMessage: message
 		});
 	};
 	_resetError = () => {

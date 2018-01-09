@@ -6,7 +6,13 @@ import { Field } from './Field';
 
 export const Email = props => (
 	<View>
-		<Field placeholder="Email" onChangeText={props.handleChange} value={props.value} />
+		<Field
+			keyboardType={'email-address'}
+			placeholder="Email"
+			onChangeText={props.handleChange}
+			value={props.value}
+			onBlur={props.handleEmailBlur}
+		/>
 		<EmailIcon name="email" size={25} color="#D7D7D7" />
 	</View>
 );

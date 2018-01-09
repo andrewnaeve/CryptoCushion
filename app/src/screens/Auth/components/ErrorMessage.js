@@ -18,7 +18,6 @@ export class ErrorMessage extends Component {
 	}
 	render() {
 		const { error } = this.props;
-
 		return (
 			<ErrorContainer>
 				<AnimatedErrorText

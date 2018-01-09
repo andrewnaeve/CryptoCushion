@@ -6,7 +6,13 @@ import { Field } from './Field';
 
 export const Password = props => (
 	<View>
-		<Field placeholder="Password" secureTextEntry onChangeText={props.handleChange} value={props.value} />
+		<Field
+			placeholder="Password"
+			secureTextEntry
+			onChangeText={props.handleChange}
+			onBlur={props.handleBlur}
+			value={props.value}
+		/>
 		<LockIcon name="lock" size={25} color="#D7D7D7" />
 	</View>
 );

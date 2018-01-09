@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { WebView } from 'react-native';
 import styled from 'styled-components/native';
 import { coinbase } from '../../../../config.json';
 import { isBase64 } from '../../utils/helpers';
@@ -31,7 +30,7 @@ class Coinbase extends Component {
 
 const WebContainer = styled.WebView`
 	flex: 1;
-	background: #164a7c;
+	background: #1b4b82;
 `;
 
 export default Coinbase;

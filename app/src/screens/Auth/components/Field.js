@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import { width } from '../../../utils/styleConstants';
 
-export const Field = props => <Input {...props} />;
+export const Field = props => <Input autoCorrect={false} {...props} />;
 
 const Input = styled.TextInput`
 	height: 35px;
