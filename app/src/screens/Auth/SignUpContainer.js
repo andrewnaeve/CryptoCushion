@@ -13,51 +13,56 @@ import { signUpMutation } from './authMutations';
 
 class SignUpContainer extends Component {
 	render() {
+		const {
+			firstName,
+			handleFirstNameChange,
+			lastName,
+			handleLastNameChange,
+			email,
+			handleEmailChange,
+			handleEmailBlur,
+			password,
+			handlePasswordChange,
+			handlePasswordBlur,
+			confirmationPassword,
+			handleConfirmationPasswordChange,
+			handleConfirmationPasswordBlur,
+			error,
+			resetError
+		} = this.props;
 		return (
-			<Auth
-				render={props => (
-					<Container>
-						<FirstName handleChange={props.handleFirstNameChange} value={props.firstName} />
-						<LastName handleChange={props.handleLastNameChange} value={props.lastName} />
-						<Email
-							handleChange={props.handleEmailChange}
-							handleEmailBlur={props.handleEmailBlur}
-							value={props.email}
-						/>
-						<Password
-							handleChange={props.handlePasswordChange}
-							handleBlur={props.handlePasswordBlur}
-							value={props.password}
-						/>
-						<Password
-							handleChange={props.handleConfirmationPasswordChange}
-							handleBlur={props.handleConfirmationPasswordBlur}
-							value={props.confirmationPassword}
-						/>
-						<ErrorMessage error={props.error} resetError={props.resetError} />
-						<Separator />
-						<SubmitButton
-							handlePress={() =>
-								this._handleSubmit(
-									props.firstName,
-									props.lastName,
-									props.email,
-									props.password,
-									props.validEmail,
-									props.validPassword,
-									props.handleErrorChange
-								)
-							}
-							label={'Sign Up'}
-						/>
-					</Container>
-				)}
-			/>
+			<Container>
+				<FirstName handleChange={handleFirstNameChange} value={firstName} />
+				<LastName handleChange={handleLastNameChange} value={lastName} />
+				<Email handleChange={handleEmailChange} handleEmailBlur={handleEmailBlur} value={email} />
+				<Password
+					handleChange={handlePasswordChange}
+					handleBlur={handlePasswordBlur}
+					value={password}
+				/>
+				<Password
+					handleChange={handleConfirmationPasswordChange}
+					handleBlur={handleConfirmationPasswordBlur}
+					value={confirmationPassword}
+				/>
+				<ErrorMessage error={error} resetError={resetError} />
+				<Separator />
+				<SubmitButton handlePress={this._handleSubmit} label={'Sign Up'} />
+			</Container>
 		);
 	}
 
-	_handleSubmit = (firstName, lastName, email, password, validEmail, validPassword, handleErrorChange) => {
-		const { mutate } = this.props;
+	_handleSubmit = () => {
+		const {
+			mutate,
+			firstName,
+			lastName,
+			email,
+			password,
+			validEmail,
+			validPassword,
+			handleErrorChange
+		} = this.props;
 		if (firstName && lastName && validEmail && validPassword) {
 			mutate({
 				variables: {
@@ -100,4 +105,7 @@ const Separator = styled.View`
 	flex: 1;
 `;
 
-export default graphql(signUpMutation)(SignUpContainer);
+const WithGraphQL = graphql(signUpMutation)(SignUpContainer);
+const SignUpWithAuth = () => <Auth render={props => <WithGraphQL {...props} />} />;
+
+export default SignUpWithAuth;
