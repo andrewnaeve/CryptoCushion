@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { isEmail, arePasswordsEqual, isPasswordValid } from '../utils/validation';
+import { isEmail, arePasswordsEqual, isPasswordValid } from '../../utils/validation';
 
 export const withAuth = Form => {
 	class Auth extends Component {

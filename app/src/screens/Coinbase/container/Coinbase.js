@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components/native';
 import { coinbase } from '../../../../config.json';
-import { isBase64 } from '../../utils/validation';
+import { isBase64 } from '../../../utils/validation';
 const { development: { COINBASE_CLIENT_ID } } = coinbase;
 
 class Coinbase extends Component {

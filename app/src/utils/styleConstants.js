@@ -1,8 +1,8 @@
-import { Dimensions, StyleSheet, PixelRatio } from 'react-native';
+import { Dimensions, PixelRatio } from 'react-native';
 
 export const { height, width } = Dimensions.get('window');
 
-const normalize = size => {
+export const normalize = size => {
 	if (PixelRatio === 2) {
 		// iphone 5s and older Androids
 		if (width < 360) {
