@@ -105,4 +105,6 @@ const Separator = styled.View`
 	flex: 1;
 `;
 
-export default withAuth(graphql(signUpMutation)(SignUpContainer));
+const SignUp = withAuth(graphql(signUpMutation)(SignUpContainer));
+
+export default SignUp;

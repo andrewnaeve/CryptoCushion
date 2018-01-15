@@ -9,7 +9,7 @@ import { SubmitButton } from './components/SubmitButton';
 import { signInMutation } from './authMutations';
 import { withAuth } from './AuthHOC';
 
-class SignIn extends Component {
+class SignInContainer extends Component {
 	render() {
 		const {
 			email,
@@ -21,13 +21,13 @@ class SignIn extends Component {
 			handleEmailBlur
 		} = this.props;
 		return (
-			<SignInContainer>
+			<Container>
 				<Email handleChange={handleEmailChange} handleEmailBlur={handleEmailBlur} value={email} />
 				<Password handleChange={handlePasswordChange} value={password} />
 				<ErrorMessage error={error} resetError={resetError} />
 				<Separator />
 				<SubmitButton handlePress={this._handleSubmit} label={'Sign In'} />
-			</SignInContainer>
+			</Container>
 		);
 	}
 
@@ -57,7 +57,7 @@ class SignIn extends Component {
 	};
 }
 
-const SignInContainer = styled.View`
+const Container = styled.View`
 	flex: 1;
 	padding-top: ${height * 0.2};
 	align-items: center;
@@ -68,4 +68,6 @@ const Separator = styled.View`
 	flex: 1;
 `;
 
-export default withAuth(graphql(signInMutation)(SignIn));
+const SignIn = withAuth(graphql(signInMutation)(SignInContainer));
+
+export default SignIn;
