@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components/native';
 import { Text, Linking } from 'react-native';
 import { width } from '../../../utils/styleConstants';
-import { isBase64 } from '../../utils/helpers';
+import { isBase64 } from '../../utils/validation';
 
 class Home extends Component {
 	constructor() {
