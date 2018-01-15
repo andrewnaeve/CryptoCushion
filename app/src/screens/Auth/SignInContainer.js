@@ -7,40 +7,32 @@ import { Password } from './components/Password';
 import { ErrorMessage } from './components/ErrorMessage';
 import { SubmitButton } from './components/SubmitButton';
 import { signInMutation } from './authMutations';
+import { withAuth } from './AuthHOC';
 
 class SignIn extends Component {
-	state = {
-		email: '',
-		password: '',
-		errorMessage: ''
-	};
-
 	render() {
-		const { email, password, errorMessage } = this.state;
+		const {
+			email,
+			password,
+			error,
+			handleEmailChange,
+			handlePasswordChange,
+			resetError,
+			handleEmailBlur
+		} = this.props;
 		return (
 			<SignInContainer>
-				<Email handleChange={this._handleEmailChange} updateError={this._updateError} value={email} />
-				<Password handleChange={this._handlePasswordChange} value={password} />
-				<ErrorMessage error={errorMessage} resetError={this._resetError} />
+				<Email handleChange={handleEmailChange} handleEmailBlur={handleEmailBlur} value={email} />
+				<Password handleChange={handlePasswordChange} value={password} />
+				<ErrorMessage error={error} resetError={resetError} />
 				<Separator />
 				<SubmitButton handlePress={this._handleSubmit} label={'Sign In'} />
 			</SignInContainer>
 		);
 	}
 
-	_handleEmailChange = character => {
-		this.setState({
-			email: character
-		});
-	};
-	_handlePasswordChange = character => {
-		this.setState({
-			password: character
-		});
-	};
 	_handleSubmit = () => {
-		const { mutate } = this.props;
-		const { email, password } = this.state;
+		const { mutate, email, password } = this.props;
 		if (email && password) {
 			mutate({
 				variables: {
@@ -56,28 +48,12 @@ class SignIn extends Component {
 		}
 	};
 	_handleResult = result => {
-		const { navigation: { goBack } } = this.props;
+		const { navigation: { goBack }, handleErrorChange } = this.props;
 		if (result === true) {
 			goBack();
-			this._resetPassword();
 		} else if (result === false) {
-			this._updateError('Your email or password is incorrect.');
+			handleErrorChange('Your email or password is incorrect.');
 		}
-	};
-	_resetPassword = () => {
-		this.setState({
-			password: ''
-		});
-	};
-	_updateError = message => {
-		this.setState({
-			errorMessage: message
-		});
-	};
-	_resetError = () => {
-		this.setState({
-			errorMessage: ''
-		});
 	};
 }
 
@@ -92,4 +68,4 @@ const Separator = styled.View`
 	flex: 1;
 `;
 
-export default graphql(signInMutation)(SignIn);
+export default withAuth(graphql(signInMutation)(SignIn));

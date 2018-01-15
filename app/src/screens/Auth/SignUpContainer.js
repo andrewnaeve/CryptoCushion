@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Auth from './Auth';
+import { withAuth } from './AuthHOC';
 import { graphql } from 'react-apollo';
 import styled from 'styled-components/native';
 import { height } from '../../utils/styleConstants';
@@ -105,7 +105,4 @@ const Separator = styled.View`
 	flex: 1;
 `;
 
-const WithGraphQL = graphql(signUpMutation)(SignUpContainer);
-const SignUpWithAuth = () => <Auth render={props => <WithGraphQL {...props} />} />;
-
-export default SignUpWithAuth;
+export default withAuth(graphql(signUpMutation)(SignUpContainer));
