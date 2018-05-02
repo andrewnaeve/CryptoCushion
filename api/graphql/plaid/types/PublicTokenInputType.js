@@ -1,11 +1,11 @@
-const { InputObjectType, String } = require('../../utilities/GraphQLTypeUtilities');
+const { InputObjectType, String } = require('../../utilities/GraphQLTypeUtilities')
 
 const PublicTokenInput = InputObjectType({
-	name: 'PublicTokenInput',
-	fields: () => ({
-		email: { type: String },
-		public_token: { type: String }
-	})
-});
+  name: 'PublicTokenInput',
+  fields: () => ({
+    email: { type: String },
+    public_token: { type: String }
+  })
+})
 
-module.exports = PublicTokenInput;
+module.exports = PublicTokenInput
