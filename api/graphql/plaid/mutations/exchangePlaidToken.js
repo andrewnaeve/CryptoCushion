@@ -3,9 +3,9 @@ const { userIdByEmail } = require('../../common/userInfo/db/queries')
 const { saveItem } = require('../db/queries')
 const Wreck = require('wreck')
 const Boom = require('boom')
-const PLAID_URL = require('../../../config.json').plaid[process.env.NODE_ENV].PLAID_URL
-const CLIENT_ID = require('../../../config.json').plaid[process.env.NODE_ENV].PLAID_CLIENT_ID
-const SECRET = require('../../../config.json').plaid[process.env.NODE_ENV].PLAID_SECRET
+const { PLAID_URL } = require('../../../config.json').plaid[process.env.NODE_ENV]
+const { CLIENT_ID } = require('../../../config.json').plaid[process.env.NODE_ENV]
+const { SECRET } = require('../../../config.json').plaid[process.env.NODE_ENV]
 // const PublicTokenInputType = require('../types/PublicTokenInputType');
 
 const exchangePlaidToken = async token => {
