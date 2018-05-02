@@ -1,5 +1,3 @@
 # CryptoCushion
 
-You will need config.json in root directory to get started, along with a .env file with NODE_ENV=development in the api and processor directory
-
-TODO: pull all secret keys off of endpoints instead of env files
+This project is a GraphQL api built on Hapi.js with a React Native skeleton frontend that can connect to Coinbase as well as the Plaid banking api for the purpose of helping less savvy crypto-currency users automatically round up their banking transactions and place them in Bitcoin.
