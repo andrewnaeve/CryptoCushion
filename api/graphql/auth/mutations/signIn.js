@@ -12,7 +12,7 @@ module.exports = {
       }
     },
     resolve: async (_, { user: { email, password } }) => {
-      return await comparePassword(email, password)
+      await comparePassword(email, password)
     }
   }
 }

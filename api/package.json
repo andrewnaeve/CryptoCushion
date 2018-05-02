@@ -5,7 +5,7 @@
 	"scripts": {
 		"start": "nodemon server.js",
 		"test": "jest --watch",
-		"lint": "./node_modules/.bin/eslint **/*.js"
+		"lint": "./node_modules/.bin/eslint eslint '**/*.js' --fix"
 	},
 	"author": "",
 	"license": "ISC",
