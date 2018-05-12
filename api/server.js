@@ -3,7 +3,7 @@ const Glue = require('glue')
 const manifest = require('./manifest')
 const path = require('path')
 const options = {
-  relativeTo: path(__dirname, '/src')
+  relativeTo: path.join(__dirname, '/src')
 }
 
 Glue.compose(manifest, options, function (err, server) {
